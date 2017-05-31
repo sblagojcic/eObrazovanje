@@ -33,7 +33,7 @@ public class Student {
 	private Set<Exam> exams = new HashSet<Exam>();
 
 	@OneToMany(mappedBy = "student", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-	private Set<Payment> payments = new HashSet<Payment>();
+	private Set<Transaction> transactions = new HashSet<Transaction>();
 
 	public Student() {
 		super();
@@ -41,7 +41,7 @@ public class Student {
 
 
 	public Student(Integer id, String gender, Date dateOfBirth, String address, String jMBG, String picturePath,
-			Set<Subject> subjects, Set<Document> documents, Set<Exam> exams, Set<Payment> payments) {
+			Set<Subject> subjects, Set<Document> documents, Set<Exam> exams, Set<Transaction> transactions) {
 		super(); 
 		this.id = id;
 		this.gender = gender;
@@ -52,7 +52,7 @@ public class Student {
 		this.subjects = subjects;
 		this.documents = documents;
 		this.exams = exams;
-		this.payments = payments;
+		this.transactions = transactions;
 	}
 
 
@@ -66,13 +66,13 @@ public class Student {
 	}
 
 
-	public Set<Payment> getPayments() {
-		return payments;
+	public Set<Transaction> gettransactions() {
+		return transactions;
 	}
 
 
-	public void setPayments(Set<Payment> payments) {
-		this.payments = payments;
+	public void settransactions(Set<Transaction> transactions) {
+		this.transactions = transactions;
 	}
 
 

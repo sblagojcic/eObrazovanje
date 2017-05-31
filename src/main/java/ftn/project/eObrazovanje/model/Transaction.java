@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Payment {
+public class Transaction {
 	@Id
 	@GeneratedValue
 	private Integer id;
@@ -20,11 +20,11 @@ public class Payment {
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	private Student student;
 
-	public Payment() {
+	public Transaction() {
 		super();
 	}
 
-	public Payment(Integer id, String purpose, String bankAccount, double price, String recipient, Student student) {
+	public Transaction(Integer id, String purpose, String bankAccount, double price, String recipient, Student student) {
 		super();
 		this.id = id;
 		this.purpose = purpose;
