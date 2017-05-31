@@ -30,7 +30,7 @@ public class Subject {
     @OneToMany(mappedBy = "subject", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     private Set<ProfessorRole> professorRole = new HashSet<ProfessorRole>();
 
-    @ManyToMany(targetEntity = Student.class, mappedBy = "subjects", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "subjects",targetEntity = Student.class, fetch = FetchType.LAZY)
     private Set<Student> students = new HashSet<Student>();
 
     public Subject() {
