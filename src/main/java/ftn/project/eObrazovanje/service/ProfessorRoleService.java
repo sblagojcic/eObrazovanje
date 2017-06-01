@@ -7,9 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import ftn.project.eObrazovanje.model.Professor;
 import ftn.project.eObrazovanje.model.ProfessorRole;
-import ftn.project.eObrazovanje.repository.ProfessorRepository;
 import ftn.project.eObrazovanje.repository.ProfessorRoleRepository;
 
 @Service

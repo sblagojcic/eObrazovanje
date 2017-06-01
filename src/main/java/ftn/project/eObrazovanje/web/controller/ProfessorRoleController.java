@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ftn.project.eObrazovanje.model.Professor;
 import ftn.project.eObrazovanje.model.ProfessorRole;
-import ftn.project.eObrazovanje.model.Subject;
 import ftn.project.eObrazovanje.service.ProfessorRoleService;
 import ftn.project.eObrazovanje.service.ProfessorService;
 import ftn.project.eObrazovanje.web.dto.ProfessorRoleDTO;
