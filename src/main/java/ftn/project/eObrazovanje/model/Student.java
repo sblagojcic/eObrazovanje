@@ -12,11 +12,13 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
-public class Student {
+public class Student extends User{
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	private String gender;
 	private Date dateOfBirth;
 	private String address;
@@ -27,12 +29,15 @@ public class Student {
 	private Set<Subject> subjects = new HashSet<Subject>();
 	 
 	@OneToMany(mappedBy = "student", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+	@JsonManagedReference
 	private Set<Document> documents = new HashSet<Document>();
 
 	@OneToMany(mappedBy = "student", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+	@JsonManagedReference
 	private Set<Exam> exams = new HashSet<Exam>();
 
 	@OneToMany(mappedBy = "student", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+	@JsonManagedReference
 	private Set<Transaction> transactions = new HashSet<Transaction>();
 
 	public Student() {
@@ -40,7 +45,7 @@ public class Student {
 	}
 
 
-	public Student(Integer id, String gender, Date dateOfBirth, String address, String jMBG, String picturePath,
+	public Student(Long id, String gender, Date dateOfBirth, String address, String jMBG, String picturePath,
 			Set<Subject> subjects, Set<Document> documents, Set<Exam> exams, Set<Transaction> transactions) {
 		super(); 
 		this.id = id;
@@ -75,14 +80,6 @@ public class Student {
 		this.transactions = transactions;
 	}
 
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public String getGender() {
 		return gender;

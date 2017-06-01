@@ -7,23 +7,26 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Document {
 
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	private String name;
 	private String path;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    private Student student;
+	@JsonBackReference
+	private Student student;
 
 	public Document() {
 		super();
 	}
 
-	public Document(Integer id, String name, String path,Student student) {
+	public Document(Long id, String name, String path,Student student) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -31,11 +34,11 @@ public class Document {
 		this.student=student;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

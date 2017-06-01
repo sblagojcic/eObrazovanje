@@ -9,7 +9,7 @@ public class User {
 
     @Id
     @GeneratedValue
-    private Integer id;
+    private Long id;
     private String role;
     private String name;
     private String lastName;
@@ -20,7 +20,7 @@ public class User {
 
     }
 
-    public User(Integer id, String role, String name, String lastName, String userName, String password) {
+    public User(Long id, String role, String name, String lastName, String userName, String password) {
         super();
         this.id = id;
         this.role = role;
@@ -30,11 +30,11 @@ public class User {
         this.password = password;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

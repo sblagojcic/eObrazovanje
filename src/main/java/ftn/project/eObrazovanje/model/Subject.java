@@ -12,22 +12,25 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Subject {
 
     @Id
     @GeneratedValue
-    private Integer id;
+    private Long id;
 
     private String name;
 
     private Integer semester;
 
     @OneToMany(mappedBy = "subject", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @JsonManagedReference
     private Set<Obligation> obligations = new HashSet<Obligation>();
 
     @OneToMany(mappedBy = "subject", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @JsonManagedReference
     private Set<ProfessorRole> professorRole = new HashSet<ProfessorRole>();
 
     @ManyToMany(mappedBy = "subjects",targetEntity = Student.class, fetch = FetchType.LAZY)
@@ -37,7 +40,7 @@ public class Subject {
 
     }
 
-    public Subject(Integer id, String name, Integer semester, Set<Obligation> obligations,
+    public Subject(Long id, String name, Integer semester, Set<Obligation> obligations,
 			Set<ProfessorRole> professorRole, Set<Student> students) {
 		super();
 		this.id = id;
@@ -48,11 +51,11 @@ public class Subject {
 		this.students = students;
 	}
 
-	public Integer getId() {
+	public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

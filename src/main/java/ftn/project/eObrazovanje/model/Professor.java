@@ -11,12 +11,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Professor extends User {
 
     @Id
     @GeneratedValue
-    private Integer id;
+    private Long id;
     private String gender;
     private Date dateOfBirth;
     private String address;
@@ -25,6 +27,7 @@ public class Professor extends User {
     private String picturePath;
 
     @OneToMany(mappedBy = "professor", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @JsonManagedReference
     private Set<ProfessorRole> roles = new HashSet<ProfessorRole>();
 
     public Professor() {
