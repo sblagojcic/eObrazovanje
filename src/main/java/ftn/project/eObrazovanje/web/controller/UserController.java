@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,9 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import ftn.project.eObrazovanje.model.Student;
 import ftn.project.eObrazovanje.model.User;
 import ftn.project.eObrazovanje.service.UserService;
+import ftn.project.eObrazovanje.web.dto.StudentDTO;
 import ftn.project.eObrazovanje.web.dto.UserDTO;
+
 
 
 @RestController
@@ -22,17 +27,27 @@ import ftn.project.eObrazovanje.web.dto.UserDTO;
 public class UserController {
 
     @Autowired
-    UserService userService;
+    UserService userService;    
     
-    @RequestMapping(method = RequestMethod.GET)
+
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ResponseEntity<List<UserDTO>> getUsers() {
         List<User> users = userService.findAll();
         List<UserDTO> usersDTO = new ArrayList<UserDTO>();
         for (User user : users) {
+        	
             usersDTO.add(new UserDTO(user));
         }
         return new ResponseEntity<>(usersDTO, HttpStatus.OK);
     }
+    
+    
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<Page<User>> getUsersPage(Pageable page) {
+		Page<User> users = userService.findAll(page);
+
+		return new ResponseEntity<>(users, HttpStatus.OK);
+	}
     
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
@@ -56,6 +71,19 @@ public class UserController {
         return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
 
     }
+    
+    @RequestMapping(value="/add", method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity<User> save(@RequestBody User user){
+		user.setLastName("1");
+		user.setName("1");
+		user.setPassword("1");
+		user.setRole("1");
+		user.setUserName("1");		
+	
+		userService.save(user);
+		return new ResponseEntity<User>(user, HttpStatus.OK);
+	}
+    
     
     @RequestMapping(method = RequestMethod.PUT, consumes = "application/json")
     public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO) {

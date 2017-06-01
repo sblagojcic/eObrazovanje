@@ -7,8 +7,6 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
@@ -16,9 +14,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Student extends User{
-	@Id
-	@GeneratedValue
-	private Long id;
+
 	private String gender;
 	private Date dateOfBirth;
 	private String address;
@@ -45,10 +41,10 @@ public class Student extends User{
 	}
 
 
-	public Student(Long id, String gender, Date dateOfBirth, String address, String jMBG, String picturePath,
+	public Student(String gender, Date dateOfBirth, String address, String jMBG, String picturePath,
 			Set<Subject> subjects, Set<Document> documents, Set<Exam> exams, Set<Transaction> transactions) {
 		super(); 
-		this.id = id;
+
 		this.gender = gender;
 		this.dateOfBirth = dateOfBirth;
 		this.address = address;
