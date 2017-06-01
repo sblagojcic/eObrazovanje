@@ -58,7 +58,7 @@ public class Document {
 		this.path = path;
 	}
 
-	public Student getstudent() {
+	public Student getStudent() {
 		return student;
 	}
 

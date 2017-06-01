@@ -1,4 +1,4 @@
-package ftn.project.eObrazovanje.controller;
+package ftn.project.eObrazovanje.web.controller;
 
 import java.util.ArrayList;
 import java.util.List;
