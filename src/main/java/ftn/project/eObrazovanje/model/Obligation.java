@@ -61,14 +61,6 @@ public class Obligation {
 		this.oblitagionType = oblitagionType;
 	}
 
-    public Integer getpoints() {
-        return points;
-    }
-
-    public void setpoints(Integer points) {
-        this.points = points;
-    }
-
     public Subject getSubject() {
         return subject;
     }
