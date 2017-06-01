@@ -21,10 +21,10 @@ public class Obligation {
     private Date dateOfObligation;
 
     private Integer points;
-
+    
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-	@JsonBackReference
-	private Exam exam;
+   	@JsonBackReference
+   	private Exam exam;
     
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JsonBackReference
@@ -34,14 +34,15 @@ public class Obligation {
 
     }
 
-    public Obligation(Long id, String oblitagionType, Date dateOfObligation, Integer points, Subject subject,Exam exam) {
+    public Obligation(Long id, String oblitagionType, Date dateOfObligation, Integer points, Subject subject, Exam exam) {
         super();
         this.id = id;
         this.oblitagionType = oblitagionType;
         this.dateOfObligation = dateOfObligation;
         this.points = points;
+        this.exam = exam;
         this.subject = subject;
-        this.exam=exam;
+
     }
 
     public Long getId() {
@@ -92,6 +93,14 @@ public class Obligation {
 		this.points = points;
 	}
 
+	public Date getDateOfObligation() {
+		return dateOfObligation;
+	}
+
+	public void setDateOfObligation(Date dateOfObligation) {
+		this.dateOfObligation = dateOfObligation;
+	}
+
 	public Exam getExam() {
 		return exam;
 	}
@@ -99,7 +108,7 @@ public class Obligation {
 	public void setExam(Exam exam) {
 		this.exam = exam;
 	}
-    
+	
 
 }
 
