@@ -1,12 +1,54 @@
 <!DOCTYPE HTML>
-<html >
+<html ng-app="eObrazovanjeApp">
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>eObrazovanje</title>
+        <title>Bookstore</title>
+
+        <!-- Bootstrap -->
+        <link href="/css/bootstrap.css" rel="stylesheet">
+        <link href="/css/bootstrap.min.css" rel="stylesheet">
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="/js/dependencies/jquery-2.0.0.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="/js/dependencies/bootstrap.js"></script>
+        
+        <script src="/js/dependencies/angular.js"></script>
+		<script src="/js/dependencies/angular-route.js"></script>		
+
+		
+		<script src="/js/app.js"></script>
+		<script src="/js/controllers/ProfessorController.js"></script>
+		<script src="/js/controllers/ProfessorRoleController.js"></script>	
+		<script src="/js/controllers/ApplicationController.js"></script>
 
     </head>
-    <body>
-		<h2>Hello eObrazovanje app!</h2>
+    <body ng-controller="ApplicationController">
+        <div   class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                	
+                	<a class="navbar-brand"  href="#/professors">Professors</a>          
+                	<a class="navbar-brand"  href="#/professorRoles">Professor roles</a>                                                      	                            
+
+                   	               
+                </div>
+            </div>
+        </div>
+	<div class="jumbotron">
+            <div class="container text-center">
+            <h1>eObrazovanje</h1>
+                <p>FTN e-learning project</p>
+                
+            </div>
+        </div>
+        
+        <!-- content here -->
+        <div class="container" ng-view>
+        </div>
+        
+	   	<div class="page-footer">
+=			Copyright masterTeam©
+		</div>
 	</body>
 </html>

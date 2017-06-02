@@ -14,10 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import ftn.project.eObrazovanje.model.Student;
 import ftn.project.eObrazovanje.model.User;
 import ftn.project.eObrazovanje.service.UserService;
-import ftn.project.eObrazovanje.web.dto.StudentDTO;
 import ftn.project.eObrazovanje.web.dto.UserDTO;
 
 
@@ -59,7 +57,7 @@ public class UserController {
 
     }
     
-    @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
+    @RequestMapping(value="/add", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO userDTO) {
         User user = new User();
         user.setLastName(userDTO.getLastName());
@@ -72,20 +70,8 @@ public class UserController {
 
     }
     
-    @RequestMapping(value="/add", method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<User> save(@RequestBody User user){
-		user.setLastName("1");
-		user.setName("1");
-		user.setPassword("1");
-		user.setRole("1");
-		user.setUserName("1");		
-	
-		userService.save(user);
-		return new ResponseEntity<User>(user, HttpStatus.OK);
-	}
     
-    
-    @RequestMapping(method = RequestMethod.PUT, consumes = "application/json")
+    @RequestMapping(value = "/edit/{id}",method = RequestMethod.PUT, consumes = "application/json")
     public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO) {
         User user = userService.findOne(userDTO.getId());
         if (user == null)
@@ -99,7 +85,7 @@ public class UserController {
 
     }
     
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
         User user = userService.findOne(id);
         if (user != null) {

@@ -1,0 +1,74 @@
+<form class="form-horizontal" ng-init= "initProfessor()" required>
+
+    <div class="form-group">
+        <label class="col-sm-2">Name</label>
+        <div class="col-sm-6">
+            <input  ng-model="professor.name" class="form-control" />
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="col-sm-2">Last name</label>
+        <div class="col-sm-6">
+            <input  ng-model="professor.lastName" class="form-control" />
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="col-sm-2">User name</label>
+        <div class="col-sm-6">
+            <input  ng-model="professor.userName" class="form-control" />
+        </div>
+    </div>
+    
+    
+    <div class="form-group">
+        <label class="col-sm-2">Password</label>
+        <div class="col-sm-6">
+            <input type="password"  ng-model="professor.password" class="form-control" />
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="col-sm-2">JMBG</label>
+        <div class="col-sm-6">
+            <input ng-model="professor.jmbg" class="form-control" />
+        </div>
+    </div>
+    
+        <div class="form-group">
+        <label class="col-sm-2">Date of birth</label>
+        <div class="col-sm-6">
+            <input type="datetime" ng-model="professor.dateOfBirth" class="form-control" />
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="col-sm-2">Address</label>
+        <div class="col-sm-6">
+            <input ng-model="professor.address" class="form-control" />
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="col-sm-2">Gender</label>
+        <div class="col-sm-6">
+            <input ng-model="professor.gender" class="form-control" />
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="col-sm-2">Title</label>
+        <div class="col-sm-6">
+            <input ng-model="professor.title" class="form-control" />
+        </div>
+    </div>
+
+
+    <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button  ng-click="saveProfessor()" type="submit" class="btn btn-primary" >Save</button>  
+<!--       ng-disabled="!professor.name||!professor.userName||!professor.password||!professor.jmbg||!professor.lastName||!professor.address||!professor.gender||!proffessor.title" -->
+    </div>
+  </div>
+</form>

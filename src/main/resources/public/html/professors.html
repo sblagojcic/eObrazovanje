@@ -1,0 +1,55 @@
+ <table ng-init= "getAllProfessors()" class="table table-bordered" >
+	<thead class="thead-inverse">
+		<tr>
+			<th>ID</th>
+			<th>Last name</th>
+			<th>Name</th>
+			<th>username</th>
+			<th>JMBG</th>
+			<th>Address</th>
+			<th>Date of birth</th>
+			<th>Gender</th>
+			<th>Title</th>			
+			<th></th>
+			<th></th>
+			
+			
+			
+<!-- 			<th>Quantity</th> -->
+
+			
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="professor in professors">
+			<td>{{ professor.id }}</td>
+			<td>{{ professor.lastName }}</td>
+			<td>{{ professor.name }}</td>
+			<td>{{ professor.userName }}</td>
+			<td>{{ professor.jmbg }}</td>
+			<td>{{ professor.address }}</td>
+			<td>{{ professor.dateOfBirth }}</td>
+			<td>{{ professor.gender }}</td>
+			<td>{{ professor.title }}</td>
+
+			
+			<td>
+				<button ng-model="button" ng-click="hideAlerts();deleteProfessor(professor.id)" class="btn btn-xs btn-danger">Delete</button>
+			</td>
+			<td>
+				<a href="#/professors/edit/{{ professor.id }}" class="btn btn-xs btn-primary">Edit</a>
+			</td>
+		</tr>
+		
+	</tbody>
+</table>
+
+
+<div ng-show="blueAlert" class="alert alert-success">
+  <strong>Success  </strong> You have successfully deleted the professor {{deleted.name}} {{deleted.lastName}} . 
+</div>
+<div ng-show="redAlert" class="alert alert-danger">
+  <strong>Greska!</strong> nije obrisano.
+</div>
+
+<a href="#/addOrUpdateProfessor" class="btn btn-success">Add new professor</a>

@@ -1,6 +1,6 @@
-INSERT INTO user( id, dtype,last_name, name,password,role,user_name,jmbg,address,date_of_birth,gender,picture_path) VALUES ( '1','student', 'peric', 'pera', '123', 'da', 'perica', 'da', 'da', '2008-10-03 22:59:52', 'male', 'da');
-INSERT INTO user( id, dtype,last_name, name,password,role,user_name) VALUES ( '3','user', 'dali', 'dali', '123', 'da', 'da');
-INSERT INTO user(id, dtype ,last_name, name,password,role,user_name,jmbg,address,date_of_birth,gender,picture_path,title) VALUES ( '2','professor',  'jovo', 'jovic', '123', 'da', 'jovica', 'da', 'da', '2008-10-03 22:59:52', 'male', 'da', 'da');
+INSERT INTO user( id, dtype,last_name, name,password,role,user_name,jmbg,address,date_of_birth,gender,picture_path) VALUES ( '1','Student', 'peric', 'pera', '123', 'da', 'perica', '23525235235233', 'da', '2008-10-03 22:59:52', 'male', 'da');
+INSERT INTO user( id, dtype,last_name, name,password,role,user_name) VALUES ( '3','User', 'dali', 'dali', '123', 'da', 'da');
+INSERT INTO user(id, dtype ,last_name, name,password,role,user_name,jmbg,address,date_of_birth,gender,picture_path,title) VALUES ( '2','Professor',  'jovo', 'jovic', '123', 'da', 'jovica', '1313121251251', 'da', '2008-10-03 22:59:52', 'male', 'da', 'da');
 INSERT INTO transaction (id, bank_account,price, purpose, recipient, student_id) VALUES ('1', '2222222', '2000', 'dada', 'dede', '1');
 INSERT INTO document (id, name, path,student_id) VALUES ('1', 'indeks', 'aha', '1');
 INSERT INTO exam (id,pass,points,student_id) VALUES ('1', true, '90', '1');

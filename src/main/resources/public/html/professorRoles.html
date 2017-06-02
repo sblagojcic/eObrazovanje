@@ -1,0 +1,34 @@
+ <table ng-init= "getAllProfessorRoles()" class="table table-bordered" >
+	<thead class="thead-inverse">
+		<tr>
+			<th>ID</th>
+			<th>Role</th>
+			<th></th>
+			<th></th>	
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="professorRole in professorRoles">
+			<td>{{ professorRole.id }}</td>
+			<td>{{ professorRole.role }}</td>
+
+			<td>
+				<button ng-model="button" ng-click="hideAlerts();deleteProfessorRole(professor.id)" class="btn btn-xs btn-danger">Delete</button>
+			</td>
+			<td>
+				<a href="#/professorRoles/edit/{{ professorRole.id }}" class="btn btn-xs btn-primary">Edit</a>
+			</td>
+		</tr>
+		
+	</tbody>
+</table>
+
+
+<div ng-show="blueAlert" class="alert alert-success">
+  <strong>Success  </strong> You have successfully deleted the profesor role {{deleted.role}} . 
+</div>
+<div ng-show="redAlert" class="alert alert-danger">
+  <strong>Greska!</strong> nije obrisano.
+</div>
+
+<a href="#/addOrUpdateProfessorRole" class="btn btn-success">Add new professor role</a>

@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +32,7 @@ public class ProfessorController {
 	@Autowired
 	ProfessorRoleService professorRoleService;
 
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public ResponseEntity<List<ProfessorDTO>> getProfessors() {
 		List<Professor> professors = professorService.findAll();
 		List<ProfessorDTO> professorsDTO = new ArrayList<ProfessorDTO>();
@@ -38,6 +40,13 @@ public class ProfessorController {
 			professorsDTO.add(new ProfessorDTO(professor));
 		}
 		return new ResponseEntity<>(professorsDTO, HttpStatus.OK);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<Page<Professor>> getProfessorsPage(Pageable page) {
+		Page<Professor> professors = professorService.findAll(page);
+
+		return new ResponseEntity<>(professors, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -49,7 +58,7 @@ public class ProfessorController {
 			return new ResponseEntity<>(new ProfessorDTO(professor), HttpStatus.OK);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, consumes = "application/json")
+	@RequestMapping(value="/add",method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<ProfessorDTO> saveProfessor(@RequestBody ProfessorDTO professorDTO) {
 		Professor professor = new Professor();
 		professor.setAddress(professorDTO.getAddress());
@@ -67,7 +76,7 @@ public class ProfessorController {
 		return new ResponseEntity<>(new ProfessorDTO(professor), HttpStatus.OK);
 	}
 
-	@RequestMapping(method = RequestMethod.PUT, consumes = "application/json")
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT, consumes = "application/json")
 	public ResponseEntity<ProfessorDTO> updateProfessor(@RequestBody ProfessorDTO professorDTO) {
 		Professor professor = professorService.findOne(professorDTO.getId());
 		if (professor == null)
@@ -86,7 +95,7 @@ public class ProfessorController {
 		return new ResponseEntity<>(new ProfessorDTO(professor), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteProfessor(@PathVariable Long id) {
 		Professor professor = professorService.findOne(id);
 		if (professor == null)
