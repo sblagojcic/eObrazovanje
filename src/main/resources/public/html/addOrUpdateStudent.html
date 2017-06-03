@@ -1,0 +1,68 @@
+<form class="form-horizontal" ng-init= "initStudent()" required>
+
+    <div class="form-group">
+        <label class="col-sm-2">Name</label>
+        <div class="col-sm-6">
+            <input  ng-model="student.name" class="form-control" />
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="col-sm-2">Last name</label>
+        <div class="col-sm-6">
+            <input  ng-model="student.lastName" class="form-control" />
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="col-sm-2">User name</label>
+        <div class="col-sm-6">
+            <input  ng-model="student.userName" class="form-control" />
+        </div>
+    </div>
+    
+    
+    <div class="form-group">
+        <label class="col-sm-2">Password</label>
+        <div class="col-sm-6">
+            <input type="password"  ng-model="student.password" class="form-control" />
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="col-sm-2">JMBG</label>
+        <div class="col-sm-6">
+            <input ng-model="student.jmbg" class="form-control" />
+        </div>
+    </div>
+    
+        <div class="form-group">
+        <label class="col-sm-2">Date of birth</label>
+        <div class="col-sm-6">
+            <input type="datetime" ng-model="student.dateOfBirth" class="form-control" />
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="col-sm-2">Address</label>
+        <div class="col-sm-6">
+            <input ng-model="student.address" class="form-control" />
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="col-sm-2">Gender</label>
+        <div class="col-sm-6">
+            <input ng-model="student.gender" class="form-control" />
+        </div>
+    </div>
+    
+
+
+    <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button  ng-click="saveStudent()" type="submit" class="btn btn-primary" >Save</button>  
+<!--       ng-disabled="!student.name||!student.userName||!student.password||!student.jmbg||!student.lastName||!student.address||!student.gender" -->
+    </div>
+  </div>
+</form>

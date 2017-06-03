@@ -22,6 +22,18 @@ angular.module('eObrazovanjeApp', [ 'ngRoute']).config(
 			}).when('/professorRoles/edit/:id', {
 				templateUrl : '/html/addOrUpdateProfessorRole.html',
 				controller : 'ProfessorRoleController'
+			}).when('/students', {
+				templateUrl : '/html/Students.html',
+				controller : 'StudentController'
+			}).when('/addOrUpdateStudent', {
+				templateUrl : '/html/addOrUpdateStudent.html',
+				controller : 'StudentController'
+			}).when('/Students/edit/:id', {
+				templateUrl : '/html/addOrUpdateStudent.html',
+				controller : 'StudentController'
+			}).when('/transactions', {
+				templateUrl : '/html/Transactions.html',
+				controller : 'TransactionController'
 			}).otherwise({
 				redirectTo : '/'
 			});

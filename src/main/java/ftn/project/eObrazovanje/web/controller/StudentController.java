@@ -51,16 +51,20 @@ public class StudentController {
 		return new ResponseEntity<>(new StudentDTO(student), HttpStatus.OK);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<StudentDTO> savestudent(@RequestBody Student student1) {
-		Student student = student1;
+	@RequestMapping(value="/add",method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity<StudentDTO> savestudent(@RequestBody StudentDTO student1) {
+		Student student = new Student(student1.getGender(), student1.getDateOfBirth(), student1.getAddress(), student1.getJMBG(), student1.getPicturePath(), null, null,null,null);
+		student.setName(student1.getName());
+		student.setUserName(student1.getUserName());
+		student.setLastName(student1.getLastName());
+		student.setPassword(student1.getPassword());
 		student = studentService.save(student);
 
 		return new ResponseEntity<>(new StudentDTO(student), HttpStatus.CREATED);
 	}
 
-	@RequestMapping(method = RequestMethod.PUT, consumes = "application/json")
-	public ResponseEntity<StudentDTO> updatestudent(@RequestBody Student student1) {
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT, consumes = "application/json")
+	public ResponseEntity<StudentDTO> updatestudent(@RequestBody StudentDTO student1) {
 		// a student must exist
 		Student student = studentService.findOne(student1.getId());
 		if (student == null) {
