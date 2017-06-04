@@ -83,7 +83,8 @@ public class DocumentController {
 		Document document = documentService.findOne(documentDTO.getId());
 		if (document == null)
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		document.setName(documentDTO.getPath());
+		document.setName(documentDTO.getName());
+		document.setPath(documentDTO.getPath());
 		Student student = studentService.findOne(documentDTO.getStudentID());
 		document.setStudent(student);
 		document = documentService.save(document);

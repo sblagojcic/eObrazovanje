@@ -1,0 +1,29 @@
+<form class="form-horizontal" ng-init= "initExam()" required>
+
+    <div class="form-group">
+        <label class="col-sm-2">Points</label>
+        <div class="col-sm-6">
+            <input  ng-model="exam.points" class="form-control" />
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="col-sm-2">Pass</label>
+        <div class="col-sm-6">
+            <input  ng-model="exam.pass" class="form-control" type="checkbox"/>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="col-sm-2">StudentID</label>
+        <div class="col-sm-6">
+            <input  ng-model="exam.studentID" class="form-control" />
+        </div>
+    </div>
+    
+    <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button ng-click="saveExam()" type="submit" class="btn btn-primary" >Save</button>
+    </div>
+  </div>
+</form>

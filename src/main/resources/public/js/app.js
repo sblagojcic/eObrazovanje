@@ -43,6 +43,15 @@ angular.module('eObrazovanjeApp', [ 'ngRoute']).config(
 			}).when('/addOrUpdateDocument', {
 				templateUrl : '/html/addOrUpdateDocument.html',
 				controller : 'DocumentController'
+			}).when('/exams', {
+				templateUrl : '/html/Exams.html',
+				controller : 'ExamController'
+			}).when('/exams/edit/:id', {
+				templateUrl : '/html/addOrUpdateExam.html',
+				controller : 'ExamController'
+			}).when('/addOrUpdateExam', {
+				templateUrl : '/html/addOrUpdateExam.html',
+				controller : 'ExamController'
 			}).otherwise({
 				redirectTo : '/'
 			});

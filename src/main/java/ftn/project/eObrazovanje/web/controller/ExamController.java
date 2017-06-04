@@ -84,7 +84,7 @@ public class ExamController {
 		if (exam == null)
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		exam.setPass(examDTO.isPass());
-		exam.setPoints(exam.getPoints());
+		exam.setPoints(examDTO.getPoints());
 		Student student = studentService.findOne(examDTO.getStudentID());
 		exam.setStudent(student);
 		exam = examService.save(exam);
