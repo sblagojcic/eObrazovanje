@@ -8,8 +8,7 @@ angular.module('eObrazovanjeApp').controller(
 				'$location',
 				
 				function($rootScope, $scope, $http, $routeParams, $location) {
-					
-					
-					
 
-				} ]);
+				}
+		]
+);

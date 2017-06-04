@@ -34,6 +34,15 @@ angular.module('eObrazovanjeApp', [ 'ngRoute']).config(
 			}).when('/transactions', {
 				templateUrl : '/html/Transactions.html',
 				controller : 'TransactionController'
+			}).when('/documents', {
+				templateUrl : '/html/Documents.html',
+				controller : 'DocumentController'
+			}).when('/documents/edit/:id', {
+				templateUrl : '/html/addOrUpdateDocument.html',
+				controller : 'DocumentController'
+			}).when('/addOrUpdateDocument', {
+				templateUrl : '/html/addOrUpdateDocument.html',
+				controller : 'DocumentController'
 			}).otherwise({
 				redirectTo : '/'
 			});

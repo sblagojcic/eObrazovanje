@@ -7,13 +7,13 @@ public class DocumentDTO {
 	private Long id;
 	private String name;
 	private String path;
-	private StudentDTO studentDTO;
+	private Long studentID;
 	
 	public DocumentDTO(Document document){
 		this.id = document.getId();
 		this.name = document.getName();
 		this.path = document.getPath();
-		this.studentDTO = new StudentDTO(document.getStudent());
+		this.studentID = document.getStudent().getId();
 	}
 	public DocumentDTO(){}
 	
@@ -36,13 +36,10 @@ public class DocumentDTO {
 	public void setPath(String path) {
 		this.path = path;
 	}
-	public StudentDTO getStudentDTO() {
-		return studentDTO;
+	public Long getStudentID() {
+		return studentID;
 	}
-	public void setStudentDTO(StudentDTO studentDTO) {
-		this.studentDTO = studentDTO;
+	public void setStudentID(Long studentID) {
+		this.studentID = studentID;
 	}
-	
-	
-	
 }

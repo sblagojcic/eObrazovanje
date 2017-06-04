@@ -7,15 +7,17 @@ public class ExamDTO {
 	private Long id;
 	private Integer points;
 	private boolean pass;
-	private StudentDTO studentDTO;
+	private Long studentID;
 	
 	public ExamDTO(Exam exam){
 		this.id = exam.getId();
 		this.points = exam.getPoints();
 		this.pass = exam.getPass();
-		this.studentDTO = new StudentDTO(exam.getStudent());
+		this.studentID = exam.getStudent().getId();
 	}
+	
 	public ExamDTO(){}
+	
 	public Long getId() {
 		return id;
 	}
@@ -36,13 +38,11 @@ public class ExamDTO {
 		this.pass = pass;
 	}
 
-	public StudentDTO getStudentDTO() {
-		return studentDTO;
+	public Long getStudentID() {
+		return studentID;
 	}
-	public void setStudentDTO(StudentDTO studentDTO) {
-		this.studentDTO = studentDTO;
+	public void setStudentID(Long studentID) {
+		this.studentID = studentID;
 	}
-	
-	
 
 }
