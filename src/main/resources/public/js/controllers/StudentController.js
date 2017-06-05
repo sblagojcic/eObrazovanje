@@ -22,7 +22,7 @@ angular.module('eObrazovanjeApp').controller(
 						$http.get('api/students/all').success
 							(function(data, status) {
 								$scope.students = data;
-
+								
 						}).error(function() {
 							alert('Oops, something went wrong!');
 						});
@@ -32,7 +32,17 @@ angular.module('eObrazovanjeApp').controller(
 						}
 					};
 					
-
+					$scope.getAllDocumentsForUser = function(id) {
+						$http.get('api/documents/getFor/' + id).success
+							(function(data, status) {
+								$scope.documents = data;
+								$location.path('/documents/getFor/'+id);
+						}).error(function() {
+							alert('Oops, something went wrong!');
+						});
+						$scope.resetFilter = function() {
+						}
+					};
 
 					$scope.deleteStudent = function(id) {
 						$http.delete('api/students/delete/' + id).success(

@@ -11,7 +11,7 @@
 			<th>Gender</th>
 			<th></th>
 			<th></th>
-			
+			<th></th>
 
 			
 		</tr>
@@ -33,6 +33,10 @@
 			</td>
 			<td>
 				<a href="#/Students/edit/{{ student.id }}" class="btn btn-xs btn-primary">Edit</a>
+			</td>
+			<td>
+				<a href="#/documents/getFor/{{ student.id }}" class="btn btn-xs btn-primary">Show list of documents</a>
+				<a href="#/exams/getFor/{{ student.id }}" class="btn btn-xs btn-primary">Show list of exams</a>
 			</td>
 		</tr>
 		

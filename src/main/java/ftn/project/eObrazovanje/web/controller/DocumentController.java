@@ -91,4 +91,15 @@ public class DocumentController {
 		return new ResponseEntity<>(new DocumentDTO(document), HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/getFor/{id}", method = RequestMethod.GET)
+	public ResponseEntity<List<DocumentDTO>> getDocunemtForUser(@PathVariable Long id){
+		List<Document> documents = documentService.findAll();
+		List<DocumentDTO> documentsDTO = new ArrayList<DocumentDTO>();
+		for(Document document : documents){
+			if(document.getStudent().getId().equals(id)){
+				documentsDTO.add(new DocumentDTO(document));
+			}
+		}
+		return new ResponseEntity<>(documentsDTO, HttpStatus.OK);
+	}
 }

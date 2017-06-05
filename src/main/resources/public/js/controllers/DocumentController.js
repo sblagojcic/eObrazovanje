@@ -16,6 +16,21 @@ angular.module('eObrazovanjeApp').controller(
 					});
 				};
 
+				$scope.getAllDocumentsForUser = function() {
+					if ($routeParams && $routeParams.id) {
+						// ovo je edit stranica
+						$http.get('api/documents/getFor/' + $routeParams.id).success
+						(function(data, status) {
+							$scope.documents = data;
+						}).error(function() {
+						alert('Oops, something went wrong!');
+					});
+					}
+					
+					$scope.resetFilter = function() {
+					}
+				};
+				
 				$scope.getAllDocuments = function() {
 					$http.get('api/documents/all').success
 						(function(data, status) {

@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import ftn.project.eObrazovanje.model.Document;
 import ftn.project.eObrazovanje.model.Exam;
 import ftn.project.eObrazovanje.model.Student;
 import ftn.project.eObrazovanje.service.ExamService;
 import ftn.project.eObrazovanje.service.StudentService;
+import ftn.project.eObrazovanje.web.dto.DocumentDTO;
 import ftn.project.eObrazovanje.web.dto.ExamDTO;
 
 @RestController
@@ -89,5 +91,17 @@ public class ExamController {
 		exam.setStudent(student);
 		exam = examService.save(exam);
 		return new ResponseEntity<>(new ExamDTO(exam), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/getFor/{id}", method = RequestMethod.GET)
+	public ResponseEntity<List<ExamDTO>> getExamForUser(@PathVariable Long id){
+		List<Exam> exams = examService.findAll();
+		List<ExamDTO> examsDTO = new ArrayList<ExamDTO>();
+		for(Exam exam : exams){
+			if(exam.getStudent().getId().equals(id)){
+				examsDTO.add(new ExamDTO(exam));
+			}
+		}
+		return new ResponseEntity<>(examsDTO, HttpStatus.OK);
 	}
 }

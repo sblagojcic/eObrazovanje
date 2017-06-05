@@ -1,0 +1,24 @@
+<table ng-init= "getAllDocumentsForUser()" class="table table-bordered" >
+	<thead class="thead-inverse">
+		<tr>
+			<th>ID</th>
+			<th>Name</th>
+			<th></th>
+			<th></th>	
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="document in documents">
+			<td>{{ document.id }}</td>
+			<td>{{ document.name }}</td>
+
+			<td>
+				<button ng-model="button" ng-click="hideAlerts();deleteDocument(document.id)" class="btn btn-xs btn-danger">Delete</button>
+			</td>
+			<td>
+				<a href="#/documents/edit/{{ document.id }}" class="btn btn-xs btn-primary">Edit</a>
+			</td>
+		</tr>
+		
+	</tbody>
+</table>

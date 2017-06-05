@@ -16,6 +16,20 @@ angular.module('eObrazovanjeApp').controller(
 					});
 				};
 
+				$scope.getAllExamsForUser = function() {
+					if ($routeParams && $routeParams.id) {
+						$http.get('api/exams/getFor/' + $routeParams.id).success
+						(function(data, status) {
+							$scope.exams = data;
+					}).error(function() {
+						alert('Oops, something went wrong!');
+					});
+					}
+					
+					$scope.resetFilter = function() {
+					}
+				};
+				
 				$scope.getAllExams = function() {
 					$http.get('api/exams/all').success
 						(function(data, status) {
