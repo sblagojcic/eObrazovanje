@@ -1,4 +1,17 @@
-angular.module('eObrazovanjeApp').controller(
+angular.module('eObrazovanjeApp')
+	.directive('fileInput',['$parse', function($parse){
+		return{
+			restrict: 'A',
+			link:function(scope,elm,attrs){
+				elm.bind('change', function(){
+					$parse(attrs.fileInput)
+					.assign(scope,elm[0].files)
+					scope.$apply()
+				})
+			}
+		}
+	}])
+	.controller(
 		'DocumentController',
 		[
 			'$rootScope',
@@ -91,6 +104,26 @@ angular.module('eObrazovanjeApp').controller(
 							alert('greska dodavanja!')
 						});
 					}
+				};
+				
+				$scope.filesChanged = function(element){
+					$scope.files = element.files;
+					$scope.$apply();
+				};
+				
+				$scope.upload = function(){
+					var fd= new FormData();
+					angular.forEach($scope.files,function(file){
+						fd.append('file', file)
+					});
+					$http.post('api/documents/uploadAngular', fd,{
+						transformRequest:angular.identity,	
+						headers:{'Content-Type': undefined}
+					})
+					.success(function(data){
+						console.log(data);
+					});
+					
 				};
 			}
 		]

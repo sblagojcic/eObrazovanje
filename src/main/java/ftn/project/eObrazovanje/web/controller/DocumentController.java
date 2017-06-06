@@ -1,5 +1,9 @@
 package ftn.project.eObrazovanje.web.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +16,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import ftn.project.eObrazovanje.model.Document;
 import ftn.project.eObrazovanje.model.Student;
@@ -23,6 +29,8 @@ import ftn.project.eObrazovanje.web.dto.DocumentDTO;
 @RestController
 @RequestMapping(value = "api/documents")
 public class DocumentController {
+
+	private static final String UPLOADED_FOLDER = "./upload/";
 
 	@Autowired
 	DocumentService documentService;
@@ -102,4 +110,46 @@ public class DocumentController {
 		}
 		return new ResponseEntity<>(documentsDTO, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value="/upload", method = RequestMethod.POST)
+    public ResponseEntity<Void> singleFileUpload(@RequestParam("file") MultipartFile file) {
+
+        if (file.isEmpty()) {
+        	return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+
+            // Get the file and save it somewhere
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
+            Files.write(path, bytes);
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+	@RequestMapping(value="/uploadAngular", headers = "content-type=multipart/*" , consumes = "multipart/form-data", method = RequestMethod.POST)
+    public ResponseEntity<Void> singleFileUploadAngular(@RequestParam("file") MultipartFile file) {
+
+        if (file.isEmpty()) {
+        	return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+
+            // Get the file and save it somewhere
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
+            Files.write(path, bytes);
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }
