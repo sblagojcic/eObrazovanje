@@ -2,8 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>500 Internal Server Error :(</title>
-	 <style>
+    <title> 401 Unauthorized :(</title>
+ <style>
       ::-moz-selection {
         background: #b3d4fc;
         text-shadow: none;
@@ -136,13 +136,15 @@
   </head>
   <body>
     <div class="container">
-      <h1>500 - Internal Server Error <span>:(</span></h1>
-      <p>The server experienced an unexpected error. </p>
-      <p>Please verify the address and try again.</p>
+      <h1>401 - Unauthorized<span>:(</span></h1>
+      <p>This section requires a password or is otherwise protected.  </p>
+      <p>If you feel you have reached this page in error, please return to the login page and try again, or contact the webmaster if you continue to have problems.</p>
       <ul>
-        <li>Go back to <a href="localhost:8080">home page</a></li>
+        <li>Go back to <a href="localhost:8080/#login">login page</a></li>
       </ul>
-      <script> 
+      <script>
+        var GOOG_FIXURL_LANG = (navigator.language || '').slice(0,2),GOOG_FIXURL_SITE = location.host;
+      </script>
       <script src="//linkhelp.clients.google.com/tbproxy/lh/wm/fixurl.js"></script>
     </div>
   </body>
