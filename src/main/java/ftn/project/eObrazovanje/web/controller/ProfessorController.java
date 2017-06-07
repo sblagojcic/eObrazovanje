@@ -52,7 +52,7 @@ public class ProfessorController {
 		}
 		PageRequest page = null;
 		try {
-			page = new PageRequest(pageNumber, 1);
+			page = new PageRequest(pageNumber, 20);
 		} catch (Exception e) {
 			page = (PageRequest) pageable;
 		}

@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ftn.project.eObrazovanje.model.Professor;
 import ftn.project.eObrazovanje.model.ProfessorRole;
+import ftn.project.eObrazovanje.model.Subject;
 import ftn.project.eObrazovanje.service.ProfessorRoleService;
 import ftn.project.eObrazovanje.service.ProfessorService;
+import ftn.project.eObrazovanje.service.SubjectService;
 import ftn.project.eObrazovanje.web.dto.ProfessorRoleDTO;
 
 @RestController
@@ -27,8 +29,8 @@ public class ProfessorRoleController {
 	@Autowired
 	ProfessorRoleService professorRoleService;
 
-	// @Autowired
-	// SubjectService subjectService;
+	 @Autowired
+	 SubjectService subjectService;
 
 	@Autowired
 	ProfessorService professorService;
@@ -80,10 +82,10 @@ public class ProfessorRoleController {
 		if (professorRoleDTO.getSubjectDTO() == null)
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-		// Subject subject =
-		// subjectService.findOne(professorRoleDTO.getSubjectDTO().getId());
-		// if (subject == null)
-		// return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		 Subject subject =
+		 subjectService.findOne(professorRoleDTO.getSubjectDTO().getId());
+		 if (subject == null)
+		 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
 		Professor professor = professorService.findOne(professorRoleDTO.getProfessorDTO().getId());
 		if (professor == null)
@@ -91,7 +93,7 @@ public class ProfessorRoleController {
 
 		ProfessorRole professorRole = new ProfessorRole();
 		professorRole.setProfessor(professor);
-		// professorRole.setSubject(subject);
+		 professorRole.setSubject(subject);
 		professorRole.setRole(professorRoleDTO.getRole());
 
 		professorRole = professorRoleService.save(professorRole);
