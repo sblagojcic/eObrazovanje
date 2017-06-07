@@ -44,45 +44,30 @@ public class Obligation {
         this.subject = subject;
 
     }
+    public Obligation(String oblitagionType, Date dateOfObligation, Integer points, Subject subject, Exam exam) {
+        super();
+        this.oblitagionType = oblitagionType;
+        this.dateOfObligation = dateOfObligation;
+        this.points = points;
+        this.exam = exam;
+        this.subject = subject;
 
-    public Long getId() {
-        return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public String getOblitagionType() {
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getOblitagionType() {
 		return oblitagionType;
 	}
 
 	public void setOblitagionType(String oblitagionType) {
 		this.oblitagionType = oblitagionType;
-	}
-
-    public Subject getSubject() {
-        return subject;
-    }
-
-    public void setSubject(Subject subject) {
-        this.subject = subject;
-    }
-
-    public Date getDate() {
-        return dateOfObligation;
-    }
-
-    public void setDate(Date dateOfObligation) {
-        this.dateOfObligation = dateOfObligation;
-    }
-
-	public Integer getPoints() {
-		return points;
-	}
-
-	public void setPoints(Integer points) {
-		this.points = points;
 	}
 
 	public Date getDateOfObligation() {
@@ -93,6 +78,14 @@ public class Obligation {
 		this.dateOfObligation = dateOfObligation;
 	}
 
+	public Integer getPoints() {
+		return points;
+	}
+
+	public void setPoints(Integer points) {
+		this.points = points;
+	}
+
 	public Exam getExam() {
 		return exam;
 	}
@@ -100,7 +93,13 @@ public class Obligation {
 	public void setExam(Exam exam) {
 		this.exam = exam;
 	}
-	
 
+	public Subject getSubject() {
+		return subject;
+	}
+
+	public void setSubject(Subject subject) {
+		this.subject = subject;
+	}
 }
 

@@ -1,42 +1,38 @@
-<table ng-init= "getAllStudents()" class="table table-bordered" >
+ <table ng-init= "getAllSubjects()" class="table table-bordered" >
 	<thead class="thead-inverse">
 		<tr>
 			<th>ID</th>
-			<th>Last name</th>
 			<th>Name</th>
-			<th>username</th>
-			<th>JMBG</th>
-			<th>Address</th>
-			<th>Date of birth</th>
-			<th>Gender</th>
+			<th>Semester</th>	
 			<th></th>
 			<th></th>
-			<th></th>
+			
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="student in students">
-			<td>{{ student.id }}</td>
-			<td>{{ student.lastName }}</td>
-			<td>{{ student.name }}</td>
-			<td>{{ student.userName }}</td>
-			<td>{{ student.jmbg }}</td>
-			<td>{{ student.address }}</td>
-			<td>{{ student.dateOfBirth| date:'dd-MM-yyyy'}}</td>
-			<td>{{ student.gender }}</td>
+		<tr ng-repeat="subject in subjects">
+			<td>{{ subject.id }}</td>
+			<td>{{ subject.name }}</td>
+			<td>{{ subject.semester }}</td>
 			<td>
-				<button ng-model="button" ng-click="hideAlerts();deleteStudent(student.id)" class="btn btn-xs btn-danger">Delete</button>
+				<button ng-model="button" ng-click="hideAlerts();deleteSubject(subject.id)" class="btn btn-xs btn-danger">Delete</button>
 			</td>
 			<td>
-				<a href="#/Students/edit/{{ student.id }}" class="btn btn-xs btn-primary">Edit</a>
-			</td>
-			<td>
-				<a href="#/documents/getFor/{{ student.id }}" class="btn btn-xs btn-primary">Show list of documents</a>
-				<a href="#/exams/getFor/{{ student.id }}" class="btn btn-xs btn-primary">Show list of exams</a>
+				<a href="#/subjects/edit/{{ subject.id }}" class="btn btn-xs btn-primary">Edit</a>
 			</td>
 		</tr>
+		
 	</tbody>
 </table>
+<div ng-show="blueAlert" class="alert alert-success">
+  <strong>Success  </strong> You have successfully deleted the subject {{deleted.name}} {{deleted.semester}} . 
+</div>
+<div ng-show="redAlert" class="alert alert-danger">
+  <strong>Error!</strong> cannot be done.
+</div>
+
+<a href="#/addOrUpdateSubject" class="btn btn-success">Add new subject</a>
+
 <div ng-show="blueAlert" class="alert alert-success">
 	<strong>Success  </strong> You have successfully deleted the student {{deleted.name}} {{deleted.lastName}} . 
 </div>

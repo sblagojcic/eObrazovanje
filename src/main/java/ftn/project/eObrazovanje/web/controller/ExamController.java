@@ -14,12 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import ftn.project.eObrazovanje.model.Document;
 import ftn.project.eObrazovanje.model.Exam;
 import ftn.project.eObrazovanje.model.Student;
 import ftn.project.eObrazovanje.service.ExamService;
 import ftn.project.eObrazovanje.service.StudentService;
-import ftn.project.eObrazovanje.web.dto.DocumentDTO;
 import ftn.project.eObrazovanje.web.dto.ExamDTO;
 
 @RestController
@@ -28,10 +26,10 @@ public class ExamController {
 
 	@Autowired
 	ExamService examService;
-	
+
 	@Autowired
 	StudentService studentService;
-	
+
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public ResponseEntity<List<ExamDTO>> getExams() {
 		List<Exam> exams = examService.findAll();
@@ -41,15 +39,15 @@ public class ExamController {
 		}
 		return new ResponseEntity<>(examsDTO, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Page<Exam>> getExamsPage(Pageable page) {
 		Page<Exam> exams = examService.findAll(page);
 
 		return new ResponseEntity<>(exams, HttpStatus.OK);
 	}
-	
-	@RequestMapping(value="/add",method = RequestMethod.POST, consumes = "application/json")
+
+	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<ExamDTO> saveExam(@RequestBody ExamDTO examDTO) {
 		Exam exam = new Exam();
 		exam.setPoints(examDTO.getPoints());
@@ -59,7 +57,7 @@ public class ExamController {
 		exam = examService.save(exam);
 		return new ResponseEntity<>(new ExamDTO(exam), HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<ExamDTO> getExam(@PathVariable Long id) {
 		Exam exam = examService.findOne(id);
@@ -68,18 +66,18 @@ public class ExamController {
 		else
 			return new ResponseEntity<>(new ExamDTO(exam), HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Void> deleteResponsePayment(@PathVariable Long id) {
-        Exam exam = examService.findOne(id);
-        if (exam == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        else {
-        	examService.remove(id);
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
-    }
-	
+	public ResponseEntity<Void> deleteResponsePayment(@PathVariable Long id) {
+		Exam exam = examService.findOne(id);
+		if (exam == null)
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		else {
+			examService.remove(id);
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+	}
+
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT, consumes = "application/json")
 	public ResponseEntity<ExamDTO> updateProfessor(@RequestBody ExamDTO examDTO) {
 		Exam exam = examService.findOne(examDTO.getId());
@@ -92,13 +90,13 @@ public class ExamController {
 		exam = examService.save(exam);
 		return new ResponseEntity<>(new ExamDTO(exam), HttpStatus.OK);
 	}
-	
-	@RequestMapping(value="/getFor/{id}", method = RequestMethod.GET)
-	public ResponseEntity<List<ExamDTO>> getExamForUser(@PathVariable Long id){
+
+	@RequestMapping(value = "/getFor/{id}", method = RequestMethod.GET)
+	public ResponseEntity<List<ExamDTO>> getExamForUser(@PathVariable Long id) {
 		List<Exam> exams = examService.findAll();
 		List<ExamDTO> examsDTO = new ArrayList<ExamDTO>();
-		for(Exam exam : exams){
-			if(exam.getStudent().getId().equals(id)){
+		for (Exam exam : exams) {
+			if (exam.getStudent().getId().equals(id)) {
 				examsDTO.add(new ExamDTO(exam));
 			}
 		}
