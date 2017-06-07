@@ -3,11 +3,12 @@
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>Bookstore</title>
+        <title>E-obrazovanje</title>
 
         <!-- Bootstrap -->
         <link href="/css/bootstrap.css" rel="stylesheet">
         <link href="/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/css/main.css" rel="stylesheet">
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="/js/dependencies/jquery-2.0.0.min.js"></script>
         <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -25,25 +26,52 @@
 		<script src="/js/controllers/ApplicationController.js"></script>
 		<script src="/js/controllers/DocumentController.js"></script>
 		<script src="/js/controllers/ExamController.js"></script>
+		<script src="/js/controllers/SubjectController.js"></script>
+		<script src="/js/controllers/ObligationController.js"></script>
     </head>
     <body ng-controller="ApplicationController">
-        <div   class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                	
-                	<a class="navbar-brand"  href="#/professors">Professors</a>          
-                	<a class="navbar-brand"  href="#/professorRoles">Professor roles</a> 
-                	<a class="navbar-brand"  href="#/students">Students</a>          
-                	<a class="navbar-brand"  href="#/transactions">Transactions</a>                                                      	                            
-					<a class="navbar-brand"  href="#/documents">Documents</a>
-            	    <a class="navbar-brand"  href="#/exams">Exams</a>
-                </div>
-            </div>
-        </div>
+    <div id="navigation" class="container-fluid">
+	  <div class="navbar-header">
+	     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+	      <span class="sr-only">Toggle navigation</span>
+	      <span class="icon-bar"></span>
+	      <span class="icon-bar"></span>
+	      <span class="icon-bar"></span>
+	    </button>
+	    <a  id="1" class="navbar-brand"  href="#"><img id="logo" alt="eObrazovanje" src="/img/logo.png"></a>
+	    
+	  </div>
+  <div id="navbar" class="navbar-collapse collapse">
+    <ul class="nav navbar-nav">
+    
+  					<li><a class="navbar-brand"  href="#/professors">Professors</a>   </li>       
+                	<li><a class="navbar-brand"  href="#/professorRoles">Professor roles</a> </li>
+                	<li><a class="navbar-brand"  href="#/students">Students</a>   </li>
+                	<li><a class="navbar-brand"  href="#/subjects">Subjects</a> </li>
+                	<li><a class="navbar-brand"  href="#/obligations">Obligations</a>    </li>    
+                	<li><a class="navbar-brand"  href="#/transactions">Transactions</a>   </li>                                                   	                            
+					<li><a class="navbar-brand"  href="#/documents">Documents</a></li>
+            	   <li> <a class="navbar-brand"  href="#/exams">Exams</a></li>
+
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a class="log" href="#">Login</a></li>
+      <li><a class="log" href="#">Logout</a></li>
+    </ul>
+  </div><!--/.nav-collapse -->
+</div>
+    
+    
+    
+    
+    
+    
+      
 	<div class="jumbotron">
             <div class="container text-center">
-            <h1>eObrazovanje</h1>
-                <p>FTN e-learning project</p>
+            <br><br><br><br><br><br><br><br><br>
+
+            
                 
             </div>
         </div>

@@ -1,0 +1,38 @@
+#logo{
+  height: 150%;  
+}
+#1{
+margin-right: 5%
+}
+
+#navigation{
+  background: #008080;
+  
+}
+
+.navbar-collapse {
+    float: left;
+    width: 100%;
+    clear: both;
+}
+
+@media (min-width: 768px) {
+    .navbar-right {
+        margin-top: -50px;
+    }
+}
+.navbar-brand{
+  color: white;
+
+}
+.log{
+	color: white;
+}
+.jumbotron{
+ 	background-image: url("/img/elearning.jpg");
+    background-position: 0% 15%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: #9a1409	;
+	
+}
