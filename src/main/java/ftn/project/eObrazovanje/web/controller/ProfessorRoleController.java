@@ -18,32 +18,31 @@ import ftn.project.eObrazovanje.model.Professor;
 import ftn.project.eObrazovanje.model.ProfessorRole;
 import ftn.project.eObrazovanje.service.ProfessorRoleService;
 import ftn.project.eObrazovanje.service.ProfessorService;
-import ftn.project.eObrazovanje.web.dto.ProfessorDTO;
 import ftn.project.eObrazovanje.web.dto.ProfessorRoleDTO;
 
 @RestController
 @RequestMapping(value = "api/professorRoles")
 public class ProfessorRoleController {
 
-    @Autowired
-    ProfessorRoleService professorRoleService;
+	@Autowired
+	ProfessorRoleService professorRoleService;
 
-//    @Autowired
-//    SubjectService subjectService;
+	// @Autowired
+	// SubjectService subjectService;
 
-    @Autowired
-    ProfessorService professorService;
+	@Autowired
+	ProfessorService professorService;
 
-    @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public ResponseEntity<List<ProfessorRoleDTO>> getProfessorRoles() {
-        List<ProfessorRole> professorRoles = professorRoleService.findAll();
-        List<ProfessorRoleDTO> profesorRolesDTO = new ArrayList<ProfessorRoleDTO>();
-        for (ProfessorRole professorRole : professorRoles) {
-            profesorRolesDTO.add(new ProfessorRoleDTO(professorRole));
-        }
-        return new ResponseEntity<>(profesorRolesDTO, HttpStatus.OK);
-    }
-    
+	@RequestMapping(value = "/all", method = RequestMethod.GET)
+	public ResponseEntity<List<ProfessorRoleDTO>> getProfessorRoles() {
+		List<ProfessorRole> professorRoles = professorRoleService.findAll();
+		List<ProfessorRoleDTO> profesorRolesDTO = new ArrayList<ProfessorRoleDTO>();
+		for (ProfessorRole professorRole : professorRoles) {
+			profesorRolesDTO.add(new ProfessorRoleDTO(professorRole));
+		}
+		return new ResponseEntity<>(profesorRolesDTO, HttpStatus.OK);
+	}
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<ProfessorRoleDTO> getProfessorRole(@PathVariable Long id) {
 		ProfessorRole professorRole = professorRoleService.findOne(id);
@@ -52,76 +51,78 @@ public class ProfessorRoleController {
 		else
 			return new ResponseEntity<>(new ProfessorRoleDTO(professorRole), HttpStatus.OK);
 	}
-    
+
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Page<ProfessorRole>> getProfessorRolesPage(Pageable page) {
 		Page<ProfessorRole> professorRoles = professorRoleService.findAll(page);
 
 		return new ResponseEntity<>(professorRoles, HttpStatus.OK);
 	}
-//
-//    @RequestMapping(method = RequestMethod.GET, value = "/subjects/{id}")
-//    public ResponseEntity<List<ProfessorRoleDTO>> getProfessorRolesForSubject(@PathVariable Integer id) {
-//        Subject subject = subjectService.findOne(id);
-//        List<ProfessorRole> professorRoles = professorRoleService.findBySubject(subject);
-//        List<ProfessorRoleDTO> profesorRolesDTO = new ArrayList<ProfessorRoleDTO>();
-//        for (ProfessorRole professorRole : professorRoles) {
-//            profesorRolesDTO.add(new ProfessorRoleDTO(professorRole));
-//        }
-//        return new ResponseEntity<>(profesorRolesDTO, HttpStatus.OK);
-//    }
+	//
+	// @RequestMapping(method = RequestMethod.GET, value = "/subjects/{id}")
+	// public ResponseEntity<List<ProfessorRoleDTO>>
+	// getProfessorRolesForSubject(@PathVariable Integer id) {
+	// Subject subject = subjectService.findOne(id);
+	// List<ProfessorRole> professorRoles =
+	// professorRoleService.findBySubject(subject);
+	// List<ProfessorRoleDTO> profesorRolesDTO = new
+	// ArrayList<ProfessorRoleDTO>();
+	// for (ProfessorRole professorRole : professorRoles) {
+	// profesorRolesDTO.add(new ProfessorRoleDTO(professorRole));
+	// }
+	// return new ResponseEntity<>(profesorRolesDTO, HttpStatus.OK);
+	// }
 
-    @RequestMapping(value="/add", method = RequestMethod.POST)
-    public ResponseEntity<ProfessorRoleDTO> saveProfessorRole(@RequestBody ProfessorRoleDTO professorRoleDTO) {
-        if (professorRoleDTO.getProfessorDTO() == null)
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        if (professorRoleDTO.getSubjectDTO() == null)
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	public ResponseEntity<ProfessorRoleDTO> saveProfessorRole(@RequestBody ProfessorRoleDTO professorRoleDTO) {
+		if (professorRoleDTO.getProfessorDTO() == null)
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		if (professorRoleDTO.getSubjectDTO() == null)
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-//        Subject subject = subjectService.findOne(professorRoleDTO.getSubjectDTO().getId());
-//        if (subject == null)
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		// Subject subject =
+		// subjectService.findOne(professorRoleDTO.getSubjectDTO().getId());
+		// if (subject == null)
+		// return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-        Professor professor = professorService.findOne(professorRoleDTO.getProfessorDTO().getId());
-        if (professor == null)
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		Professor professor = professorService.findOne(professorRoleDTO.getProfessorDTO().getId());
+		if (professor == null)
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-        ProfessorRole professorRole = new ProfessorRole();
-        professorRole.setProfessor(professor);
- //       professorRole.setSubject(subject);
-        professorRole.setRole(professorRoleDTO.getRole());
+		ProfessorRole professorRole = new ProfessorRole();
+		professorRole.setProfessor(professor);
+		// professorRole.setSubject(subject);
+		professorRole.setRole(professorRoleDTO.getRole());
 
-        professorRole = professorRoleService.save(professorRole);
-        return new ResponseEntity<>(new ProfessorRoleDTO(professorRole), HttpStatus.OK);
+		professorRole = professorRoleService.save(professorRole);
+		return new ResponseEntity<>(new ProfessorRoleDTO(professorRole), HttpStatus.OK);
 
+	}
 
-    }
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<ProfessorRoleDTO> updateProfessorRole(@RequestBody ProfessorRoleDTO professorRoleDTO) {
+		ProfessorRole professorRole = professorRoleService.findOne(professorRoleDTO.getId());
+		if (professorRole == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<ProfessorRoleDTO> updateProfessorRole(@RequestBody ProfessorRoleDTO professorRoleDTO) {
-        ProfessorRole professorRole = professorRoleService.findOne(professorRoleDTO.getId());
-        if (professorRole == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+		professorRole.setRole(professorRoleDTO.getRole());
+		professorRole = professorRoleService.save(professorRole);
 
-        professorRole.setRole(professorRoleDTO.getRole());
-        professorRole = professorRoleService.save(professorRole);
+		return new ResponseEntity<>(new ProfessorRoleDTO(professorRole), HttpStatus.OK);
+	}
 
-        return new ResponseEntity<>(new ProfessorRoleDTO(professorRole), HttpStatus.OK);
-    }
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Void> deleteResponsePayment(@PathVariable Long id) {
+		ProfessorRole professorRole = professorRoleService.findOne(id);
+		if (professorRole == null)
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		else {
+			professorRoleService.remove(id);
+			return new ResponseEntity<>(HttpStatus.OK);
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Void> deleteResponsePayment(@PathVariable Long id) {
-        ProfessorRole professorRole = professorRoleService.findOne(id);
-        if (professorRole == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        else {
-        	professorRoleService.remove(id);
-            return new ResponseEntity<>(HttpStatus.OK);
+		}
 
-        }
-
-    }
-
+	}
 
 }

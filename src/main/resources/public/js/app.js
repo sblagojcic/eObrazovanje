@@ -58,6 +58,24 @@ angular.module('eObrazovanjeApp', [ 'ngRoute']).config(
 			}).when('/exams/getFor/:id', {
 				templateUrl : '/html/allExamsForUser.html',
 				controller : 'ExamController'
+			}).when('/subjects', {
+				templateUrl : '/html/subjects.html',
+				controller : 'ProfessorController'
+			}).when('/addOrUpdateSubject', {
+				templateUrl : '/html/addOrUpdateSubject.html',
+				controller : 'SubjectController'
+			}).when('/subjects/edit/:id', {
+				templateUrl : '/html/addOrUpdateSubjects.html',
+				controller : 'SubjectController'
+			}).when('/obligations', {
+				templateUrl : '/html/obligations.html',
+				controller : 'ObligationController'
+			}).when('/addOrUpdateObligation', {
+				templateUrl : '/html/addOrUpdateObligation.html',
+				controller : 'ObligationController'
+			}).when('/obligations/edit/:id', {
+				templateUrl : '/html/addOrUpdateObligations.html',
+				controller : 'ObligationController'
 			}).otherwise({
 				redirectTo : '/'
 			});

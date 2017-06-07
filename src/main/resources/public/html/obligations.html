@@ -21,3 +21,21 @@
 		
 	</tbody>
 </table>
+
+<a href="#/addOrUpdateObligation" class="btn btn-success">Add new subject</a>
+<div ng-show="blueAlert" class="alert alert-success">
+	<strong>Success  </strong> You have successfully deleted the student {{deleted.name}} {{deleted.lastName}} . 
+</div>
+<div ng-show="redAlert" class="alert alert-danger">
+	<strong>Greska!</strong> nije obrisano.
+</div>
+<a href="#/addOrUpdateStudent" class="btn btn-success">Add new student</a>
+<button ng-model="button" style="margin-left: 20%" ng-click="hideAlerts();firstPage()"
+	class="btn btn-xs btn-default">First page</button>
+<button ng-model="button" ng-click="hideAlerts();previousPage()"
+	class="btn btn-xs btn-default">Previous page</button>
+<td>{{pageNum}}</td>
+<button ng-model="button" ng-click="hideAlerts();nextPage()"
+	class="btn btn-xs btn-default">Next page</button>
+<button ng-model="button" ng-click="hideAlerts();lastPage()"
+	class="btn btn-xs btn-default">Last page ( {{pageNumMax}} )</button>
