@@ -1,0 +1,23 @@
+ <table ng-init= "getAllTransactions()" class="table table-bordered" >
+	<thead class="thead-inverse">
+		<tr>
+			<th>ID</th>
+			<th>Obligation Type</th>
+			<th>Obligation Date</th>
+			<th>Points</th>	
+			<th>Exam</th>
+			<th>Subject</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="transaction in transactions">
+			<td>{{ transaction.id }}</td>
+			<td>{{ transaction.obligationType }}</td>
+			<td>{{ transaction.dateOfObligation }}</td>
+			<td>{{ transaction.points }}</td>
+			<td>{{ transaction.examDTO.points }}</td>
+			<td>{{ transaction.subjectDTO.name }}</td>
+			</tr>
+		
+	</tbody>
+</table>
