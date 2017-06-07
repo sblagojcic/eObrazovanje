@@ -28,6 +28,7 @@ angular.module('eObrazovanjeApp').controller(
 					.success(function (data, status) {
 						$scope.professors = data.content;
 						$scope.pageNum = data.number + 1;
+		                $scope.pageNumMax = data.totalPages;
 					}).error(function () {
 						alert('Oops, something went wrong!');
 					});

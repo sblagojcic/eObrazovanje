@@ -65,7 +65,7 @@ angular.module('eObrazovanjeApp', [ 'ngRoute']).config(
 				templateUrl : '/html/addOrUpdateSubject.html',
 				controller : 'SubjectController'
 			}).when('/subjects/edit/:id', {
-				templateUrl : '/html/addOrUpdateSubjects.html',
+				templateUrl : '/html/addOrUpdateSubject.html',
 				controller : 'SubjectController'
 			}).when('/obligations', {
 				templateUrl : '/html/obligations.html',

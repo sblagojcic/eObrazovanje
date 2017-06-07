@@ -26,6 +26,7 @@ angular.module('eObrazovanjeApp').controller(
 				}).success(function(data, status) {
 					$scope.obligations = data;
 					$scope.pageNum = 1;
+	                $scope.pageNumMax = data.totalPages;
 				}).error(function() {
 					alert('Oops, something went wrong!');
 				});

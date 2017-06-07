@@ -10,28 +10,24 @@
     <div class="form-group">
         <label class="col-sm-2">Date</label>
         <div class="col-sm-6">
-            <input  ng-model="obligation.dateOfObligation" class="form-control" type="checkbox"/>
+            <input  ng-model="obligation.dateOfObligation" class="form-control" type="date"/>
         </div>
     </div>
     
     <div class="form-group">
         <label class="col-sm-2">Points</label>
         <div class="col-sm-6">
-            <input  ng-model="obligation.points" class="form-control" type="checkbox"/>
+            <input  ng-model="obligation.points" class="form-control"/>
         </div>
     </div>
     
     <div class="form-group">
-        <label class="col-sm-2">ExamID</label>
+        <label class="col-sm-2">Subject</label>
         <div class="col-sm-6">
-            <input  ng-model="obligation.examID" class="form-control" />
-        </div>
-    </div>
-    
-    <div class="form-group">
-        <label class="col-sm-2">SubjectID</label>
-        <div class="col-sm-6">
-            <input  ng-model="obligation.subjectID" class="form-control" />
+            <select ng-model="obligation.subject"
+				ng-options="subject as subject.name for subject in subjects">
+				<option value="">Select type:</option>
+			</select>
         </div>
     </div>
     

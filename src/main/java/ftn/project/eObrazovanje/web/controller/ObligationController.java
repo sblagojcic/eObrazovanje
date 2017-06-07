@@ -25,7 +25,7 @@ import ftn.project.eObrazovanje.web.dto.ObligationDTO;
 public class ObligationController {
 	@Autowired
 	private ObligationService obligationService;
-
+	
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public ResponseEntity<List<ObligationDTO>> getAllObligations() {
 		List<Obligation> obligations = obligationService.findAll();
