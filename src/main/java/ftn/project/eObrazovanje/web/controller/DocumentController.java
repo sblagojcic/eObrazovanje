@@ -132,15 +132,13 @@ public class DocumentController {
         }
     }
 
-	@RequestMapping(value="/uploadAngular", headers = "content-type=multipart/*" , consumes = "multipart/form-data", method = RequestMethod.POST)
+	@RequestMapping(value="/uploadAngular", method = RequestMethod.POST)
     public ResponseEntity<Void> singleFileUploadAngular(@RequestParam("file") MultipartFile file) {
-
-        if (file.isEmpty()) {
-        	return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
         try {
-
+        	if (file.isEmpty()) {
+            	
+            	throw new IOException();
+            }
             // Get the file and save it somewhere
             byte[] bytes = file.getBytes();
             Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());

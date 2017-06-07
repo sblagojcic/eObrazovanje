@@ -30,8 +30,11 @@ Upload direktno na server
 
 <hr />
 Upload preko angulara
+
+
 <form ng-controler="DocumentController" enctype="multipart/form-data">
 	<input type="file" name="file" file-input="files"/>
 	<button ng-click="upload()">Upload</button>
 	<li ng-repeat="file in files">{{file.name}}</li>
 </form>
+<div id="loading-bar-container"></div>
