@@ -1,0 +1,43 @@
+<form class="form-horizontal" ng-init= "initObligation()" required>
+
+    <div class="form-group">
+        <label class="col-sm-2">Type</label>
+        <div class="col-sm-6">
+            <input  ng-model="obligation.obligationType" class="form-control" />
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="col-sm-2">Date</label>
+        <div class="col-sm-6">
+            <input  ng-model="obligation.dateOfObligation" class="form-control" type="checkbox"/>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="col-sm-2">Points</label>
+        <div class="col-sm-6">
+            <input  ng-model="obligation.points" class="form-control" type="checkbox"/>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="col-sm-2">ExamID</label>
+        <div class="col-sm-6">
+            <input  ng-model="obligation.examID" class="form-control" />
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="col-sm-2">SubjectID</label>
+        <div class="col-sm-6">
+            <input  ng-model="obligation.subjectID" class="form-control" />
+        </div>
+    </div>
+    
+    <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button ng-click="saveObligation()" type="submit" class="btn btn-primary" >Save</button>
+    </div>
+  </div>
+</form>
