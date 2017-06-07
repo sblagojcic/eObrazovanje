@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ftn.project.eObrazovanje.model.Student;
@@ -28,14 +30,25 @@ public class StudentController {
 	public ResponseEntity<List<StudentDTO>> getAllStudents() {
 		List<Student> students = studentService.findAll();
 		List<StudentDTO> studentsDTO = new ArrayList<StudentDTO>();
-        for (Student student: students) {
-        	studentsDTO.add(new StudentDTO(student));
-        }
+		for (Student student : students) {
+			studentsDTO.add(new StudentDTO(student));
+		}
 		return new ResponseEntity<>(studentsDTO, HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<Page<Student>> getStudentsPage(Pageable page) {
+	public ResponseEntity<Page<Student>> getStudentsPage(
+			@RequestParam(value = "pageNumber", required = false) int pageNumber, Pageable pageable) {
+		if (pageNumber < 0) {
+			pageNumber = 0;
+		}
+		PageRequest page = null;
+		try {
+			page = new PageRequest(pageNumber, 1);
+		} catch (Exception e) {
+			page = (PageRequest) pageable;
+		}
+		System.out.println(page.getPageSize());
 		Page<Student> students = studentService.findAll(page);
 
 		return new ResponseEntity<>(students, HttpStatus.OK);
@@ -51,9 +64,10 @@ public class StudentController {
 		return new ResponseEntity<>(new StudentDTO(student), HttpStatus.OK);
 	}
 
-	@RequestMapping(value="/add",method = RequestMethod.POST, consumes = "application/json")
+	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<StudentDTO> savestudent(@RequestBody StudentDTO student1) {
-		Student student = new Student(student1.getGender(), student1.getDateOfBirth(), student1.getAddress(), student1.getJMBG(), student1.getPicturePath(), null, null,null,null);
+		Student student = new Student(student1.getGender(), student1.getDateOfBirth(), student1.getAddress(),
+				student1.getJMBG(), student1.getPicturePath(), null, null, null, null);
 		student.setName(student1.getName());
 		student.setUserName(student1.getUserName());
 		student.setLastName(student1.getLastName());
@@ -86,7 +100,7 @@ public class StudentController {
 		return new ResponseEntity<>(new StudentDTO(student), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
 		Student student = studentService.findOne(id);
 		if (student != null) {

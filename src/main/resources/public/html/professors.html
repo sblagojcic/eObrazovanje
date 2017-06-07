@@ -1,4 +1,4 @@
- <table ng-init= "getAllProfessors()" class="table table-bordered" >
+<table ng-init= "getAllProfessors()" class="table table-bordered" >
 	<thead class="thead-inverse">
 		<tr>
 			<th>ID</th>
@@ -9,15 +9,9 @@
 			<th>Address</th>
 			<th>Date of birth</th>
 			<th>Gender</th>
-			<th>Title</th>			
+			<th>Title</th>
 			<th></th>
 			<th></th>
-			
-			
-			
-<!-- 			<th>Quantity</th> -->
-
-			
 		</tr>
 	</thead>
 	<tbody>
@@ -31,8 +25,6 @@
 			<td>{{ professor.dateOfBirth| date:'dd-MM-yyyy' }}</td>
 			<td>{{ professor.gender }}</td>
 			<td>{{ professor.title }}</td>
-
-			
 			<td>
 				<button ng-model="button" ng-click="hideAlerts();deleteProfessor(professor.id)" class="btn btn-xs btn-danger">Delete</button>
 			</td>
@@ -40,16 +32,21 @@
 				<a href="#/professors/edit/{{ professor.id }}" class="btn btn-xs btn-primary">Edit</a>
 			</td>
 		</tr>
-		
 	</tbody>
 </table>
-
-
 <div ng-show="blueAlert" class="alert alert-success">
-  <strong>Success  </strong> You have successfully deleted the professor {{deleted.name}} {{deleted.lastName}} . 
+	<strong>Success  </strong> You have successfully deleted the professor {{deleted.name}} {{deleted.lastName}} . 
 </div>
 <div ng-show="redAlert" class="alert alert-danger">
-  <strong>Greska!</strong> nije obrisano.
+	<strong>Greska!</strong> nije obrisano.
 </div>
-
 <a href="#/addOrUpdateProfessor" class="btn btn-success">Add new professor</a>
+<button ng-model="button" style="margin-left: 20%" ng-click="hideAlerts();firstPage()"
+	class="btn btn-xs btn-default">First page</button>
+<button ng-model="button" ng-click="hideAlerts();previousPage()"
+	class="btn btn-xs btn-default">Previous page</button>
+<td>{{pageNum}}</td>
+<button ng-model="button" ng-click="hideAlerts();nextPage()"
+	class="btn btn-xs btn-default">Next page</button>
+<button ng-model="button" ng-click="hideAlerts();lastPage()"
+	class="btn btn-xs btn-default">Last page ( {{pageNumMax}} )</button>

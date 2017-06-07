@@ -8,9 +8,9 @@ angular.module('eObrazovanjeApp').controller(
 				'$location',
 				function($rootScope, $scope, $http, $routeParams,  $location) {
 					$scope.getStudent = function(id) {
-						$http.get('api/students/' + id).success(
+						$http.get('api/students/all' + id).success(
 								function(data, status) {
-									$scope.student = data;
+									$scope.student.content = data;
 
 								}).error(function() {
 							$scope.redAlert = true;
@@ -18,11 +18,19 @@ angular.module('eObrazovanjeApp').controller(
 						});
 					};
 
+					$scope.pageNumber = 0;
+
 					$scope.getAllStudents = function() {
-						$http.get('api/students/all').success
+						$http.get('api/students', {
+			                params: {
+			                    "pageNumber":$scope.pageNumber
+			                    
+			                }
+			            }).success
 							(function(data, status) {
-								$scope.students = data;
-								
+								$scope.students= data.content;
+								$scope.pageNum = data.number + 1;
+				                $scope.pageNumMax = data.totalPages;
 						}).error(function() {
 							alert('Oops, something went wrong!');
 						});
@@ -95,5 +103,71 @@ angular.module('eObrazovanjeApp').controller(
 							});
 						}
 					};
+					//paginacija
+					$scope.previousPage = function() {
+				    	if ($scope.pageNumber!=0) {
+				    		$scope.pageNumber = $scope.pageNumber-1;
+						}
+				        $http.get('api/students', {
+				                params: {
+				                    "pageNumber":$scope.pageNumber
+				                }
+				            })
+				            .success(function(data, status) {
+				                $scope.students = data.content;
+				                $scope.pageNum = data.number + 1;
+				                
+				            })
+				            .error(function() {
+				                alert('Oops, something went wrong!');
+				            });
 
+				    };
+				    $scope.firstPage = function() {
+				    	$scope.pageNumber = 0;
+				        $http.get('api/students', {
+				                params: {"pageNumber":$scope.pageNumber
+				                }
+				            })
+				            .success(function(data, status) {
+				                $scope.students = data.content;
+				                $scope.pageNum = data.number + 1;
+				            })
+				            .error(function() {
+				                alert('Oops, something went wrong!');
+				            });
+
+				    };
+				    $scope.nextPage = function() {
+				    	if ($scope.pageNumber+1<$scope.pageNumMax) {
+				    		$scope.pageNumber = $scope.pageNumber+1;
+						}
+				        $http.get('api/students', {
+				                params: {
+				                    "pageNumber":$scope.pageNumber
+				                }
+				            })
+				            .success(function(data, status) {
+				                $scope.students = data.content;
+				                $scope.pageNum = data.number + 1;
+				            })
+				            .error(function() {
+				                alert('Oops, something went wrong!');
+				            });
+				    };
+				    $scope.lastPage = function() {
+				    	$scope.pageNumber = $scope.pageNumMax-1;
+				        $http.get('api/students', {
+			                params: {
+			                    "pageNumber":$scope.pageNumber
+			                }
+			            })
+			            .success(function(data, status) {
+			                $scope.students = data.content;
+			                $scope.pageNum = data.number + 1;
+			            })
+				            .error(function() {
+				                alert('Oops, something went wrong!');
+				            });
+				    };
 				} ]);
