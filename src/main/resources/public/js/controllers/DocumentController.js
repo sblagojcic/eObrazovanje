@@ -121,7 +121,7 @@ angular.module('eObrazovanjeApp')
 						headers:{'Content-Type': undefined}
 					})
 					.success(function(data){
-						console.log(data);
+						$scope.document.path = data;
 					});
 					
 				};
