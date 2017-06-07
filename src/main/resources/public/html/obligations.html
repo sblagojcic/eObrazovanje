@@ -4,19 +4,17 @@
 			<th>ID</th>
 			<th>Obligation Type</th>
 			<th>Obligation Date</th>
-			<th>Points</th>	
-			<th>Exam</th>
+			<th>Points</th>
 			<th>Subject</th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="transaction in transactions">
-			<td>{{ transaction.id }}</td>
-			<td>{{ transaction.obligationType }}</td>
-			<td>{{ transaction.dateOfObligation }}</td>
-			<td>{{ transaction.points }}</td>
-			<td>{{ transaction.examDTO.points }}</td>
-			<td>{{ transaction.subjectDTO.name }}</td>
+		<tr ng-repeat="obligation in obligations">
+			<td>{{ obligation.id }}</td>
+			<td>{{ obligation.obligationType }}</td>
+			<td>{{ obligation.dateOfObligation | date:'dd-MM-yyyy' }}</td>
+			<td>{{ obligation.points }}</td>
+			<td>{{ obligation.subject.name }}</td>
 			</tr>
 		
 	</tbody>
@@ -29,12 +27,3 @@
 <div ng-show="redAlert" class="alert alert-danger">
 	<strong>Greska!</strong> nije obrisano.
 </div>
-<button ng-model="button" style="margin-left: 20%" ng-click="hideAlerts();firstPage()"
-	class="btn btn-xs btn-info">First page</button>
-<button ng-model="button" ng-click="hideAlerts();previousPage()"
-	class="btn btn-xs btn-info">Previous page</button>
-	<button class="btn btn-xs btn-warning">{{pageNum}}</button>
-<button ng-model="button" ng-click="hideAlerts();nextPage()"
-	class="btn btn-xs btn-info">Next page</button>
-<button ng-model="button" ng-click="hideAlerts();lastPage()"
-	class="btn btn-xs btn-info">Last page ( {{pageNumMax}} )</button>
