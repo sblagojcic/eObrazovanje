@@ -1,0 +1,22 @@
+<form class="form-horizontal" ng-init= "initSubject()" required>
+
+    <div class="form-group">
+        <label class="col-sm-2">Name</label>
+        <div class="col-sm-6">
+            <input  ng-model="subject.name" class="form-control" />
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="col-sm-2">Semester</label>
+        <div class="col-sm-6">
+            <input  ng-model="subject.semester" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button  ng-click="saveSubject()" type="submit" class="btn btn-primary" >Save</button>  
+<!--       ng-disabled="!subject.name||!subject.semester" -->
+    </div>
+  </div>
+</form>

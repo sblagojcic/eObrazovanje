@@ -1,0 +1,43 @@
+ <table ng-init= "getAllSubjects()" class="table table-bordered" >
+	<thead class="thead-inverse">
+		<tr>
+			<th>ID</th>
+			<th>Name</th>
+			<th>Semester</th>	
+			<th></th>
+			<th></th>
+			
+			
+			
+<!-- 			<th>Quantity</th> -->
+
+			
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="subject in subjects">
+			<td>{{ subject.id }}</td>
+			<td>{{ subject.name }}</td>
+			<td>{{ subject.semester }}</td>
+
+			
+			<td>
+				<button ng-model="button" ng-click="hideAlerts();deleteSubject(subject.id)" class="btn btn-xs btn-danger">Delete</button>
+			</td>
+			<td>
+				<a href="#/subjects/edit/{{ subject.id }}" class="btn btn-xs btn-primary">Edit</a>
+			</td>
+		</tr>
+		
+	</tbody>
+</table>
+
+
+<div ng-show="blueAlert" class="alert alert-success">
+  <strong>Success  </strong> You have successfully deleted the subject {{deleted.name}} {{deleted.semester}} . 
+</div>
+<div ng-show="redAlert" class="alert alert-danger">
+  <strong>Error!</strong> cannot be done.
+</div>
+
+<a href="#/addOrUpdateSubject" class="btn btn-success">Add new subject</a>
