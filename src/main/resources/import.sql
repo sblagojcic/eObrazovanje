@@ -5,6 +5,6 @@ INSERT INTO transaction (id, bank_account,price, purpose, recipient, student_id)
 INSERT INTO document (id, name, path,student_id) VALUES ('1', 'indeks', 'aha', '1');
 INSERT INTO exam (id,pass,points,student_id) VALUES ('1', true, '90', '1');
 INSERT INTO subject (id,name,semester) VALUES ('1', 'Engleski', '1');
-INSERT INTO obligation(id,date_of_obligation,oblitagion_type,points,subject_id,exam_id) VALUES ('1', '2008-10-03 22:59:52', 'kolokvijum', '30', '1','1');
+INSERT INTO obligation(id,date_of_obligation,obligation_type,points,subject_id) VALUES ('1', '2008-10-03 22:59:52', 'kolokvijum', '30', '1');
 INSERT INTO professor_role(id,role,professor_id,subject_id) VALUES ('1', 'rola', '2', '1');
 INSERT INTO user_subjects (students_id,subjects_id) VALUES ('1', '1');

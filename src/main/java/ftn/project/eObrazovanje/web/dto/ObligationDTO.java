@@ -2,7 +2,6 @@ package ftn.project.eObrazovanje.web.dto;
 
 import java.util.Date;
 
-import ftn.project.eObrazovanje.model.Exam;
 import ftn.project.eObrazovanje.model.Obligation;
 
 public class ObligationDTO {
@@ -10,20 +9,27 @@ public class ObligationDTO {
 	private Long id;
 	private String obligationType;
 	private Date dateOfObligation;
-	private Integer maxPoints;
-	private SubjectDTO subjectDTO;
-	private Exam exam;
+	private Integer points;
+	private SubjectDTO subject;
 	
 	public ObligationDTO(Obligation obligation){
 		this.id = obligation.getId();
-		this.obligationType = obligation.getOblitagionType();
+		this.obligationType = obligation.getObligationType();
 		this.dateOfObligation = obligation.getDateOfObligation();
-		this.maxPoints = obligation.getPoints();
-		this.subjectDTO = new SubjectDTO(obligation.getSubject());
-		this.exam=obligation.getExam();
+		this.points = obligation.getPoints();
+		this.subject = new SubjectDTO(obligation.getSubject());
 	}
 	
 	public ObligationDTO(){}
+
+	public ObligationDTO(String obligationType, Date dateOfObligation, Integer points,
+			SubjectDTO subject, ExamDTO exam) {
+		super();
+		this.obligationType = obligationType;
+		this.dateOfObligation = dateOfObligation;
+		this.points = points;
+		this.subject = subject;
+	}
 
 	public Long getId() {
 		return id;
@@ -49,28 +55,21 @@ public class ObligationDTO {
 		this.dateOfObligation = dateOfObligation;
 	}
 
-	public Integer getMaxPoints() {
-		return maxPoints;
+	public Integer getPoints() {
+		return points;
 	}
 
-	public void setMaxPoints(Integer maxPoints) {
-		this.maxPoints = maxPoints;
+	public void setPoints(Integer points) {
+		this.points = points;
 	}
 
-	public SubjectDTO getSubjectDTO() {
-		return subjectDTO;
+	public SubjectDTO getSubject() {
+		return subject;
 	}
 
-	public void setSubjectDTO(SubjectDTO subjectDTO) {
-		this.subjectDTO = subjectDTO;
+	public void setSubject(SubjectDTO subject) {
+		this.subject = subject;
 	}
 
-	public Exam getExam() {
-		return exam;
-	}
-
-	public void setExam(Exam exam) {
-		this.exam = exam;
-	}
 
 }

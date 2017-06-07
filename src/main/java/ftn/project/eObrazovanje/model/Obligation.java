@@ -17,14 +17,10 @@ public class Obligation {
     @Id
     @GeneratedValue
     private Long id;
-    private String oblitagionType; //test kolokvijum usmeni 
+    private String obligationType; //test kolokvijum usmeni 
     private Date dateOfObligation;
 
     private Integer points;
-    
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-   	@JsonBackReference
-   	private Exam exam;
     
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JsonBackReference
@@ -34,22 +30,20 @@ public class Obligation {
 
     }
 
-    public Obligation(Long id, String oblitagionType, Date dateOfObligation, Integer points, Subject subject, Exam exam) {
+    public Obligation(Long id, String obligationType, Date dateOfObligation, Integer points, Subject subject) {
         super();
         this.id = id;
-        this.oblitagionType = oblitagionType;
+        this.obligationType = obligationType;
         this.dateOfObligation = dateOfObligation;
         this.points = points;
-        this.exam = exam;
         this.subject = subject;
 
     }
-    public Obligation(String oblitagionType, Date dateOfObligation, Integer points, Subject subject, Exam exam) {
+    public Obligation(String obligationType, Date dateOfObligation, Integer points, Subject subject) {
         super();
-        this.oblitagionType = oblitagionType;
+        this.obligationType = obligationType;
         this.dateOfObligation = dateOfObligation;
         this.points = points;
-        this.exam = exam;
         this.subject = subject;
 
     }
@@ -62,12 +56,12 @@ public class Obligation {
 		this.id = id;
 	}
 
-	public String getOblitagionType() {
-		return oblitagionType;
+	public String getObligationType() {
+		return obligationType;
 	}
 
-	public void setOblitagionType(String oblitagionType) {
-		this.oblitagionType = oblitagionType;
+	public void setObligationType(String obligationType) {
+		this.obligationType = obligationType;
 	}
 
 	public Date getDateOfObligation() {
@@ -86,13 +80,6 @@ public class Obligation {
 		this.points = points;
 	}
 
-	public Exam getExam() {
-		return exam;
-	}
-
-	public void setExam(Exam exam) {
-		this.exam = exam;
-	}
 
 	public Subject getSubject() {
 		return subject;
