@@ -48,7 +48,6 @@ public class StudentController {
 		} catch (Exception e) {
 			page = (PageRequest) pageable;
 		}
-		System.out.println(page.getPageSize());
 		Page<Student> students = studentService.findAll(page);
 
 		return new ResponseEntity<>(students, HttpStatus.OK);

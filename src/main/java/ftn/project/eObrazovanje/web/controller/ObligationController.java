@@ -48,7 +48,6 @@ public class ObligationController {
 		} catch (Exception e) {
 			page = (PageRequest) pageable;
 		}
-		System.out.println(page.getPageSize());
 		Page<Obligation> obligations = obligationService.findAll(page);
 
 		return new ResponseEntity<>(obligations, HttpStatus.OK);

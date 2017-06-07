@@ -60,7 +60,7 @@ angular.module('eObrazovanjeApp', [ 'ngRoute']).config(
 				controller : 'ExamController'
 			}).when('/subjects', {
 				templateUrl : '/html/subjects.html',
-				controller : 'ProfessorController'
+				controller : 'SubjectController'
 			}).when('/addOrUpdateSubject', {
 				templateUrl : '/html/addOrUpdateSubject.html',
 				controller : 'SubjectController'

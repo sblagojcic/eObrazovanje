@@ -17,11 +17,18 @@ angular.module('eObrazovanjeApp').controller(
 
 						});
 					};
-
+					$scope.pageNumber = 0;
+					
 					$scope.getAllSubjects = function() {
-						$http.get('api/subjects/all').success
+						$http.get('api/subjects', {
+							params: {
+								"pageNumber": $scope.pageNumber
+
+							}
+						}).success
 							(function(data, status) {
-								$scope.subjects = data;
+								$scope.subjects = data.content;
+								$scope.pageNum = data.number + 1;
 
 						}).error(function() {
 							alert('Oops, something went wrong!');
@@ -87,4 +94,76 @@ angular.module('eObrazovanjeApp').controller(
 						}
 					};
 
+					// paginacija
+					$scope.previousPage = function () {
+						if ($scope.pageNumber != 0) {
+							$scope.pageNumber = $scope.pageNumber - 1;
+						}
+						$http.get('api/subjects', {
+							params: {
+								"pageNumber": $scope.pageNumber
+
+							}
+						}).success
+							(function(data, status) {
+								$scope.subjects = data.content;
+								$scope.pageNum = data.number + 1;
+
+						}).error(function() {
+							alert('Oops, something went wrong!');
+						});
+
+					};
+					$scope.firstPage = function () {
+						$scope.pageNumber = 0;
+
+						$http.get('api/subjects', {
+							params: {
+								"pageNumber": $scope.pageNumber
+
+							}
+						}).success
+							(function(data, status) {
+								$scope.subjects = data.content;
+								$scope.pageNum = data.number + 1;
+
+						}).error(function() {
+							alert('Oops, something went wrong!');
+						});
+
+					};
+					$scope.nextPage = function () {
+						if ($scope.pageNumber + 1 < $scope.pageNumMax) {
+							$scope.pageNumber = $scope.pageNumber + 1;
+						}
+						$http.get('api/subjects', {
+							params: {
+								"pageNumber": $scope.pageNumber
+
+							}
+						}).success
+							(function(data, status) {
+								$scope.subjects = data.content;
+								$scope.pageNum = data.number + 1;
+
+						}).error(function() {
+							alert('Oops, something went wrong!');
+						});
+					};
+					$scope.lastPage = function () {
+						$scope.pageNumber = $scope.pageNumMax - 1;
+						$http.get('api/subjects', {
+							params: {
+								"pageNumber": $scope.pageNumber
+
+							}
+						}).success
+							(function(data, status) {
+								$scope.subjects = data.content;
+								$scope.pageNum = data.number + 1;
+
+						}).error(function() {
+							alert('Oops, something went wrong!');
+						});
+					};
 				} ]);

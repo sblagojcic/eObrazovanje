@@ -49,7 +49,6 @@ public class SubjectController {
 		} catch (Exception e) {
 			page = (PageRequest) pageable;
 		}
-		System.out.println(page.getPageSize());
 		Page<Subject> subjects = subjectService.findAll(page);
 
 		return new ResponseEntity<>(subjects, HttpStatus.OK);

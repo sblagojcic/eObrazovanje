@@ -42,11 +42,13 @@
 </div>
 <a href="#/addOrUpdateProfessor" class="btn btn-success">Add new professor</a>
 <button ng-model="button" style="margin-left: 20%" ng-click="hideAlerts();firstPage()"
-	class="btn btn-xs btn-default">First page</button>
+	class="btn btn-xs btn-info">First page</button>
 <button ng-model="button" ng-click="hideAlerts();previousPage()"
-	class="btn btn-xs btn-default">Previous page</button>
-<td>{{pageNum}}</td>
+	class="btn btn-xs btn-info">Previous page</button>
+	
+	<button class="btn btn-xs btn-warning">{{pageNum}}</button>
+
 <button ng-model="button" ng-click="hideAlerts();nextPage()"
-	class="btn btn-xs btn-default">Next page</button>
+	class="btn btn-xs btn-info">Next page</button>
 <button ng-model="button" ng-click="hideAlerts();lastPage()"
-	class="btn btn-xs btn-default">Last page ( {{pageNumMax}} )</button>
+	class="btn btn-xs btn-info">Last page ( {{pageNumMax}} )</button>
