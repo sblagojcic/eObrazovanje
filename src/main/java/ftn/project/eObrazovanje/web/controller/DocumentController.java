@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
+
 import ftn.project.eObrazovanje.model.Document;
 import ftn.project.eObrazovanje.model.Student;
 import ftn.project.eObrazovanje.service.DocumentService;
@@ -133,7 +135,7 @@ public class DocumentController {
     }
 
 	@RequestMapping(value="/uploadAngular", method = RequestMethod.POST)
-    public ResponseEntity<Void> singleFileUploadAngular(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<String> singleFileUploadAngular(@RequestParam("file") MultipartFile file) {
         try {
         	if (file.isEmpty()) {
             	
@@ -143,8 +145,9 @@ public class DocumentController {
             byte[] bytes = file.getBytes();
             Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
             Files.write(path, bytes);
-
-            return new ResponseEntity<>(HttpStatus.OK);
+            Gson gson = new Gson();
+            String jsonTry = gson.toJson(path.toString());
+            return new ResponseEntity<>(jsonTry,HttpStatus.OK);
         } catch (IOException e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

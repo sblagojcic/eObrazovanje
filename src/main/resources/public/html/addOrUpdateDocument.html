@@ -1,9 +1,24 @@
+<hr />
+Upload preko angulara
+
+<form ng-controler="DocumentController" enctype="multipart/form-data">
+	<input type="file" name="file" file-input="files"/>
+	<button ng-click="upload()">Upload</button>
+</form>
+
 <form class="form-horizontal" ng-init= "initDocument()" required>
 
     <div class="form-group">
         <label class="col-sm-2">Name</label>
         <div class="col-sm-6">
             <input  ng-model="document.name" class="form-control" />
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="col-sm-2">Path</label>
+        <div class="col-sm-6">
+            <input  ng-model="document.path" class="form-control"/>
         </div>
     </div>
     
@@ -21,20 +36,5 @@
   </div>
 </form>
 
-<hr />
-Upload direktno na server
-<form method="POST" action="api/documents/upload" enctype="multipart/form-data">
-    <input type="file" name="file" />
-    <input type="submit" value="Submit" />
-</form>
-
-<hr />
-Upload preko angulara
 
 
-<form ng-controler="DocumentController" enctype="multipart/form-data">
-	<input type="file" name="file" file-input="files"/>
-	<button ng-click="upload()">Upload</button>
-	<li ng-repeat="file in files">{{file.name}}</li>
-</form>
-<div id="loading-bar-container"></div>
