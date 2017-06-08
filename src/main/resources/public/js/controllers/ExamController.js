@@ -16,7 +16,20 @@ angular.module('eObrazovanjeApp').controller(
 						$scope.redAlert = true;
 					});
 				};
+			//	$scope.subjectId=uzeti iz putanje;
+				$scope.getAllStudents = function() {
+					$http.get('api/students/inSubject/'+$scope.subjectId).success
+						(function(data, status) {
+							$scope.students= data;
+						
+					}).error(function() {
+						alert('Oops, something went wrong!');
+					});
 
+					$scope.resetFilter = function() {
+
+					}
+				};
 				$scope.getAllExamsForUser = function() {
 					if ($routeParams && $routeParams.id) {
 						$http.get('api/exams/getFor/' + $routeParams.id).success

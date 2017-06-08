@@ -16,7 +16,7 @@ angular.module('eObrazovanjeApp').controller(
 							alert('Oops, something went wrong!');
 						});
 					};
-					$scope.getProfessor = function(id) {
+					$scope.getSubject = function(id) {
 						$http.get('api/subjects/' + id).success(
 								function(data, status) {
 									$scope.subject = data;

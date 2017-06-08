@@ -32,7 +32,32 @@ angular.module('eObrazovanjeApp').controller(
 
 						}
 					};
-					
+					$scope.getAllSubjects = function() {
+						$http.get('api/subjects/all').success
+							(function(data, status) {
+								$scope.subjects = data;
+
+						}).error(function() {
+							alert('Oops, something went wrong!');
+						});
+
+						$scope.resetFilter = function() {
+
+						}
+					};
+					$scope.getAllProfessors = function() {
+						$http.get('api/professors/all').success
+							(function(data, status) {
+								$scope.professors = data;
+
+						}).error(function() {
+							alert('Oops, something went wrong!');
+						});
+
+						$scope.resetFilter = function() {
+
+						}
+					};
 
 
 					$scope.deleteProfessorRole = function(id) {

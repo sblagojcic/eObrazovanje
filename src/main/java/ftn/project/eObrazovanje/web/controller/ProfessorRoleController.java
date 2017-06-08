@@ -83,8 +83,7 @@ public class ProfessorRoleController {
 		if (professorRoleDTO.getSubjectDTO() == null)
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-		 Subject subject =
-		 subjectService.findOne(professorRoleDTO.getSubjectDTO().getId());
+		 Subject subject=subjectService.findOne(professorRoleDTO.getSubjectDTO().getId());
 		 if (subject == null)
 		 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
@@ -96,7 +95,6 @@ public class ProfessorRoleController {
 		professorRole.setProfessor(professor);
 		 professorRole.setSubject(subject);
 		professorRole.setRole(professorRoleDTO.getRole());
-
 		professorRole = professorRoleService.save(professorRole);
 		return new ResponseEntity<>(new ProfessorRoleDTO(professorRole), HttpStatus.OK);
 
