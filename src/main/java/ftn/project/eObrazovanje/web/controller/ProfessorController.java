@@ -75,7 +75,7 @@ public class ProfessorController {
 	public ResponseEntity<ProfessorDTO> saveProfessor(@RequestBody ProfessorDTO professorDTO) {
 		Professor professor = new Professor();
 		professor.setAddress(professorDTO.getAddress());
-		professor.setRole("professor");
+		professor.setRole("PROFESSOR");
 		professor.setName(professorDTO.getName());
 		professor.setLastName(professorDTO.getLastName());
 		professor.setUserName(professorDTO.getUserName());

@@ -31,10 +31,7 @@ angular.module('eObrazovanjeApp').controller('LoginController', ['$rootScope', '
 				localStorage.setItem('jwt_token', response.access_token);
 				$http.get('api/users/user/' + $scope.credentials.username).success(function(data, status) {
 					$scope.user = data;
-					localStorage.setItem('id', $scope.user.id);
-					localStorage.setItem('userName', $scope.user.userName);
-					localStorage.setItem('user', $scope.user);
-					localStorage.setItem('role', $scope.user.role);
+					
 					$rootScope.userId=$scope.user.id;
 					if ($scope.user.role=='STUDENT') {
 						window.location = "/#/subjects/getFor/"+$scope.user.id;
@@ -43,7 +40,7 @@ angular.module('eObrazovanjeApp').controller('LoginController', ['$rootScope', '
 						window.location = "/#/subjects/getFor/"+$scope.user.id;
 					}
 					else{
-						window.location = "/#/api/subjects"
+						window.location = "/#/subjects"
 					}
 				}).error(function() {
 				alert("greska")

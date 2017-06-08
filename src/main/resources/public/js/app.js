@@ -1,9 +1,9 @@
 'use stirict';
-angular.module('eObrazovanjeApp', [ 'ngRoute']).config(
+angular.module('eObrazovanjeApp', [ 'angular-jwt' ,'ngRoute']).config(
 		[ '$routeProvider', function($routeProvider) {
 			$routeProvider.when('/', {
-		        templateUrl: '/html/professors.html',
-		        controller: 'ProfessorController',
+		        templateUrl: '/html/login.html',
+		        controller: 'LoginController',
 		    }).when('/login', {
 				templateUrl : '/html/login.html',
 				controller : 'LoginController'

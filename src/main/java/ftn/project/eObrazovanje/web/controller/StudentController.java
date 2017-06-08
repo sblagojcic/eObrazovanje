@@ -71,6 +71,7 @@ public class StudentController {
 				student1.getJMBG(), student1.getPicturePath(), null, null, null, null);
 		student.setName(student1.getName());
 		student.setUserName(student1.getUserName());
+		student.setRole("STUDENT");
 		student.setLastName(student1.getLastName());
 		student.setPassword(student1.getPassword());
 		student = studentService.save(student);

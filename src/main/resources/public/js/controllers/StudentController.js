@@ -6,7 +6,8 @@ angular.module('eObrazovanjeApp').controller(
 				'$http',
 				'$routeParams',
 				'$location',
-				function($rootScope, $scope, $http, $routeParams,  $location) {
+				'authService',
+				function($rootScope, $scope, $http, $routeParams, authService, $location) {
 					$scope.getStudent = function(id) {
 						$http.get('api/students/all' + id).success(
 								function(data, status) {
@@ -89,7 +90,7 @@ angular.module('eObrazovanjeApp').controller(
 							// edit stranica
 							$http.put('api/students/edit/' + $scope.student.id,
 									$scope.student).success(function() {
-								$location.path('/students/all');
+										window.location ="#/students";
 							}).error(function() {
 								alert("neka greska edita");
 							});
@@ -97,7 +98,7 @@ angular.module('eObrazovanjeApp').controller(
 							// add stranica
 							$http.post('api/students/add/', $scope.student).success(
 									function() {
-										$location.path('/students/all');
+										window.location ="#/students";
 									}).error(function() {
 								alert('greska dodavanja!')
 							});

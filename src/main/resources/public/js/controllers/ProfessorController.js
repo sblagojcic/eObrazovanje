@@ -5,31 +5,32 @@ angular.module('eObrazovanjeApp').controller(
 		'$http',
 		'$routeParams',
 		'$location',
-		function ($rootScope, $scope, $http, $routeParams, $location) {
-			$scope.getProfessor = function (id) {
+		'authService',
+		function($rootScope, $scope, $http, $routeParams, authService, $location) {
+			$scope.getProfessor = function(id) {
 				$http.get('api/professors/' + id).success(
-					function (data, status) {
+					function(data, status) {
 						$scope.professor = data;
 
-					}).error(function () {
+					}).error(function() {
 					$scope.redAlert = true;
 
 				});
 			};
 			$scope.pageNumber = 0;
 
-			$scope.getAllProfessors = function () {
+			$scope.getAllProfessors = function() {
 				$http.get('api/professors', {
 						params: {
 							"pageNumber": $scope.pageNumber
 
 						}
 					})
-					.success(function (data, status) {
+					.success(function(data, status) {
 						$scope.professors = data.content;
 						$scope.pageNum = data.number + 1;
-		                $scope.pageNumMax = data.totalPages;
-					}).error(function () {
+						$scope.pageNumMax = data.totalPages;
+					}).error(function() {
 						alert('Oops, something went wrong!');
 					});
 
@@ -37,60 +38,60 @@ angular.module('eObrazovanjeApp').controller(
 
 
 
-			$scope.deleteProfessor = function (id) {
+			$scope.deleteProfessor = function(id) {
 				$http.delete('api/professors/delete/' + id).success(
-					function (data, status) {
+					function(data, status) {
 						$scope.deleted = data;
 						$scope.blueAlert = true;
 						$scope.getAllProfessors();
 
-					}).error(function () {
+					}).error(function() {
 					$scope.redAlert = true;
 
 				});
 			};
 
-			$scope.hideAlerts = function () {
+			$scope.hideAlerts = function() {
 				$scope.redAlert = false;
 				$scope.blueAlert = false;
 				$scope.orangeAlert = false;
 			};
 
-			$scope.initProfessor = function () {
+			$scope.initProfessor = function() {
 				$scope.professor = {};
 
 				if ($routeParams && $routeParams.id) {
 					// ovo je edit stranica
 					$http.get('api/professors/' + $routeParams.id).success(
-						function (data) {
+						function(data) {
 							$scope.professor = data;
-						}).error(function () {
+						}).error(function() {
 
 					});
 				}
 			};
 
-			$scope.saveProfessor = function () {
+			$scope.saveProfessor = function() {
 				if ($scope.professor.id) {
 					// edit stranica
 					$http.put('api/professors/edit/' + $scope.professor.id,
-						$scope.professor).success(function () {
-						$location.path('/professors/all');
-					}).error(function () {
+						$scope.professor).success(function() {
+							window.location ="#/professors";
+					}).error(function() {
 						alert("neka greska edita");
 					});
 				} else {
 					// add stranica
 					$http.post('api/professors/add/', $scope.professor).success(
-						function () {
-							$location.path('/professors/all');
-						}).error(function () {
+						function() {
+							window.location ="#/professors";
+						}).error(function() {
 						alert('greska dodavanja!')
 					});
 				}
 			};
 			// paginacija
-			$scope.previousPage = function () {
+			$scope.previousPage = function() {
 				if ($scope.pageNumber != 0) {
 					$scope.pageNumber = $scope.pageNumber - 1;
 				}
@@ -100,15 +101,15 @@ angular.module('eObrazovanjeApp').controller(
 
 						}
 					})
-					.success(function (data, status) {
+					.success(function(data, status) {
 						$scope.professors = data.content;
 						$scope.pageNum = data.number + 1;
-					}).error(function () {
+					}).error(function() {
 						alert('Oops, something went wrong!');
 					});
 
 			};
-			$scope.firstPage = function () {
+			$scope.firstPage = function() {
 				$scope.pageNumber = 0;
 
 				$http.get('api/professors', {
@@ -117,15 +118,15 @@ angular.module('eObrazovanjeApp').controller(
 
 						}
 					})
-					.success(function (data, status) {
+					.success(function(data, status) {
 						$scope.professors = data.content;
 						$scope.pageNum = data.number + 1;
-					}).error(function () {
+					}).error(function() {
 						alert('Oops, something went wrong!');
 					});
 
 			};
-			$scope.nextPage = function () {
+			$scope.nextPage = function() {
 				if ($scope.pageNumber + 1 < $scope.pageNumMax) {
 					$scope.pageNumber = $scope.pageNumber + 1;
 				}
@@ -135,24 +136,24 @@ angular.module('eObrazovanjeApp').controller(
 
 						}
 					})
-					.success(function (data, status) {
+					.success(function(data, status) {
 						$scope.professors = data.content;
 						$scope.pageNum = data.number + 1;
-					}).error(function () {
+					}).error(function() {
 						alert('Oops, something went wrong!');
 					});
 			};
-			$scope.lastPage = function () {
+			$scope.lastPage = function() {
 				$scope.pageNumber = $scope.pageNumMax - 1;
 				$http.get('api/professors', {
 						params: {
 							"pageNumber": $scope.pageNumber
 						}
 					})
-					.success(function (data, status) {
+					.success(function(data, status) {
 						$scope.professors = data.content;
 						$scope.pageNum = data.number + 1;
-					}).error(function () {
+					}).error(function() {
 						alert('Oops, something went wrong!');
 					});
 

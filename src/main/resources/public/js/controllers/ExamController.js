@@ -6,7 +6,8 @@ angular.module('eObrazovanjeApp').controller(
 			'$http',
 			'$routeParams',
 			'$location',
-			function($rootScope, $scope, $http, $routeParams,  $location) {
+			'authService',
+			function($rootScope, $scope, $http, $routeParams, authService,  $location) {
 				$scope.getExam = function(id) {
 					$http.get('api/exams/' + id).success(
 							function(data, status) {

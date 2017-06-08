@@ -19,7 +19,8 @@ angular.module('eObrazovanjeApp')
 			'$http',
 			'$routeParams',
 			'$location',
-			function($rootScope, $scope, $http, $routeParams,  $location) {
+			'authService',
+			function($rootScope, $scope, $http, $routeParams,  authService,  $location) {
 				$scope.getDocument = function(id) {
 					$http.get('api/documents/' + id).success(
 							function(data, status) {
