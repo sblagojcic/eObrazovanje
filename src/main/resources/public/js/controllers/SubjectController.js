@@ -59,7 +59,7 @@ angular.module('eObrazovanjeApp').controller(
 								function(data, status) {
 									$scope.deleted = data;
 									$scope.blueAlert = true;
-									$scope.getAllProfessors();
+									$scope.getAllSubjects();
 
 								}).error(function() {
 							$scope.redAlert = true;

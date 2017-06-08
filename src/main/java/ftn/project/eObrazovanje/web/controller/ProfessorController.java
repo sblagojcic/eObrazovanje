@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -74,12 +75,14 @@ public class ProfessorController {
 	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<ProfessorDTO> saveProfessor(@RequestBody ProfessorDTO professorDTO) {
 		Professor professor = new Professor();
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String hashedPassword = passwordEncoder.encode(professorDTO.getPassword());
 		professor.setAddress(professorDTO.getAddress());
 		professor.setRole("PROFESSOR");
 		professor.setName(professorDTO.getName());
 		professor.setLastName(professorDTO.getLastName());
 		professor.setUserName(professorDTO.getUserName());
-		professor.setPassword(professorDTO.getPassword());
+		professor.setPassword(hashedPassword);
 		professor.setGender(professorDTO.getGender());
 		professor.setDateOfBirth(professorDTO.getDateOfBirth());
 		professor.setJMBG(professorDTO.getJMBG());

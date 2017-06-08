@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -85,11 +86,14 @@ public class StudentController {
 	public ResponseEntity<StudentDTO> savestudent(@RequestBody StudentDTO student1) {
 		Student student = new Student(student1.getGender(), student1.getDateOfBirth(), student1.getAddress(),
 				student1.getJMBG(), student1.getPicturePath(), null, null, null, null);
+		
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String hashedPassword = passwordEncoder.encode(student1.getPassword());
 		student.setName(student1.getName());
 		student.setUserName(student1.getUserName());
 		student.setRole("STUDENT");
 		student.setLastName(student1.getLastName());
-		student.setPassword(student1.getPassword());
+		student.setPassword(hashedPassword);
 		student = studentService.save(student);
 
 		return new ResponseEntity<>(new StudentDTO(student), HttpStatus.CREATED);

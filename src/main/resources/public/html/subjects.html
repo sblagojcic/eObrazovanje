@@ -34,12 +34,6 @@
 
 	<a href="#/addOrUpdateSubject" class="btn btn-success">Add new subject</a>
 
-	<div ng-show="blueAlert" class="alert alert-success">
-		<strong>Success  </strong> You have successfully deleted the student {{deleted.name}} {{deleted.lastName}} . 
-	</div>
-	<div ng-show="redAlert" class="alert alert-danger">
-		<strong>Greska!</strong> nije obrisano.
-	</div>
 	<button ng-model="button" style="margin-left: 20%" ng-click="hideAlerts();firstPage()"
 		class="btn btn-xs btn-info">First page</button>
 	<button ng-model="button" ng-click="hideAlerts();previousPage()"

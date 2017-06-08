@@ -17,15 +17,35 @@ angular.module('eObrazovanjeApp').controller(
 
 				});
 			};
-			$scope.getSubjects = function(id) {
-				$http.get('api/subjects/all').success(
-					function(data, status) {
-						$scope.subjects = data;
-
-					}).error(function() {
-					$scope.redAlert = true;
-
+			
+			$scope.getUserObligations = function() {
+				$http.get('api/obligations/getFor/' + $routeParams.id).success(function(data, status) {
+					$scope.obligations = data;
+				}).error(function() {
+					alert('Oops, something went wrong!');
 				});
+			};
+
+			$scope.getSubjects = function(id) {
+				if ($scope.isProfessor()) {
+					$http.get('api/subjects/getFor/'+$rootScope.userId).success(
+							function(data, status) {
+								$scope.subjects = data;
+
+							}).error(function() {
+							$scope.redAlert = true;
+
+						});
+				} else {
+					$http.get('api/subjects/all').success(
+							function(data, status) {
+								$scope.subjects = data;
+
+							}).error(function() {
+							$scope.redAlert = true;
+
+						});
+				}
 			};
 			$scope.getAllObligations = function() {
 				$http.get('api/obligations/all').success(function(data, status) {
@@ -39,7 +59,11 @@ angular.module('eObrazovanjeApp').controller(
 					function(data, status) {
 						$scope.deleted = data;
 						$scope.blueAlert = true;
-						$scope.getAllProfessors();
+						if ($scope.isAdmin()) {
+							$scope.getAllObligations();
+						} else if($scope.isProfessor()){
+							$scope.getUserObligations();
+						}
 
 					}).error(function() {
 					$scope.redAlert = true;
@@ -72,7 +96,13 @@ angular.module('eObrazovanjeApp').controller(
 					// edit stranica
 					$http.put('api/obligations/edit/' + $scope.obligation.id,
 						$scope.obligation).success(function() {
-						$location.path('/obligations/all');
+							if ($scope.isAdmin()) {
+								window.location ="#/obligations";
+							} else if($scope.isProfessor()){
+								window.location ="#/obligations/getFor/"+$rootScope.userId;
+							}
+							
+
 					}).error(function() {
 						alert("Editing error!");
 					});
@@ -80,7 +110,11 @@ angular.module('eObrazovanjeApp').controller(
 					// add stranica
 					$http.post('api/obligations/add/', $scope.obligation).success(
 						function() {
-							$location.path('/obligations/all');
+							if ($scope.isAdmin()) {
+								window.location ="#/obligations";
+							} else if($scope.isProfessor()){
+								window.location ="#/obligations/getFor/"+$rootScope.userId;
+							}
 						}).error(function() {
 						alert('Error while adding!')
 					});
@@ -88,3 +122,6 @@ angular.module('eObrazovanjeApp').controller(
 			};
 		}
 	]);
+
+			
+			

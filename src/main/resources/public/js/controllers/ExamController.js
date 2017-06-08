@@ -90,7 +90,7 @@ angular.module('eObrazovanjeApp').controller(
 						// edit stranica
 						$http.put('api/exams/edit/' + $scope.exam.id,
 								$scope.exam).success(function() {
-									window.location ="#/subjects";
+									window.location ="#/subjects/getFor/"+$rootScope.userId;
 						}).error(function() {
 							alert("neka greska edita");
 						});
@@ -98,7 +98,7 @@ angular.module('eObrazovanjeApp').controller(
 						// add stranica
 						$http.post('api/exams/add/', $scope.exam).success(
 								function() {
-									window.location ="#/subjects";
+									window.location ="#/subjects/getFor/"+$rootScope.userId;
 								}).error(function() {
 							alert('greska dodavanja!')
 						});

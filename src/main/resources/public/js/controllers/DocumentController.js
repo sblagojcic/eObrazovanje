@@ -92,7 +92,7 @@ angular.module('eObrazovanjeApp')
 						// edit stranica
 						$http.put('api/documents/edit/' + $scope.document.id,
 								$scope.document).success(function() {
-							$location.path('/documents');
+									window.location ="#/documents";
 						}).error(function() {
 							alert("neka greska edita");
 						});
@@ -100,7 +100,7 @@ angular.module('eObrazovanjeApp')
 						// add stranica
 						$http.post('api/documents/add/', $scope.document).success(
 								function() {
-									$location.path('/documents/all');
+									window.location ="#/documents";
 								}).error(function() {
 							alert('greska dodavanja!')
 						});

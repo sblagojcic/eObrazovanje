@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import ftn.project.eObrazovanje.model.Obligation;
+import ftn.project.eObrazovanje.model.ProfessorRole;
 import ftn.project.eObrazovanje.model.Subject;
 import ftn.project.eObrazovanje.service.ObligationService;
 import ftn.project.eObrazovanje.web.dto.ObligationDTO;
@@ -24,7 +25,8 @@ public class ObligationController {
 	@Autowired
 	private ObligationService obligationService;
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_PROFESSOR')")
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public ResponseEntity<List<ObligationDTO>> getAllStudents() {
 		List<Obligation> obligations = obligationService.findAll();
@@ -34,6 +36,25 @@ public class ObligationController {
 		}
 		return new ResponseEntity<>(obligationsDTO, HttpStatus.OK);
 	}
+	
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
+	@RequestMapping(value = "/getFor/{id}", method = RequestMethod.GET)
+	public ResponseEntity<List<ObligationDTO>> getObligationsForUser(@PathVariable Long id) {
+
+		List<Obligation> obligations = obligationService.findAll();
+		List<ObligationDTO> obligationsDTO = new ArrayList<ObligationDTO>();
+		for (Obligation obligation : obligations) {
+			for (ProfessorRole role : obligation.getSubject().getProfessorRole()) {
+				if (role.getProfessor().getId()==id) {
+					obligationsDTO.add(new ObligationDTO(obligation));
+				}
+			}
+			
+		}
+		return new ResponseEntity<>(obligationsDTO, HttpStatus.OK);
+	}
+	
+	
 	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR','ROLE_ADMIN','ROLE_STUDENT')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<ObligationDTO> getObligation(@PathVariable Long id) {

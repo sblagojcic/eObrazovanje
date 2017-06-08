@@ -52,8 +52,9 @@
                 	<li><a class="navbar-brand"  ng-show="isAdmin()" href="#/professorRoles">Professor roles</a> </li>
                 	<li><a class="navbar-brand"  ng-show="isAdmin()" href="#/students">Students</a>   </li>
                 	<li><a class="navbar-brand"  ng-show="isAdmin()" href="#/subjects">All Subjects</a> </li>
-                	<li><a class="navbar-brand"  ng-show="isStudent()||isProfessor()" href="#/subjects/getFor/{{ userId }}" >Subjects</a> </li>
-                	<li><a class="navbar-brand"  ng-show="isAdmin()" href="#/obligations">Obligations</a>    </li>    
+                	<li><a class="navbar-brand"  ng-show="isStudent()||isProfessor()" href="#/subjects/getFor/{{ userId }}" >Subjects</a> </li>               	
+                	<li><a class="navbar-brand"  ng-show="isAdmin()" href="#/obligations">All Obligations</a>    </li>    
+                	<li><a class="navbar-brand"  ng-show="isProfessor()" href="#/obligations/getFor/{{ userId }}"> Obligations</a>    </li>    
                 	<li><a class="navbar-brand"  ng-show="isAdmin()" href="#/transactions">All Transactions</a>   </li> 
                 	<li><a class="navbar-brand"  ng-show="isStudent()" href="#/transactions/getFor/{{ userId }}">Transactions</a>   </li>                                                   	                            
 					<li><a class="navbar-brand"  ng-show="isAdmin()" href="#/documents">All Documents</a></li>

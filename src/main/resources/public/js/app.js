@@ -80,11 +80,14 @@ angular.module('eObrazovanjeApp', [ 'angular-jwt' ,'ngRoute']).config(
 				templateUrl : '/html/addOrUpdateObligation.html',
 				controller : 'ObligationController'
 			}).when('/obligations/edit/:id', {
-				templateUrl : '/html/addOrUpdateObligations.html',
+				templateUrl : '/html/addOrUpdateObligation.html',
 				controller : 'ObligationController'
 			}).when('/subjects/getFor/:id', {
 				templateUrl : '/html/UserSubjects.html',
 				controller : 'SubjectController'
+			}).when('/obligations/getFor/:id', {
+				templateUrl : '/html/UserObligations.html',
+				controller : 'ObligationController'
 			}).when('/transactions/getFor/:id', {
 				templateUrl : '/html/UserTransactions.html',
 				controller : 'TransactionController'

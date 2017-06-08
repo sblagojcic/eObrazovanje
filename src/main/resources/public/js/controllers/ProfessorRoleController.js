@@ -98,7 +98,7 @@ angular.module('eObrazovanjeApp').controller(
 							// edit stranica
 							$http.put('api/professorRoles/edit/' + $scope.professorRole.id,
 									$scope.professorRole).success(function() {
-								$location.path('/professorRoles');
+										window.location ="#/professorRoles";
 							}).error(function() {
 								alert("neka greska edita");
 							});
@@ -107,7 +107,7 @@ angular.module('eObrazovanjeApp').controller(
 							console.log($scope.professorRole)
 							$http.post('api/professorRoles/add/', $scope.professorRole).success(
 									function() {
-										$location.path('/professorRoles');
+										window.location ="#/professorRoles";
 									}).error(function() {
 								alert('greska dodavanja!')
 							});

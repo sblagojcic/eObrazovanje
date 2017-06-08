@@ -1,4 +1,4 @@
- <table ng-init= "getAllObligations()" class="table table-bordered" >
+<table ng-init= "getUserObligations()" class="table table-bordered" >
 	<thead class="thead-inverse">
 		<tr>
 			<th>ID</th>
@@ -6,6 +6,7 @@
 			<th>Obligation Date</th>
 			<th>Points</th>
 			<th>Subject</th>
+			<th></th>
 			<th></th>
 		</tr>
 	</thead>
@@ -18,6 +19,9 @@
 			<td>{{ obligation.subject.name }}</td>
 			<td>
 				<button ng-model="button" ng-click="hideAlerts();deleteObligation(obligation.id)" class="btn btn-xs btn-danger">Delete</button>
+			</td>
+			<td>
+				<a href="#/obligations/edit/{{ obligation.id }}" class="btn btn-xs btn-primary">Edit</a>
 			</td>
 			</tr>
 		
