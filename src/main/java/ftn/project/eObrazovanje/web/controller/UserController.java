@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +28,7 @@ public class UserController {
     @Autowired
     UserService userService;    
     
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ResponseEntity<List<UserDTO>> getUsers() {
         List<User> users = userService.findAll();
@@ -39,14 +40,14 @@ public class UserController {
         return new ResponseEntity<>(usersDTO, HttpStatus.OK);
     }
     
-    
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Page<User>> getUsersPage(Pageable page) {
 		Page<User> users = userService.findAll(page);
 
 		return new ResponseEntity<>(users, HttpStatus.OK);
 	}
-    
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
         User user = userService.findOne(id);
@@ -56,7 +57,7 @@ public class UserController {
         return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
 
     }
-    
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value="/add", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO userDTO) {
         User user = new User();
@@ -70,7 +71,7 @@ public class UserController {
 
     }
     
-    
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/edit/{id}",method = RequestMethod.PUT, consumes = "application/json")
     public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO) {
         User user = userService.findOne(userDTO.getId());
@@ -84,7 +85,7 @@ public class UserController {
         return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
 
     }
-    
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
         User user = userService.findOne(id);

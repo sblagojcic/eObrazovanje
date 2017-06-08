@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +27,8 @@ public class SubjectController {
 
 	@Autowired
 	SubjectService subjectService;
-
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public ResponseEntity<List<SubjectDTO>> getSubjects() {
 		List<Subject> subjects = subjectService.findAll();
@@ -36,7 +38,7 @@ public class SubjectController {
 		}
 		return new ResponseEntity<>(subjectsDTO, HttpStatus.OK);
 	}
-
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Page<Subject>> getSubjectsPage(
 			@RequestParam(value = "pageNumber", required = false) int pageNumber, Pageable pageable) {
@@ -53,7 +55,7 @@ public class SubjectController {
 
 		return new ResponseEntity<>(subjects, HttpStatus.OK);
 	}
-
+	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR','ROLE_ADMIN','ROLE_STUDENT')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<SubjectDTO> getSubject(@PathVariable Long id) {
 		Subject subject = subjectService.findOne(id);
@@ -62,7 +64,7 @@ public class SubjectController {
 		else
 			return new ResponseEntity<>(new SubjectDTO(subject), HttpStatus.OK);
 	}
-
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<SubjectDTO> saveSubject(@RequestBody SubjectDTO subjectDTO) {
 		Subject subject = new Subject();
@@ -72,7 +74,7 @@ public class SubjectController {
 		subject = subjectService.save(subject);
 		return new ResponseEntity<>(new SubjectDTO(subject), HttpStatus.OK);
 	}
-
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT, consumes = "application/json")
 	public ResponseEntity<SubjectDTO> updateSubject(@RequestBody SubjectDTO subjectDTO) {
 		Subject subject = subjectService.findOne(subjectDTO.getId());
@@ -84,7 +86,7 @@ public class SubjectController {
 		subject = subjectService.save(subject);
 		return new ResponseEntity<>(new SubjectDTO(subject), HttpStatus.OK);
 	}
-
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteSubject(@PathVariable Long id) {
 		Subject subject = subjectService.findOne(id);

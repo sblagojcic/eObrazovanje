@@ -4,7 +4,10 @@ angular.module('eObrazovanjeApp', [ 'ngRoute']).config(
 			$routeProvider.when('/', {
 		        templateUrl: '/html/professors.html',
 		        controller: 'ProfessorController',
-		    }).when('/professors', {
+		    }).when('/login', {
+				templateUrl : '/html/login.html',
+				controller : 'LoginController'
+			}).when('/professors', {
 				templateUrl : '/html/professors.html',
 				controller : 'ProfessorController'
 			}).when('/professorRoles', {
