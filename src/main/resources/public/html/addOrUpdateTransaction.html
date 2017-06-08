@@ -1,0 +1,45 @@
+<form class="form-horizontal" >
+
+    <div class="form-group">
+        <label class="col-sm-2">Purpose</label>
+        <div class="col-sm-6">
+            <input  ng-model="transaction.purpose" class="form-control" />
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="col-sm-2">Bank Account</label>
+        <div class="col-sm-6">
+            <input  ng-model="transaction.bankAccount" class="form-control" />
+        </div>
+    </div>
+    
+        <div class="form-group">
+        <label class="col-sm-2">Price</label>
+        <div class="col-sm-6">
+            <input  ng-model="transaction.price" class="form-control" />
+        </div>
+    </div>
+    
+   </div hidden="true">
+    
+      <div class="form-group">
+
+        <div class="col-sm-6">
+            <input hidden="true" ng-model="transaction.studentDTO" class="form-control" value="{{ userId }}"/>
+        </div>
+    </div>
+    
+        <div class="form-group">
+        <label class="col-sm-2">Recipient Account</label>
+        <div class="col-sm-6">
+            <input  ng-model="transaction.recipient" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button  ng-click="saveTransaction()" type="submit" class="btn btn-primary" >Save</button>  
+<!--       ng-disabled="!subject.name||!subject.semester" -->
+    </div>
+  </div>
+</form>

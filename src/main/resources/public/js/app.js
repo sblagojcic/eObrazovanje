@@ -37,6 +37,9 @@ angular.module('eObrazovanjeApp', [ 'angular-jwt' ,'ngRoute']).config(
 			}).when('/transactions', {
 				templateUrl : '/html/Transactions.html',
 				controller : 'TransactionController'
+			}).when('/addOrUpdateTransaction', {
+				templateUrl : '/html/addOrUpdateTransaction.html',
+				controller : 'TransactionController'
 			}).when('/documents', {
 				templateUrl : '/html/Documents.html',
 				controller : 'DocumentController'

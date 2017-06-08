@@ -4,8 +4,7 @@
 			<th>ID</th>
 			<th>Points</th>
 			<th>Pass</th>
-			<th></th>	
-			<th></th>	
+	
 		</tr>
 	</thead>
 	<tbody>
@@ -13,14 +12,8 @@
 			<td>{{ exam.id }}</td>
 			<td>{{ exam.points }}</td>
 			<td>{{ exam.pass }}</td>
-			<td>
-				<button ng-model="button" ng-click="hideAlerts();deleteExam(exam.id)" class="btn btn-xs btn-danger">Delete</button>
-			</td>
-			<td>
-				<a href="#/exams/edit/{{ exam.id }}" class="btn btn-xs btn-primary">Edit</a>
-			</td>
+
 		</tr>
 		
 	</tbody>
 </table>
-<a href="#/addOrUpdateExam" class="btn btn-success">Add new exam</a>

@@ -28,4 +28,20 @@ angular.module('eObrazovanjeApp').controller(
 					};
 					
 
+					$scope.saveTransaction = function() {
+							$scope.transaction.studentDTO={
+									"id": $rootScope.userId
+									
+							}
+							// add stranica
+							$http.post('api/transaction/add/', $scope.transaction).success(
+									function() {
+										window.location ="#/transactions";
+									}).error(function() {
+								alert('Error while adding!')
+							});
+					
+					};
+					
+
 				} ]);
