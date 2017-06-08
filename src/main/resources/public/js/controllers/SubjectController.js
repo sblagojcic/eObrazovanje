@@ -89,7 +89,8 @@ angular.module('eObrazovanjeApp').controller(
 							// edit stranica
 							$http.put('api/subjects/edit/' + $scope.subject.id,
 									$scope.subject).success(function() {
-								$location.path('/subjects/all');
+									window.location ="#/subjects";
+
 							}).error(function() {
 								alert("Editing error!");
 							});
@@ -97,7 +98,7 @@ angular.module('eObrazovanjeApp').controller(
 							// add stranica
 							$http.post('api/subjects/add/', $scope.subject).success(
 									function() {
-										$location.path('/subjects/all');
+										window.location ="#/subjects";
 									}).error(function() {
 								alert('Error while adding!')
 							});
