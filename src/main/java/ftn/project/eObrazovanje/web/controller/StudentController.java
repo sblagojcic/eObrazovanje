@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ftn.project.eObrazovanje.model.Student;
+import ftn.project.eObrazovanje.model.Subject;
 import ftn.project.eObrazovanje.service.StudentService;
 import ftn.project.eObrazovanje.web.dto.StudentDTO;
 
@@ -34,6 +35,21 @@ public class StudentController {
 		List<StudentDTO> studentsDTO = new ArrayList<StudentDTO>();
 		for (Student student : students) {
 			studentsDTO.add(new StudentDTO(student));
+		}
+		return new ResponseEntity<>(studentsDTO, HttpStatus.OK);
+	}
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
+	@RequestMapping(value = "/inSubject/{id}", method = RequestMethod.GET)
+	public ResponseEntity<List<StudentDTO>> getStudentsInSubject(@PathVariable Long id) {
+		List<Student> students = studentService.findAll();
+		List<StudentDTO> studentsDTO = new ArrayList<StudentDTO>();
+		for (Student student : students) {
+			for (Subject subject : student.getSubjects()) {
+				if (subject.getId()==id) {
+					studentsDTO.add(new StudentDTO(student));
+				}
+			}
+			
 		}
 		return new ResponseEntity<>(studentsDTO, HttpStatus.OK);
 	}

@@ -60,8 +60,13 @@ public class TransactionController {
 
 	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR','ROLE_ADMIN','ROLE_STUDENT')")
 	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<TransactionDTO> savetransaction(@RequestBody Transaction transaction1) {
-		Transaction transaction = transaction1;
+	public ResponseEntity<TransactionDTO> savetransaction(@RequestBody TransactionDTO transaction1) {
+		Transaction transaction =new Transaction();
+		transaction.setBankAccount(transaction1.getBankAcc());
+		transaction.setPrice(transaction1.getPrice());
+		transaction.setPurpose(transaction1.getPurpose());
+		transaction.setRecipient(transaction1.getRecipient());
+		transaction.setStudent(studentService.findOne(transaction1.getStudentDTO().getId()));
 		transaction = transactionService.save(transaction);
 
 		return new ResponseEntity<>(new TransactionDTO(transaction), HttpStatus.CREATED);

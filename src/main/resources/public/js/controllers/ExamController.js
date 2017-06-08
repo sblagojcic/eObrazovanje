@@ -16,9 +16,8 @@ angular.module('eObrazovanjeApp').controller(
 						$scope.redAlert = true;
 					});
 				};
-			//	$scope.subjectId=uzeti iz putanje;
 				$scope.getAllStudents = function() {
-					$http.get('api/students/inSubject/'+$scope.subjectId).success
+					$http.get('api/students/inSubject/'+$rootScope.subjectId).success
 						(function(data, status) {
 							$scope.students= data;
 						
@@ -91,7 +90,7 @@ angular.module('eObrazovanjeApp').controller(
 						// edit stranica
 						$http.put('api/exams/edit/' + $scope.exam.id,
 								$scope.exam).success(function() {
-							$location.path('/exams');
+									window.location ="#/subjects";
 						}).error(function() {
 							alert("neka greska edita");
 						});
@@ -99,7 +98,7 @@ angular.module('eObrazovanjeApp').controller(
 						// add stranica
 						$http.post('api/exams/add/', $scope.exam).success(
 								function() {
-									$location.path('/exams/all');
+									window.location ="#/subjects";
 								}).error(function() {
 							alert('greska dodavanja!')
 						});

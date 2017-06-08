@@ -34,9 +34,9 @@ angular.module('eObrazovanjeApp').controller(
 									
 							}
 							// add stranica
-							$http.post('api/transaction/add/', $scope.transaction).success(
+							$http.post('api/transactions/add/', $scope.transaction).success(
 									function() {
-										window.location ="#/transactions";
+										window.location ="#/transactions/getFor/"+$rootScope.userId;
 									}).error(function() {
 								alert('Error while adding!')
 							});
