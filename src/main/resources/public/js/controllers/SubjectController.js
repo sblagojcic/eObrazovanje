@@ -7,6 +7,14 @@ angular.module('eObrazovanjeApp').controller(
 				'$routeParams',
 				'$location',
 				function($rootScope, $scope, $http, $routeParams,  $location) {
+					$scope.getUserSubjects = function() {
+							$http.get('api/subjects/getFor/' + $routeParams.id).success
+							(function(data, status) {
+								$scope.subjects = data;
+							}).error(function() {
+							alert('Oops, something went wrong!');
+						});
+					};
 					$scope.getProfessor = function(id) {
 						$http.get('api/subjects/' + id).success(
 								function(data, status) {

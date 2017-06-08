@@ -42,17 +42,22 @@
 	    <a  id="1" class="navbar-brand"  href="#"><img id="logo" alt="eObrazovanje" src="/img/logo.png"></a>
 	    
 	  </div>
-  <div id="navbar" class="navbar-collapse collapse">
+	  
+  	<div id="navbar" class="navbar-collapse collapse">
     <ul class="nav navbar-nav">
     
   					<li><a class="navbar-brand"  href="#/professors">Professors</a>   </li>       
                 	<li><a class="navbar-brand"  href="#/professorRoles">Professor roles</a> </li>
                 	<li><a class="navbar-brand"  href="#/students">Students</a>   </li>
-                	<li><a class="navbar-brand"  href="#/subjects">Subjects</a> </li>
+                	<li><a class="navbar-brand"  href="#/subjects">All Subjects</a> </li>
+                	<li><a class="navbar-brand"  href="#/subjects/getFor/{{ userId }}" >Subjects</a> </li>
                 	<li><a class="navbar-brand"  href="#/obligations">Obligations</a>    </li>    
-                	<li><a class="navbar-brand"  href="#/transactions">Transactions</a>   </li>                                                   	                            
-					<li><a class="navbar-brand"  href="#/documents">Documents</a></li>
-            	   <li> <a class="navbar-brand"  href="#/exams">Exams</a></li>
+                	<li><a class="navbar-brand"  href="#/transactions">All Transactions</a>   </li> 
+                	<li><a class="navbar-brand"  href="#/transactions/getFor/{{ userId }}">Transactions</a>   </li>                                                   	                            
+					<li><a class="navbar-brand"  href="#/documents">All Documents</a></li>
+            	    <li><a class="navbar-brand"  href="#/documents/getFor/{{ userId }}">Documents</a></li>
+            	    <li> <a class="navbar-brand"  href="#/exams/getFor/{{ userId }}">Exams</a></li>
+            	   <li> <a class="navbar-brand"  href="#/exams">ALl Exams</a></li>
 
     </ul>
     <ul class="nav navbar-nav navbar-right">

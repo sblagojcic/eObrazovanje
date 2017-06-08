@@ -29,8 +29,28 @@ angular.module('eObrazovanjeApp').controller('LoginController', ['$rootScope', '
 				var token = "Bearer " + response.access_token;
 				$http.defaults.headers.common.Authorization = token;
 				localStorage.setItem('jwt_token', response.access_token);
-				console.log($http.defaults.headers.common.Authorization);
-				window.location = "/#/api/subjects"
+				$http.get('api/users/user/' + $scope.credentials.username).success(function(data, status) {
+					$scope.user = data;
+					localStorage.setItem('id', $scope.user.id);
+					localStorage.setItem('userName', $scope.user.userName);
+					localStorage.setItem('user', $scope.user);
+					localStorage.setItem('role', $scope.user.role);
+					$rootScope.userId=$scope.user.id;
+					if ($scope.user.role=='STUDENT') {
+						window.location = "/#/subjects/getFor/"+$scope.user.id;
+					}
+					else if ($scope.user.role=='PROFESSOR') {
+						window.location = "/#/subjects/getFor/"+$scope.user.id;
+					}
+					else{
+						window.location = "/#/api/subjects"
+					}
+				}).error(function() {
+				alert("greska")
+
+			});
+		
+				
 				
 			},
 			error: function(response){ 

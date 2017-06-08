@@ -79,6 +79,12 @@ angular.module('eObrazovanjeApp', [ 'ngRoute']).config(
 			}).when('/obligations/edit/:id', {
 				templateUrl : '/html/addOrUpdateObligations.html',
 				controller : 'ObligationController'
+			}).when('/subjects/getFor/:id', {
+				templateUrl : '/html/UserSubjects.html',
+				controller : 'SubjectController'
+			}).when('/transactions/getFor/:id', {
+				templateUrl : '/html/UserTransactions.html',
+				controller : 'TransactionController'
 			}).otherwise({
 				redirectTo : '/'
 			});

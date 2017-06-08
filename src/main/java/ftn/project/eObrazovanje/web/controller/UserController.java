@@ -57,6 +57,16 @@ public class UserController {
         return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
 
     }
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_PROFESSOR','ROLE_STUDENT')")
+    @RequestMapping(value = "user/{userName}", method = RequestMethod.GET)
+    public ResponseEntity<UserDTO> getUserByUserName(@PathVariable String userName) {
+        User user = userService.findByUsername(userName);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
+
+    }
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value="/add", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO userDTO) {

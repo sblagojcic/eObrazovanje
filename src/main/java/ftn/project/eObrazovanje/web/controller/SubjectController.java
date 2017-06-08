@@ -17,8 +17,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import ftn.project.eObrazovanje.model.Professor;
+import ftn.project.eObrazovanje.model.ProfessorRole;
+import ftn.project.eObrazovanje.model.Student;
 import ftn.project.eObrazovanje.model.Subject;
+import ftn.project.eObrazovanje.model.User;
+import ftn.project.eObrazovanje.service.ProfessorService;
+import ftn.project.eObrazovanje.service.StudentService;
 import ftn.project.eObrazovanje.service.SubjectService;
+import ftn.project.eObrazovanje.service.UserService;
 import ftn.project.eObrazovanje.web.dto.SubjectDTO;
 
 @RestController
@@ -27,6 +34,12 @@ public class SubjectController {
 
 	@Autowired
 	SubjectService subjectService;
+	@Autowired
+	UserService userService;
+	@Autowired
+	StudentService studentService;
+	@Autowired
+	ProfessorService professorService;
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
@@ -97,5 +110,22 @@ public class SubjectController {
 
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-
+	@PreAuthorize("hasAnyRole('ROLE_STUDENT','ROLE_PROFESSOR')")
+	@RequestMapping(value="/getFor/{id}", method = RequestMethod.GET)
+	public ResponseEntity<List<SubjectDTO>> getSubjectForUser(@PathVariable Long id){
+		List<SubjectDTO> subjectsDTO = new ArrayList<SubjectDTO>();
+		User user=userService.findOne(id);
+		if (user.getRole().equals("STUDENT")) {
+			Student student=studentService.findOne(id);
+			for(Subject subject : student.getSubjects()){
+				subjectsDTO.add(new SubjectDTO(subject));
+			}
+		}else{
+			Professor professor= professorService.findOne(id);
+			for(ProfessorRole role : professor.getRoles()){
+				subjectsDTO.add(new SubjectDTO(role.getSubject()));
+			}
+		}
+		return new ResponseEntity<>(subjectsDTO, HttpStatus.OK);
+	}
 }
