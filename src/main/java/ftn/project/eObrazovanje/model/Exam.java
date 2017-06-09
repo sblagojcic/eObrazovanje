@@ -18,6 +18,10 @@ public class Exam {
 	private Long id;
 	private int points;
 	private Boolean pass;
+	
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+	@JsonBackReference
+	private Subject subject;
 
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	@JsonBackReference
@@ -28,19 +32,49 @@ public class Exam {
 		super();
 	}
 
-
-
-
-
-
-
-	public Exam(Long id, int points, Boolean pass, Student student) {
+	public Exam(Long id, int points, Boolean pass, Subject subject, Student student) {
 		super();
 		this.id = id;
 		this.points = points;
 		this.pass = pass;
+		this.subject = subject;
 		this.student = student;
 	}
+
+
+
+
+
+
+
+
+
+
+	public Subject getSubject() {
+		return subject;
+	}
+
+
+
+
+
+
+
+
+
+
+	public void setSubject(Subject subject) {
+		this.subject = subject;
+	}
+
+
+
+
+
+
+
+
+
 
 	public Student getStudent() {
 		return student;
@@ -74,12 +108,7 @@ public class Exam {
 		this.pass = pass;
 	}
 
-	
 
 
 
-
-
-
-	
 }
