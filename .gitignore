@@ -26,3 +26,4 @@ nbdist/
 
 ./mylog.log
 ./src/main/resources/application.properties
+/mylog.log
