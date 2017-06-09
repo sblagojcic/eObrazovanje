@@ -21,6 +21,7 @@ angular.module('eObrazovanjeApp')
 			'$location',
 			'authService',
 			function($rootScope, $scope, $http, $routeParams,  authService,  $location) {
+				$rootScope.userId = localStorage.getItem('userId');
 				$scope.getDocument = function(id) {
 					$http.get('api/documents/' + id).success(
 							function(data, status) {
@@ -88,11 +89,14 @@ angular.module('eObrazovanjeApp')
 				};
 
 				$scope.saveDocument = function() {
+					
+					$scope.document.studentID= $rootScope.userId;
+
 					if ($scope.document.id) {
 						// edit stranica
 						$http.put('api/documents/edit/' + $scope.document.id,
 								$scope.document).success(function() {
-									window.location ="#/documents";
+									window.location ="#/documents/getFor/"+$rootScope.userId;
 						}).error(function() {
 							alert("neka greska edita");
 						});
@@ -100,7 +104,7 @@ angular.module('eObrazovanjeApp')
 						// add stranica
 						$http.post('api/documents/add/', $scope.document).success(
 								function() {
-									window.location ="#/documents";
+									window.location ="#/documents/getFor/"+$rootScope.userId;
 								}).error(function() {
 							alert('greska dodavanja!')
 						});

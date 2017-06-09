@@ -86,7 +86,7 @@ public class DocumentController {
 		else
 			return new ResponseEntity<>(new DocumentDTO(document), HttpStatus.OK);
 	}
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN','ROLE_STUDENT')")
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteResponsePayment(@PathVariable Long id) {
         Document document = documentService.findOne(id);

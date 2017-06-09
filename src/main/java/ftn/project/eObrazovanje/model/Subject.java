@@ -36,6 +36,10 @@ public class Subject {
     @ManyToMany(mappedBy = "subjects",targetEntity = Student.class, fetch = FetchType.LAZY)
     private Set<Student> students = new HashSet<Student>();
 
+    @OneToMany(mappedBy = "subject", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @JsonManagedReference
+    private Set<Exam> exams = new HashSet<Exam>();
+    
     public Subject() {
 
     }

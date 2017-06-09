@@ -19,6 +19,7 @@ import ftn.project.eObrazovanje.model.Exam;
 import ftn.project.eObrazovanje.model.Student;
 import ftn.project.eObrazovanje.service.ExamService;
 import ftn.project.eObrazovanje.service.StudentService;
+import ftn.project.eObrazovanje.service.SubjectService;
 import ftn.project.eObrazovanje.web.dto.ExamDTO;
 
 @RestController
@@ -30,6 +31,9 @@ public class ExamController {
 
 	@Autowired
 	StudentService studentService;
+	@Autowired
+	SubjectService subjectService;
+	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public ResponseEntity<List<ExamDTO>> getExams() {
@@ -54,7 +58,9 @@ public class ExamController {
 		exam.setPoints(examDTO.getPoints());
 		exam.setPass(examDTO.isPass());
 		Student student = studentService.findOne(examDTO.getStudentID());
+		
 		exam.setStudent(student);
+		exam.setSubject(subjectService.findOne(Long.parseLong(examDTO.getSubjectName())));
 		exam = examService.save(exam);
 		return new ResponseEntity<>(new ExamDTO(exam), HttpStatus.OK);
 	}

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import ftn.project.eObrazovanje.model.Exam;
 import ftn.project.eObrazovanje.model.Student;
 import ftn.project.eObrazovanje.model.Subject;
 import ftn.project.eObrazovanje.service.StudentService;
@@ -45,9 +46,15 @@ public class StudentController {
 		List<Student> students = studentService.findAll();
 		List<StudentDTO> studentsDTO = new ArrayList<StudentDTO>();
 		for (Student student : students) {
+			StudentDTO studentDTO=new StudentDTO(student);
+			studentsDTO.add(studentDTO);
 			for (Subject subject : student.getSubjects()) {
 				if (subject.getId()==id) {
-					studentsDTO.add(new StudentDTO(student));
+					for (Exam exam : student.getExams()) {
+						if (exam.getPass()==true && exam.getSubject().getId()==subject.getId()) { 
+							studentsDTO.remove(studentDTO);
+						}
+					}
 				}
 			}
 			
@@ -109,11 +116,13 @@ public class StudentController {
 
 		student.setAddress(student1.getAddress());
 		student.setDateOfBirth(student1.getDateOfBirth());
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String hashedPassword = passwordEncoder.encode(student1.getPassword());
 		student.setGender(student1.getGender());
 		student.setJMBG(student1.getJMBG());
 		student.setLastName(student1.getLastName());
 		student.setName(student1.getName());
-		student.setPassword(student1.getPassword());
+		student.setPassword(hashedPassword);
 		student.setPicturePath(student1.getPicturePath());
 		student.setUserName(student1.getUserName());
 		student.setRole(student1.getRole());

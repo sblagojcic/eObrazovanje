@@ -8,12 +8,14 @@ public class ExamDTO {
 	private Integer points;
 	private boolean pass;
 	private Long studentID;
+	private String subjectName;
 	
 	public ExamDTO(Exam exam){
 		this.id = exam.getId();
 		this.points = exam.getPoints();
 		this.pass = exam.getPass();
 		this.studentID = exam.getStudent().getId();
+		this.subjectName = exam.getSubject().getName();
 	}
 	
 	public ExamDTO(){}
@@ -45,4 +47,13 @@ public class ExamDTO {
 		this.studentID = studentID;
 	}
 
+	public String getSubjectName() {
+		return subjectName;
+	}
+
+	public void setSubjectName(String subjectName) {
+		this.subjectName = subjectName;
+	}
+
+	
 }

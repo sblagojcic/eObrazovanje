@@ -8,6 +8,7 @@ angular.module('eObrazovanjeApp').controller(
 				'$location',
 				'authService',
 				function($rootScope, $scope, $http, $routeParams, authService, $location) {
+					$rootScope.userId = localStorage.getItem('userId');
 					$scope.getStudent = function(id) {
 						$http.get('api/students/all' + id).success(
 								function(data, status) {

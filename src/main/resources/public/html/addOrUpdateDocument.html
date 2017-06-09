@@ -22,16 +22,15 @@ Upload preko angulara
         </div>
     </div>
     
-    <div class="form-group">
-        <label class="col-sm-2">StudentID</label>
+    <div hidden="true" class="form-group">
         <div class="col-sm-6">
-            <input  ng-model="document.studentID" class="form-control" />
+            <input hidden="true" value="{{ userId }}"  ng-model="document.studentID" class="form-control" />
         </div>
     </div>
     
     <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
-      <button ng-click="saveDocument()" type="submit" class="btn btn-primary" >Save</button>
+      <button ng-disabled="!document.name||!document.path" ng-click="saveDocument()" type="submit" class="btn btn-primary" >Save</button>
     </div>
   </div>
 </form>
