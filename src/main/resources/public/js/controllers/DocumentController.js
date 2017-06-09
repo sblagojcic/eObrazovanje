@@ -21,6 +21,7 @@ angular.module('eObrazovanjeApp')
 			'$location',
 			'authService',
 			function($rootScope, $scope, $http, $routeParams,  authService,  $location) {
+				$rootScope.userId = localStorage.getItem('userId');
 				$scope.getDocument = function(id) {
 					$http.get('api/documents/' + id).success(
 							function(data, status) {
