@@ -20,6 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,7 +48,7 @@ public class DocumentController {
 	
 	@Autowired
 	StudentService studentService;
-	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public ResponseEntity<List<DocumentDTO>> getDocuments() {
 		List<Document> documents = documentService.findAll();
@@ -64,7 +65,7 @@ public class DocumentController {
 
 		return new ResponseEntity<>(documents, HttpStatus.OK);
 	}
-	
+	@PreAuthorize("hasAnyRole('ROLE_STUDENT','ROLE_ADMIN')")
 	@RequestMapping(value="/add",method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<DocumentDTO> saveDocument(@RequestBody DocumentDTO documentDTO) {
 		Document document = new Document();
@@ -75,7 +76,7 @@ public class DocumentController {
 		document = documentService.save(document);
 		return new ResponseEntity<>(new DocumentDTO(document), HttpStatus.OK);
 	}
-	
+	@PreAuthorize("hasAnyRole('ROLE_STUDENT','ROLE_ADMIN')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<DocumentDTO> getProfessorRole(@PathVariable Long id) {
 		Document document = documentService.findOne(id);
@@ -84,7 +85,7 @@ public class DocumentController {
 		else
 			return new ResponseEntity<>(new DocumentDTO(document), HttpStatus.OK);
 	}
-	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteResponsePayment(@PathVariable Long id) {
         Document document = documentService.findOne(id);
@@ -95,7 +96,7 @@ public class DocumentController {
             return new ResponseEntity<>(HttpStatus.OK);
         }
     }
-	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT, consumes = "application/json")
 	public ResponseEntity<DocumentDTO> updateProfessor(@RequestBody DocumentDTO documentDTO) {
 		Document document = documentService.findOne(documentDTO.getId());
@@ -108,7 +109,7 @@ public class DocumentController {
 		document = documentService.save(document);
 		return new ResponseEntity<>(new DocumentDTO(document), HttpStatus.OK);
 	}
-	
+	@PreAuthorize("hasAnyRole('ROLE_STUDENT','ROLE_ADMIN')")
 	@RequestMapping(value="/getFor/{id}", method = RequestMethod.GET)
 	public ResponseEntity<List<DocumentDTO>> getDocunemtForUser(@PathVariable Long id){
 		List<Document> documents = documentService.findAll();
@@ -120,7 +121,30 @@ public class DocumentController {
 		}
 		return new ResponseEntity<>(documentsDTO, HttpStatus.OK);
 	}
-	
+
+	@PreAuthorize("hasRole('ROLE_STUDENT')")
+	@RequestMapping(value="/upload", method = RequestMethod.POST)
+    public ResponseEntity<Void> singleFileUpload(@RequestParam("file") MultipartFile file) {
+
+        if (file.isEmpty()) {
+        	return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+
+            // Get the file and save it somewhere
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
+            Files.write(path, bytes);
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+	@PreAuthorize("hasRole('ROLE_STUDENT')")
 	@RequestMapping(value="/uploadAngular", method = RequestMethod.POST)
     public ResponseEntity<String> singleFileUploadAngular(@RequestParam("file") MultipartFile file) {
         try {

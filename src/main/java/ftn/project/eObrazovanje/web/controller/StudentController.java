@@ -9,6 +9,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ftn.project.eObrazovanje.model.Student;
+import ftn.project.eObrazovanje.model.Subject;
 import ftn.project.eObrazovanje.service.StudentService;
 import ftn.project.eObrazovanje.web.dto.StudentDTO;
 
@@ -25,7 +28,8 @@ import ftn.project.eObrazovanje.web.dto.StudentDTO;
 public class StudentController {
 	@Autowired
 	private StudentService studentService;
-
+	
+	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR','ROLE_ADMIN')")
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public ResponseEntity<List<StudentDTO>> getAllStudents() {
 		List<Student> students = studentService.findAll();
@@ -35,7 +39,22 @@ public class StudentController {
 		}
 		return new ResponseEntity<>(studentsDTO, HttpStatus.OK);
 	}
-
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
+	@RequestMapping(value = "/inSubject/{id}", method = RequestMethod.GET)
+	public ResponseEntity<List<StudentDTO>> getStudentsInSubject(@PathVariable Long id) {
+		List<Student> students = studentService.findAll();
+		List<StudentDTO> studentsDTO = new ArrayList<StudentDTO>();
+		for (Student student : students) {
+			for (Subject subject : student.getSubjects()) {
+				if (subject.getId()==id) {
+					studentsDTO.add(new StudentDTO(student));
+				}
+			}
+			
+		}
+		return new ResponseEntity<>(studentsDTO, HttpStatus.OK);
+	}
+	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR','ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Page<Student>> getStudentsPage(
 			@RequestParam(value = "pageNumber", required = false) int pageNumber, Pageable pageable) {
@@ -44,7 +63,7 @@ public class StudentController {
 		}
 		PageRequest page = null;
 		try {
-			page = new PageRequest(pageNumber, 1);
+			page = new PageRequest(pageNumber, 20);
 		} catch (Exception e) {
 			page = (PageRequest) pageable;
 		}
@@ -52,7 +71,7 @@ public class StudentController {
 
 		return new ResponseEntity<>(students, HttpStatus.OK);
 	}
-
+	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR','ROLE_ADMIN','ROLE_STUDENT')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<StudentDTO> getStudent(@PathVariable Long id) {
 		Student student = studentService.findOne(id);
@@ -62,20 +81,24 @@ public class StudentController {
 
 		return new ResponseEntity<>(new StudentDTO(student), HttpStatus.OK);
 	}
-
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<StudentDTO> savestudent(@RequestBody StudentDTO student1) {
 		Student student = new Student(student1.getGender(), student1.getDateOfBirth(), student1.getAddress(),
 				student1.getJMBG(), student1.getPicturePath(), null, null, null, null);
+		
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String hashedPassword = passwordEncoder.encode(student1.getPassword());
 		student.setName(student1.getName());
 		student.setUserName(student1.getUserName());
+		student.setRole("STUDENT");
 		student.setLastName(student1.getLastName());
-		student.setPassword(student1.getPassword());
+		student.setPassword(hashedPassword);
 		student = studentService.save(student);
 
 		return new ResponseEntity<>(new StudentDTO(student), HttpStatus.CREATED);
 	}
-
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STUDENT')")
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT, consumes = "application/json")
 	public ResponseEntity<StudentDTO> updatestudent(@RequestBody StudentDTO student1) {
 		// a student must exist
@@ -98,7 +121,7 @@ public class StudentController {
 
 		return new ResponseEntity<>(new StudentDTO(student), HttpStatus.OK);
 	}
-
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
 		Student student = studentService.findOne(id);

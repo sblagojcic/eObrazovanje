@@ -15,9 +15,11 @@
         <script src="/js/dependencies/bootstrap.js"></script>
         
         <script src="/js/dependencies/angular.js"></script>
+       	<script src="/js/dependencies/angular-jwt.js"></script>
 		<script src="/js/dependencies/angular-route.js"></script>		 
 		
 		<script src="/js/app.js"></script>
+		<script src="/js/services/AuthService.js"></script>
 		<script src="/js/controllers/ProfessorController.js"></script>
 		<script src="/js/controllers/ProfessorRoleController.js"></script>	
 		<script src="/js/controllers/StudentController.js"></script>	
@@ -27,6 +29,8 @@
 		<script src="/js/controllers/ExamController.js"></script>
 		<script src="/js/controllers/SubjectController.js"></script>
 		<script src="/js/controllers/ObligationController.js"></script>
+		<script src="/js/controllers/LoginController.js"></script>
+		
     </head>
     <body ng-controller="ApplicationController">
     <div id="navigation" class="container-fluid">
@@ -40,22 +44,28 @@
 	    <a  id="1" class="navbar-brand"  href="#"><img id="logo" alt="eObrazovanje" src="/img/logo.png"></a>
 	    
 	  </div>
-  <div id="navbar" class="navbar-collapse collapse">
+	  
+  	<div id="navbar" class="navbar-collapse collapse">
     <ul class="nav navbar-nav">
     
-  					<li><a class="navbar-brand"  href="#/professors">Professors</a>   </li>       
-                	<li><a class="navbar-brand"  href="#/professorRoles">Professor roles</a> </li>
-                	<li><a class="navbar-brand"  href="#/students">Students</a>   </li>
-                	<li><a class="navbar-brand"  href="#/subjects">Subjects</a> </li>
-                	<li><a class="navbar-brand"  href="#/obligations">Obligations</a>    </li>    
-                	<li><a class="navbar-brand"  href="#/transactions">Transactions</a>   </li>                                                   	                            
-					<li><a class="navbar-brand"  href="#/documents">Documents</a></li>
-            	   <li> <a class="navbar-brand"  href="#/exams">Exams</a></li>
+  					<li><a class="navbar-brand"  ng-show="isAdmin()" href="#/professors">Professors</a>   </li>       
+                	<li><a class="navbar-brand"  ng-show="isAdmin()" href="#/professorRoles">Professor roles</a> </li>
+                	<li><a class="navbar-brand"  ng-show="isAdmin()" href="#/students">Students</a>   </li>
+                	<li><a class="navbar-brand"  ng-show="isAdmin()" href="#/subjects">All Subjects</a> </li>
+                	<li><a class="navbar-brand"  ng-show="isStudent()||isProfessor()" href="#/subjects/getFor/{{ userId }}" >Subjects</a> </li>               	
+                	<li><a class="navbar-brand"  ng-show="isAdmin()" href="#/obligations">All Obligations</a>    </li>    
+                	<li><a class="navbar-brand"  ng-show="isProfessor()" href="#/obligations/getFor/{{ userId }}"> Obligations</a>    </li>    
+                	<li><a class="navbar-brand"  ng-show="isAdmin()" href="#/transactions">All Transactions</a>   </li> 
+                	<li><a class="navbar-brand"  ng-show="isStudent()" href="#/transactions/getFor/{{ userId }}">Transactions</a>   </li>                                                   	                            
+					<li><a class="navbar-brand"  ng-show="isAdmin()" href="#/documents">All Documents</a></li>
+            	    <li><a class="navbar-brand"  ng-show="isStudent()" href="#/documents/getFor/{{ userId }}">Documents</a></li>
+            	    <li><a class="navbar-brand"  ng-show="isStudent()" href="#/exams/getFor/{{ userId }}">Exams</a></li>
 
     </ul>
     <ul class="nav navbar-nav navbar-right">
-      <li><a class="log" href="#">Login</a></li>
-      <li><a class="log" href="#">Logout</a></li>
+      <li><a ng-show="!isLoggedIn()" class="log" href="#/login">Login</a></li>
+      <li><a ng-show="isLoggedIn()" ng-click="logout()" class="log" href="#/logout">Logout</a></li>
+
     </ul>
   </div><!--/.nav-collapse -->
 </div>

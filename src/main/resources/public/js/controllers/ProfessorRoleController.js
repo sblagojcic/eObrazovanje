@@ -6,7 +6,8 @@ angular.module('eObrazovanjeApp').controller(
 				'$http',
 				'$routeParams',
 				'$location',
-				function($rootScope, $scope, $http, $routeParams,  $location) {
+				'authService',
+				function($rootScope, $scope, $http, $routeParams, authService, $location) {
 					$scope.getProfessorRole = function(id) {
 						$http.get('api/professorRoles/' + id).success(
 								function(data, status) {
@@ -31,7 +32,32 @@ angular.module('eObrazovanjeApp').controller(
 
 						}
 					};
-					
+					$scope.getAllSubjects = function() {
+						$http.get('api/subjects/all').success
+							(function(data, status) {
+								$scope.subjects = data;
+
+						}).error(function() {
+							alert('Oops, something went wrong!');
+						});
+
+						$scope.resetFilter = function() {
+
+						}
+					};
+					$scope.getAllProfessors = function() {
+						$http.get('api/professors/all').success
+							(function(data, status) {
+								$scope.professors = data;
+
+						}).error(function() {
+							alert('Oops, something went wrong!');
+						});
+
+						$scope.resetFilter = function() {
+
+						}
+					};
 
 
 					$scope.deleteProfessorRole = function(id) {
@@ -72,7 +98,7 @@ angular.module('eObrazovanjeApp').controller(
 							// edit stranica
 							$http.put('api/professorRoles/edit/' + $scope.professorRole.id,
 									$scope.professorRole).success(function() {
-								$location.path('/professorRoles');
+										window.location ="#/professorRoles";
 							}).error(function() {
 								alert("neka greska edita");
 							});
@@ -81,7 +107,7 @@ angular.module('eObrazovanjeApp').controller(
 							console.log($scope.professorRole)
 							$http.post('api/professorRoles/add/', $scope.professorRole).success(
 									function() {
-										$location.path('/professorRoles');
+										window.location ="#/professorRoles";
 									}).error(function() {
 								alert('greska dodavanja!')
 							});

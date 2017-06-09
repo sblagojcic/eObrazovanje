@@ -1,4 +1,4 @@
-<form class="form-horizontal" ng-init= "initProfessorRole()" required>
+<form class="form-horizontal" ng-init= "initProfessorRole();getAllSubjects();getAllProfessors();" required>
 
     <div class="form-group">
         <label class="col-sm-2">Role</label>
@@ -6,7 +6,20 @@
             <input  ng-model="professorRole.role" class="form-control" />
         </div>
     </div>
-    
+    <div class="form-group">
+        <label class="col-sm-2">Subject</label>
+        <select ng-model="professorRole.subjectDTO"
+				ng-options="subject as subject.name for subject in subjects">
+				<option value="">Select type:</option>
+		</select>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2">Professor</label>
+        <select ng-model="professorRole.professorDTO"
+				ng-options="professor as professor.name for professor in professors">
+				<option value="">Select type:</option>
+		</select>
+    </div>
     
     <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">

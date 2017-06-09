@@ -4,8 +4,7 @@
 			<th>ID</th>
 			<th>Points</th>
 			<th>Pass</th>
-			<th></th>	
-			<th></th>	
+			<th ng-show="isProfessor()"></th>	
 		</tr>
 	</thead>
 	<tbody>
@@ -13,14 +12,12 @@
 			<td>{{ exam.id }}</td>
 			<td>{{ exam.points }}</td>
 			<td>{{ exam.pass }}</td>
-			<td>
-				<button ng-model="button" ng-click="hideAlerts();deleteExam(exam.id)" class="btn btn-xs btn-danger">Delete</button>
-			</td>
-			<td>
+
+			<td ng-show="isProfessor()">
 				<a href="#/exams/edit/{{ exam.id }}" class="btn btn-xs btn-primary">Edit</a>
 			</td>
 		</tr>
 		
 	</tbody>
 </table>
-<a href="#/addOrUpdateExam" class="btn btn-success">Add new exam</a>
+<a ng-show="isProfessor()"  href="#/addOrUpdateExam" class="btn btn-success">Add new exam</a>

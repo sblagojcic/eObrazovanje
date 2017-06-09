@@ -6,8 +6,20 @@ angular.module('eObrazovanjeApp').controller(
 				'$http',
 				'$routeParams',
 				'$location',
-				function($rootScope, $scope, $http, $routeParams,  $location) {
-					$scope.getProfessor = function(id) {
+				'authService',
+				function($rootScope, $scope, $http, $routeParams, authService, $location) {
+					$scope.getUserSubjects = function() {
+							$http.get('api/subjects/getFor/' + $routeParams.id).success
+							(function(data, status) {
+								$scope.subjects = data;
+							}).error(function() {
+							alert('Oops, something went wrong!');
+						});
+					};
+					$scope.takeSubjectId = function(subjectId){
+						$rootScope.subjectId=subjectId;
+					};
+					$scope.getSubject = function(id) {
 						$http.get('api/subjects/' + id).success(
 								function(data, status) {
 									$scope.subject = data;
@@ -47,7 +59,7 @@ angular.module('eObrazovanjeApp').controller(
 								function(data, status) {
 									$scope.deleted = data;
 									$scope.blueAlert = true;
-									$scope.getAllProfessors();
+									$scope.getAllSubjects();
 
 								}).error(function() {
 							$scope.redAlert = true;
@@ -80,7 +92,8 @@ angular.module('eObrazovanjeApp').controller(
 							// edit stranica
 							$http.put('api/subjects/edit/' + $scope.subject.id,
 									$scope.subject).success(function() {
-								$location.path('/subjects/all');
+									window.location ="#/subjects";
+
 							}).error(function() {
 								alert("Editing error!");
 							});
@@ -88,7 +101,7 @@ angular.module('eObrazovanjeApp').controller(
 							// add stranica
 							$http.post('api/subjects/add/', $scope.subject).success(
 									function() {
-										$location.path('/subjects/all');
+										window.location ="#/subjects";
 									}).error(function() {
 								alert('Error while adding!')
 							});

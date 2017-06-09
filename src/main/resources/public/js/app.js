@@ -1,10 +1,13 @@
 'use stirict';
-angular.module('eObrazovanjeApp', [ 'ngRoute']).config(
+angular.module('eObrazovanjeApp', [ 'angular-jwt' ,'ngRoute']).config(
 		[ '$routeProvider', function($routeProvider) {
 			$routeProvider.when('/', {
-		        templateUrl: '/html/professors.html',
-		        controller: 'ProfessorController',
-		    }).when('/professors', {
+		        templateUrl: '/html/login.html',
+		        controller: 'LoginController',
+		    }).when('/login', {
+				templateUrl : '/html/login.html',
+				controller : 'LoginController'
+			}).when('/professors', {
 				templateUrl : '/html/professors.html',
 				controller : 'ProfessorController'
 			}).when('/professorRoles', {
@@ -33,6 +36,9 @@ angular.module('eObrazovanjeApp', [ 'ngRoute']).config(
 				controller : 'StudentController'
 			}).when('/transactions', {
 				templateUrl : '/html/Transactions.html',
+				controller : 'TransactionController'
+			}).when('/addOrUpdateTransaction', {
+				templateUrl : '/html/addOrUpdateTransaction.html',
 				controller : 'TransactionController'
 			}).when('/documents', {
 				templateUrl : '/html/Documents.html',
@@ -74,8 +80,17 @@ angular.module('eObrazovanjeApp', [ 'ngRoute']).config(
 				templateUrl : '/html/addOrUpdateObligation.html',
 				controller : 'ObligationController'
 			}).when('/obligations/edit/:id', {
-				templateUrl : '/html/addOrUpdateObligations.html',
+				templateUrl : '/html/addOrUpdateObligation.html',
 				controller : 'ObligationController'
+			}).when('/subjects/getFor/:id', {
+				templateUrl : '/html/UserSubjects.html',
+				controller : 'SubjectController'
+			}).when('/obligations/getFor/:id', {
+				templateUrl : '/html/UserObligations.html',
+				controller : 'ObligationController'
+			}).when('/transactions/getFor/:id', {
+				templateUrl : '/html/UserTransactions.html',
+				controller : 'TransactionController'
 			}).otherwise({
 				redirectTo : '/'
 			});

@@ -3,6 +3,8 @@
 		<tr>
 			<th>ID</th>
 			<th>Role</th>
+			<th>Professor</th>
+			<th>Subject</th>
 			<th></th>
 			<th></th>	
 		</tr>
@@ -11,6 +13,8 @@
 		<tr ng-repeat="professorRole in professorRoles">
 			<td>{{ professorRole.id }}</td>
 			<td>{{ professorRole.role }}</td>
+			<td>{{ professorRole.professorDTO.name }}</td>
+			<td>{{ professorRole.subjectDTO.name}}</td>
 
 			<td>
 				<button ng-model="button" ng-click="hideAlerts();deleteProfessorRole(professor.id)" class="btn btn-xs btn-danger">Delete</button>

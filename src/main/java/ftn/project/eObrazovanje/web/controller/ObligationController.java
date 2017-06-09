@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import ftn.project.eObrazovanje.model.Obligation;
+import ftn.project.eObrazovanje.model.ProfessorRole;
 import ftn.project.eObrazovanje.model.Subject;
 import ftn.project.eObrazovanje.service.ObligationService;
 import ftn.project.eObrazovanje.web.dto.ObligationDTO;
@@ -22,7 +24,9 @@ import ftn.project.eObrazovanje.web.dto.ObligationDTO;
 public class ObligationController {
 	@Autowired
 	private ObligationService obligationService;
-
+	
+	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_PROFESSOR')")
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public ResponseEntity<List<ObligationDTO>> getAllStudents() {
 		List<Obligation> obligations = obligationService.findAll();
@@ -32,7 +36,26 @@ public class ObligationController {
 		}
 		return new ResponseEntity<>(obligationsDTO, HttpStatus.OK);
 	}
+	
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
+	@RequestMapping(value = "/getFor/{id}", method = RequestMethod.GET)
+	public ResponseEntity<List<ObligationDTO>> getObligationsForUser(@PathVariable Long id) {
 
+		List<Obligation> obligations = obligationService.findAll();
+		List<ObligationDTO> obligationsDTO = new ArrayList<ObligationDTO>();
+		for (Obligation obligation : obligations) {
+			for (ProfessorRole role : obligation.getSubject().getProfessorRole()) {
+				if (role.getProfessor().getId()==id) {
+					obligationsDTO.add(new ObligationDTO(obligation));
+				}
+			}
+			
+		}
+		return new ResponseEntity<>(obligationsDTO, HttpStatus.OK);
+	}
+	
+	
+	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR','ROLE_ADMIN','ROLE_STUDENT')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<ObligationDTO> getObligation(@PathVariable Long id) {
 		Obligation obligation = obligationService.findOne(id);
@@ -42,7 +65,7 @@ public class ObligationController {
 
 		return new ResponseEntity<>(new ObligationDTO(obligation), HttpStatus.OK);
 	}
-
+	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR','ROLE_ADMIN')")
 	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<ObligationDTO> saveobligation(@RequestBody ObligationDTO obligation1) {
 		Obligation obligation = new Obligation();
@@ -55,7 +78,7 @@ public class ObligationController {
 
 		return new ResponseEntity<>(new ObligationDTO(obligation), HttpStatus.CREATED);
 	}
-
+	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR','ROLE_ADMIN')")
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT, consumes = "application/json")
 	public ResponseEntity<ObligationDTO> updateobligation(@RequestBody ObligationDTO obligation1) {
 
@@ -72,7 +95,7 @@ public class ObligationController {
 
 		return new ResponseEntity<>(new ObligationDTO(obligation), HttpStatus.OK);
 	}
-
+	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR','ROLE_ADMIN')")
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteObligation(@PathVariable Long id) {
 		Obligation obligation = obligationService.findOne(id);
@@ -83,4 +106,7 @@ public class ObligationController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	
+	// dodati  metodu getFor(id)
 }

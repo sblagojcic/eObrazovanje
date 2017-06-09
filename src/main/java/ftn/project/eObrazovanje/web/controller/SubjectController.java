@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +17,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import ftn.project.eObrazovanje.model.Professor;
+import ftn.project.eObrazovanje.model.ProfessorRole;
+import ftn.project.eObrazovanje.model.Student;
 import ftn.project.eObrazovanje.model.Subject;
+import ftn.project.eObrazovanje.model.User;
+import ftn.project.eObrazovanje.service.ProfessorService;
+import ftn.project.eObrazovanje.service.StudentService;
 import ftn.project.eObrazovanje.service.SubjectService;
+import ftn.project.eObrazovanje.service.UserService;
 import ftn.project.eObrazovanje.web.dto.SubjectDTO;
 
 @RestController
@@ -26,7 +34,14 @@ public class SubjectController {
 
 	@Autowired
 	SubjectService subjectService;
-
+	@Autowired
+	UserService userService;
+	@Autowired
+	StudentService studentService;
+	@Autowired
+	ProfessorService professorService;
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public ResponseEntity<List<SubjectDTO>> getSubjects() {
 		List<Subject> subjects = subjectService.findAll();
@@ -36,7 +51,7 @@ public class SubjectController {
 		}
 		return new ResponseEntity<>(subjectsDTO, HttpStatus.OK);
 	}
-
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Page<Subject>> getSubjectsPage(
 			@RequestParam(value = "pageNumber", required = false) int pageNumber, Pageable pageable) {
@@ -45,7 +60,7 @@ public class SubjectController {
 		}
 		PageRequest page = null;
 		try {
-			page = new PageRequest(pageNumber, 1);
+			page = new PageRequest(pageNumber,20);
 		} catch (Exception e) {
 			page = (PageRequest) pageable;
 		}
@@ -53,7 +68,7 @@ public class SubjectController {
 
 		return new ResponseEntity<>(subjects, HttpStatus.OK);
 	}
-
+	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR','ROLE_ADMIN','ROLE_STUDENT')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<SubjectDTO> getSubject(@PathVariable Long id) {
 		Subject subject = subjectService.findOne(id);
@@ -62,7 +77,7 @@ public class SubjectController {
 		else
 			return new ResponseEntity<>(new SubjectDTO(subject), HttpStatus.OK);
 	}
-
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<SubjectDTO> saveSubject(@RequestBody SubjectDTO subjectDTO) {
 		Subject subject = new Subject();
@@ -72,7 +87,7 @@ public class SubjectController {
 		subject = subjectService.save(subject);
 		return new ResponseEntity<>(new SubjectDTO(subject), HttpStatus.OK);
 	}
-
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT, consumes = "application/json")
 	public ResponseEntity<SubjectDTO> updateSubject(@RequestBody SubjectDTO subjectDTO) {
 		Subject subject = subjectService.findOne(subjectDTO.getId());
@@ -84,7 +99,7 @@ public class SubjectController {
 		subject = subjectService.save(subject);
 		return new ResponseEntity<>(new SubjectDTO(subject), HttpStatus.OK);
 	}
-
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteSubject(@PathVariable Long id) {
 		Subject subject = subjectService.findOne(id);
@@ -95,5 +110,22 @@ public class SubjectController {
 
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-
+	@PreAuthorize("hasAnyRole('ROLE_STUDENT','ROLE_PROFESSOR')")
+	@RequestMapping(value="/getFor/{id}", method = RequestMethod.GET)
+	public ResponseEntity<List<SubjectDTO>> getSubjectForUser(@PathVariable Long id){
+		List<SubjectDTO> subjectsDTO = new ArrayList<SubjectDTO>();
+		User user=userService.findOne(id);
+		if (user.getRole().equals("STUDENT")) {
+			Student student=studentService.findOne(id);
+			for(Subject subject : student.getSubjects()){
+				subjectsDTO.add(new SubjectDTO(subject));
+			}
+		}else{
+			Professor professor= professorService.findOne(id);
+			for(ProfessorRole role : professor.getRoles()){
+				subjectsDTO.add(new SubjectDTO(role.getSubject()));
+			}
+		}
+		return new ResponseEntity<>(subjectsDTO, HttpStatus.OK);
+	}
 }

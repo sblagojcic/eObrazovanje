@@ -19,7 +19,8 @@ angular.module('eObrazovanjeApp')
 			'$http',
 			'$routeParams',
 			'$location',
-			function($rootScope, $scope, $http, $routeParams,  $location) {
+			'authService',
+			function($rootScope, $scope, $http, $routeParams,  authService,  $location) {
 				$scope.getDocument = function(id) {
 					$http.get('api/documents/' + id).success(
 							function(data, status) {
@@ -91,7 +92,7 @@ angular.module('eObrazovanjeApp')
 						// edit stranica
 						$http.put('api/documents/edit/' + $scope.document.id,
 								$scope.document).success(function() {
-							$location.path('/documents');
+									window.location ="#/documents";
 						}).error(function() {
 							alert("neka greska edita");
 						});
@@ -99,7 +100,7 @@ angular.module('eObrazovanjeApp')
 						// add stranica
 						$http.post('api/documents/add/', $scope.document).success(
 								function() {
-									$location.path('/documents/all');
+									window.location ="#/documents";
 								}).error(function() {
 							alert('greska dodavanja!')
 						});

@@ -6,7 +6,8 @@ angular.module('eObrazovanjeApp').controller(
 			'$http',
 			'$routeParams',
 			'$location',
-			function($rootScope, $scope, $http, $routeParams,  $location) {
+			'authService',
+			function($rootScope, $scope, $http, $routeParams, authService,  $location) {
 				$scope.getExam = function(id) {
 					$http.get('api/exams/' + id).success(
 							function(data, status) {
@@ -15,7 +16,19 @@ angular.module('eObrazovanjeApp').controller(
 						$scope.redAlert = true;
 					});
 				};
+				$scope.getAllStudents = function() {
+					$http.get('api/students/inSubject/'+$rootScope.subjectId).success
+						(function(data, status) {
+							$scope.students= data;
+						
+					}).error(function() {
+						alert('Oops, something went wrong!');
+					});
 
+					$scope.resetFilter = function() {
+
+					}
+				};
 				$scope.getAllExamsForUser = function() {
 					if ($routeParams && $routeParams.id) {
 						$http.get('api/exams/getFor/' + $routeParams.id).success
@@ -77,7 +90,7 @@ angular.module('eObrazovanjeApp').controller(
 						// edit stranica
 						$http.put('api/exams/edit/' + $scope.exam.id,
 								$scope.exam).success(function() {
-							$location.path('/exams');
+									window.location ="#/subjects/getFor/"+$rootScope.userId;
 						}).error(function() {
 							alert("neka greska edita");
 						});
@@ -85,7 +98,7 @@ angular.module('eObrazovanjeApp').controller(
 						// add stranica
 						$http.post('api/exams/add/', $scope.exam).success(
 								function() {
-									$location.path('/exams/all');
+									window.location ="#/subjects/getFor/"+$rootScope.userId;
 								}).error(function() {
 							alert('greska dodavanja!')
 						});
