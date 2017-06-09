@@ -81,7 +81,6 @@ angular.module('eObrazovanjeApp').controller(
 									function(data) {
 										$scope.student = data;
 									}).error(function() {
-
 							});
 						}
 					};
@@ -172,4 +171,21 @@ angular.module('eObrazovanjeApp').controller(
 				                alert('Oops, something went wrong!');
 				            });
 				    };
+				    
+				    $scope.profilePicture = function() {
+				    	if ($routeParams && $routeParams.id) {
+				    		$http.get('api/documents/downloadPicture/' + $routeParams.id)
+				    		.success(function(data, status) {
+								$scope.documents = data;
+							}).error(function() {
+								alert('Oops, something went wrong!');
+							});
+						}
+					}
+				    
+				    $scope.availableImages = [
+				    	{
+				    	  src: "http://upload.wikimedia.org/wikipedia/commons/thumb/8/80/US_1.svg/50px-US_1.svg.png"
+				    	}
+				    	];
 				} ]);
