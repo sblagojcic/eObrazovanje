@@ -113,27 +113,6 @@ public class DocumentController {
 		return new ResponseEntity<>(documentsDTO, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/upload", method = RequestMethod.POST)
-    public ResponseEntity<Void> singleFileUpload(@RequestParam("file") MultipartFile file) {
-
-        if (file.isEmpty()) {
-        	return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        try {
-
-            // Get the file and save it somewhere
-            byte[] bytes = file.getBytes();
-            Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
-            Files.write(path, bytes);
-
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
-
 	@RequestMapping(value="/uploadAngular", method = RequestMethod.POST)
     public ResponseEntity<String> singleFileUploadAngular(@RequestParam("file") MultipartFile file) {
         try {
