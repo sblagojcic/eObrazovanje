@@ -18,10 +18,13 @@ angular.module('eObrazovanjeApp').controller(
 						});
 					};
 					
+
+					
 					$scope.getStudentsNotInSubject = function() {
+						$scope.tempSubjectDTO={};
 						$http.get('api/subjects/getNotInSubject/' + $routeParams.id).success
 						(function(data, status) {
-							$scope.subjects = data;
+							$scope.students = data;
 						}).error(function() {
 						alert('Oops, something went wrong!');
 					});
@@ -116,6 +119,17 @@ angular.module('eObrazovanjeApp').controller(
 								alert('Error while adding!')
 							});
 						}
+					};
+					
+					
+					$scope.addStudentToSubject = function() {
+							$http.post('api/subjects/addStudentToSubject/'+ $routeParams.id, $scope.tempSubjectDTO).success(
+									function() {
+										window.location ="#/subjects";
+									}).error(function() {
+								alert('Error while adding!')
+							});
+						
 					};
 
 					// paginacija

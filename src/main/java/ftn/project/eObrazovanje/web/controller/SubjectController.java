@@ -26,7 +26,9 @@ import ftn.project.eObrazovanje.service.ProfessorService;
 import ftn.project.eObrazovanje.service.StudentService;
 import ftn.project.eObrazovanje.service.SubjectService;
 import ftn.project.eObrazovanje.service.UserService;
+import ftn.project.eObrazovanje.web.dto.StudentDTO;
 import ftn.project.eObrazovanje.web.dto.SubjectDTO;
+import ftn.project.eObrazovanje.web.dto.TempSubjectDTO;
 
 @RestController
 @RequestMapping(value = "api/subjects")
@@ -128,4 +130,51 @@ public class SubjectController {
 		}
 		return new ResponseEntity<>(subjectsDTO, HttpStatus.OK);
 	}
+	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	@RequestMapping(value="/getNotInSubject/{id}", method = RequestMethod.GET)
+	public ResponseEntity<List<StudentDTO>> getStudentsNotInSubject(@PathVariable Long id){
+		List<StudentDTO> studentsDTO = new ArrayList<StudentDTO>();
+		List<Student> students = studentService.findAll();
+        
+		for (Student student : students) {
+			int i =1;
+			if (student.getSubjects().size()==0) {
+				studentsDTO.add(new StudentDTO(student));
+			}
+			else{
+				for(Subject subject : student.getSubjects()){
+				if (subject.getId()==id) {
+					i=0;
+				}
+				else{
+					i=i*1;
+				}
+				if (i==1) {
+					studentsDTO.add(new StudentDTO(student));
+				}
+			}}
+		}
+		return new ResponseEntity<>(studentsDTO, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(value = "/addStudentToSubject/{id}", method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity<SubjectDTO> saveSubject(@RequestBody TempSubjectDTO tempSubjectDTO, @PathVariable Long id) {
+		Subject subject = subjectService.findOne(id);
+		
+		for (StudentDTO studentDTO : tempSubjectDTO.getStudentsDTO()) {
+			Student student=studentService.findOne(studentDTO.getId());
+			student.getSubjects().add(subject);
+			studentService.save(student);
+			subject.getStudents().add(student);
+			
+		}
+		
+		subjectService.save(subject);
+		
+		return new ResponseEntity<>(new SubjectDTO(subject), HttpStatus.OK);
+	}
+	
+	
 }

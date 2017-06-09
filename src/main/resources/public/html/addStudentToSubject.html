@@ -1,9 +1,9 @@
-<form class="form-horizontal" ng-init= "getAllStudents();" required>
+<form class="form-horizontal" ng-init= "getStudentsNotInSubject();" required>
 
 
     <div class="form-group">
         <label class="col-sm-2">Pick a student</label>
-        <select multiple ng-model="student.subject"
+        <select multiple ng-model="tempSubjectDTO.studentsDTO"
 				ng-options="student as student.name for student in students">
 				<option value="">Select student:</option>
 		</select>
