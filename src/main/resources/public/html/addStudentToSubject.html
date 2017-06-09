@@ -1,15 +1,15 @@
 <form class="form-horizontal" ng-init= "getStudentsNotInSubject();" required>
 
 
-    <div class="form-group">
+    <div class=" form-group">
         <label class="col-sm-2">Pick a student</label>
-        <select multiple ng-model="tempSubjectDTO.studentsDTO"
-				ng-options="student as student.name for student in students">
+        <select style="width: 30%; height: 100%;" size=10 multiple ng-model="tempSubjectDTO.studentsDTO"
+				ng-options="student as student.name +' '+student.lastName for student in students track by student.Id"">
 				<option value="">Select student:</option>
 		</select>
     </div>
     
-    <div class="form-group">
+    <div class=" form-group">
     <div class="col-sm-offset-2 col-sm-10">
       <button  ng-click="addStudentToSubject()" type="submit" class="btn btn-success" >Add</button>
     </div>
