@@ -97,6 +97,7 @@ angular.module('eObrazovanjeApp').controller(
 						});
 					} else {
 						// add stranica
+						$scope.exam.subjectName=$rootScope.subjectId;
 						$http.post('api/exams/add/', $scope.exam).success(
 								function() {
 									window.location ="#/subjects/getFor/"+$rootScope.userId;
