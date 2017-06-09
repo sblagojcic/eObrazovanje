@@ -98,10 +98,12 @@ public class ProfessorController {
 		if (professor == null)
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		professor.setAddress(professorDTO.getAddress());
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String hashedPassword = passwordEncoder.encode(professorDTO.getPassword());
 		professor.setName(professorDTO.getName());
 		professor.setLastName(professorDTO.getLastName());
 		professor.setUserName(professorDTO.getUserName());
-		professor.setPassword(professorDTO.getPassword());
+		professor.setPassword(hashedPassword);
 		professor.setGender(professorDTO.getGender());
 		professor.setDateOfBirth(professorDTO.getDateOfBirth());
 		professor.setJMBG(professorDTO.getJMBG());

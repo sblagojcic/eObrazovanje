@@ -31,8 +31,8 @@ angular.module('eObrazovanjeApp').controller('LoginController', ['$rootScope', '
 				localStorage.setItem('jwt_token', response.access_token);
 				$http.get('api/users/user/' + $scope.credentials.username).success(function(data, status) {
 					$scope.user = data;
-					
-					$rootScope.userId=$scope.user.id;
+					localStorage.setItem('userId', $scope.user.id);
+					$rootScope.userId = localStorage.getItem('userId');
 					if ($scope.user.role=='STUDENT') {
 						window.location = "/#/subjects/getFor/"+$scope.user.id;
 					}

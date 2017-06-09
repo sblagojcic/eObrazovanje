@@ -1,11 +1,19 @@
 package ftn.project.eObrazovanje.web.controller;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -113,6 +121,7 @@ public class DocumentController {
 		}
 		return new ResponseEntity<>(documentsDTO, HttpStatus.OK);
 	}
+
 	@PreAuthorize("hasRole('ROLE_STUDENT')")
 	@RequestMapping(value="/upload", method = RequestMethod.POST)
     public ResponseEntity<Void> singleFileUpload(@RequestParam("file") MultipartFile file) {
@@ -134,6 +143,7 @@ public class DocumentController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+    
 	@PreAuthorize("hasRole('ROLE_STUDENT')")
 	@RequestMapping(value="/uploadAngular", method = RequestMethod.POST)
     public ResponseEntity<String> singleFileUploadAngular(@RequestParam("file") MultipartFile file) {
@@ -154,4 +164,32 @@ public class DocumentController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+	
+	@RequestMapping(value = "/download/{id}", method = RequestMethod.GET)
+	public void DownloadFiles(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) {
+			long intId = Long.parseLong(id);
+			Document document = documentService.findOne(intId);
+			String filename = document.getPath();
+            Gson gson = new Gson();
+            String jsonTry = gson.toJson(document.getPath().toString());
+            try {
+    			if(filename != null) {
+    				InputStream stream;
+    				stream = new BufferedInputStream(
+    						new FileInputStream(new File(filename)));
+    				ServletOutputStream out;
+    				out = response.getOutputStream();
+    				byte[] bbuf = new byte[100];
+    				int length = 0;
+    				while ((stream != null) && ((length = stream.read(bbuf)) != -1))
+    				   {
+    				       out.write(bbuf,0,length);
+    				   }
+    				out.flush();
+    				out.close();
+    			}
+    		} catch (Exception e1) {
+    			e1.printStackTrace();
+    		}
+	}
 }

@@ -3,7 +3,7 @@
     <div class="form-group">
         <label class="col-sm-2">Points</label>
         <div class="col-sm-6">
-            <input  ng-model="exam.points" class="form-control" />
+            <input min="0" max="100" type="number" ng-model="exam.points" class="form-control" />
         </div>
     </div>
     
@@ -17,14 +17,14 @@
     <div class="form-group">
         <label class="col-sm-2">Student</label>
         <select ng-model="exam.studentID"
-				ng-options="student.id as student.name for student in students">
+				ng-options="student.id as student.name +' '+ student.lastName for student in students">
 				<option value="">Select type:</option>
 		</select>
     </div>
     
     <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
-      <button ng-click="saveExam()" type="submit" class="btn btn-primary" >Save</button>
+      <button ng-disabled="!exam.studentID||!exam.pass||!exam.points" ng-click="saveExam()" type="submit" class="btn btn-primary" >Save</button>
     </div>
   </div>
 </form>
