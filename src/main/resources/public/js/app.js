@@ -91,6 +91,9 @@ angular.module('eObrazovanjeApp', [ 'angular-jwt' ,'ngRoute']).config(
 			}).when('/transactions/getFor/:id', {
 				templateUrl : '/html/UserTransactions.html',
 				controller : 'TransactionController'
+			}).when('/subjects/:id/addStudents', {
+				templateUrl : '/html/addStudentToSubject.html',
+				controller : 'SubjectController'
 			}).otherwise({
 				redirectTo : '/'
 			});

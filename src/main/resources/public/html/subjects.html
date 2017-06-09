@@ -6,6 +6,7 @@
 			<th>Semester</th>	
 			<th></th>
 			<th></th>
+			<th></th>
 			
 		</tr>
 	</thead>
@@ -14,6 +15,9 @@
 			<td>{{ subject.id }}</td>
 			<td>{{ subject.name }}</td>
 			<td>{{ subject.semester }}</td>
+			<td>
+				<a  href="#/subjects/{{ subject.id }}/addStudents" class="btn btn-xs btn-success">Add students</a>
+			</td>
 			<td>
 				<button ng-model="button" ng-click="hideAlerts();deleteSubject(subject.id)" class="btn btn-xs btn-danger">Delete</button>
 			</td>

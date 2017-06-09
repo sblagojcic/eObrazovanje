@@ -17,6 +17,15 @@ angular.module('eObrazovanjeApp').controller(
 							alert('Oops, something went wrong!');
 						});
 					};
+					
+					$scope.getStudentsNotInSubject = function() {
+						$http.get('api/subjects/getNotInSubject/' + $routeParams.id).success
+						(function(data, status) {
+							$scope.subjects = data;
+						}).error(function() {
+						alert('Oops, something went wrong!');
+					});
+				};
 					$scope.takeSubjectId = function(subjectId){
 						$rootScope.subjectId=subjectId;
 					};
