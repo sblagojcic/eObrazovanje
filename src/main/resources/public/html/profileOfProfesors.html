@@ -1,3 +1,4 @@
+<div class="left">
 <div ng-controller="PictureController">
 	<img ng-src="{{availableImages[0].src}}" height="242" width="142"/>
 </div>
@@ -5,9 +6,11 @@
 <form enctype="multipart/form-data">
 	<input type="file" name="file" file-input="files"/>
 	<button ng-click="upload()">Upload</button>
-</form>
+</form></div>
 
-<form class="form-horizontal" ng-init= "initProfessor()" required>
+
+<div class="right">
+	<form class="form-horizontal" ng-init= "initProfessor()" required>
 
     <div class="form-group">
         <label class="col-sm-2">Name</label>
@@ -64,4 +67,5 @@
       <a href="#/professors/edit/{{ professor.id }}" class="btn btn-xs btn-primary">Edit</a>
     </div>
   </div>
-</form>
+</form></div>
+

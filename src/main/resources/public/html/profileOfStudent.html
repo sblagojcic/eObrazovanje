@@ -1,7 +1,8 @@
-<div ng-controller="PictureController">
+<div class="left"><div ng-controller="PictureController">
 	<img ng-src="{{availableImages[0].src}}" height="242" width="142"/>
-</div>
-<form class="form-horizontal" ng-init= "initStudent()" required>
+</div></div>
+
+<div class="right"><form class="form-horizontal" ng-init= "initStudent()" required>
 
     <div class="form-group">
         <label class="col-sm-2">Name</label>
@@ -60,4 +61,4 @@
       <a href="#/Students/edit/{{ student.id }}" class="btn btn-xs btn-primary">Edit</a>
     </div>
   </div>
-</form>
+</form></div>
