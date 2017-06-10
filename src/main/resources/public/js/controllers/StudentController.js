@@ -173,14 +173,15 @@ angular.module('eObrazovanjeApp').controller(
 				    };
 				    
 				    $scope.profilePicture = function() {
-				    	if ($routeParams && $routeParams.id) {
-				    		$http.get('api/documents/downloadPicture/' + $routeParams.id)
-				    		.success(function(data, status) {
-								$scope.documents = data;
-							}).error(function() {
-								alert('Oops, something went wrong!');
-							});
-						}
+				    	$http.post('api/documents/downloadPicture/' + $routeParams.id).success(
+								function(data, status) {
+									return "https://www.google.co.in/images/srpr/logo11w.png"
+
+								}).error(function() {
+							$scope.redAlert = true;
+
+						});
+		    			
 					}
 				    
 				    $scope.availableImages = [

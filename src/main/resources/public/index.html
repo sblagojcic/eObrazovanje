@@ -30,6 +30,7 @@
 		<script src="/js/controllers/SubjectController.js"></script>
 		<script src="/js/controllers/ObligationController.js"></script>
 		<script src="/js/controllers/LoginController.js"></script>
+		<script src="/js/controllers/PictureContoller.js"></script>
 		
     </head>
     <body ng-controller="ApplicationController">
@@ -60,7 +61,8 @@
 					<li><a class="navbar-brand"  ng-show="isAdmin()" href="#/documents">All Documents</a></li>
             	    <li><a class="navbar-brand"  ng-show="isStudent()" href="#/documents/getFor/{{ userId }}">Documents</a></li>
             	    <li><a class="navbar-brand"  ng-show="isStudent()" href="#/exams/getFor/{{ userId }}">Exams</a></li>
-
+					<li><a class="navbar-brand"  ng-show="isStudent()" href="#/Students/profileOfStudent/{{ userId }}">Profile</a></li>
+					<li><a class="navbar-brand"  ng-show="isProfessor()" href="#/professors/profileOfProfesors/{{ userId }}">Profile</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li><a ng-show="!isLoggedIn()" class="log" href="#/login">Login</a></li>

@@ -159,5 +159,21 @@ angular.module('eObrazovanjeApp').controller(
 					});
 
 			};
+			$scope.upload = function(){
+				var id = $routeParams.id;
+				var fd= new FormData();
+				angular.forEach($scope.files,function(file){
+					fd.append('file', file)
+				});
+				$http.post('api/documents/profilePic/'+id, fd,{
+					transformRequest:angular.identity,	
+					headers:{'Content-Type': undefined}
+				})
+				.success(function(data){
+					$scope.document.path = data;
+				});
+				
+			};
+			
 		}
 	]);

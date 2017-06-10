@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.hamcrest.core.IsInstanceOf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,22 +34,33 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.gson.Gson;
 
 import ftn.project.eObrazovanje.model.Document;
+import ftn.project.eObrazovanje.model.Professor;
 import ftn.project.eObrazovanje.model.Student;
+import ftn.project.eObrazovanje.model.User;
 import ftn.project.eObrazovanje.service.DocumentService;
+import ftn.project.eObrazovanje.service.ProfessorService;
 import ftn.project.eObrazovanje.service.StudentService;
+import ftn.project.eObrazovanje.service.UserService;
 import ftn.project.eObrazovanje.web.dto.DocumentDTO;
 
 @RestController
 @RequestMapping(value = "api/documents")
 public class DocumentController {
 
-	private static final String UPLOADED_FOLDER = "./upload/";
+	private static final String UPLOADED_FOLDER = "./src/main/resources/public/upload/";
 
 	@Autowired
 	DocumentService documentService;
 	
 	@Autowired
 	StudentService studentService;
+	
+	@Autowired
+	UserService userService;
+	
+	@Autowired
+	ProfessorService professorService;
+	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public ResponseEntity<List<DocumentDTO>> getDocuments() {
@@ -143,6 +155,40 @@ public class DocumentController {
         }
     }
 	
+	@RequestMapping(value="/profilePic/{id}", method = RequestMethod.POST)
+    public ResponseEntity<String> profilePic(@RequestParam("file") MultipartFile file, @PathVariable String id) {
+        try {
+        	if (file.isEmpty()) {
+            	
+            	throw new IOException();
+            }
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
+            Document doc = new Document();
+            doc.setName("profile");
+            doc.setPath(path.toString());
+            User user = userService.findOne(Long.parseLong(id));
+            doc.setStudent(user);
+            documentService.save(doc);
+            
+            if(user instanceof Student){
+            	((Student) user).setPicturePath(path.toString());
+            	studentService.save((Student) user);
+            }else{
+            	((Professor) user).setPicturePath(path.toString());
+            	professorService.save((Professor) user);
+            }
+            
+            Files.write(path, bytes);
+            Gson gson = new Gson();
+            String jsonTry = gson.toJson(path.toString());
+            return new ResponseEntity<>(jsonTry,HttpStatus.OK);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+	
 	@RequestMapping(value = "/download/{id}", method = RequestMethod.GET)
 	public void DownloadFiles(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) {
 			long intId = Long.parseLong(id);
@@ -171,40 +217,26 @@ public class DocumentController {
     		}
 		}
 	
-	@RequestMapping(value = "/downloadPicture/{id}", method = RequestMethod.GET)
-	public void DownloadImages(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/downloadPicture/{id}", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<String> DownloadImages(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) throws IOException {
 			long intId = Long.parseLong(id);
-			Student student = studentService.findOne(intId);
+			User user = userService.findOne(intId);
 			List<Document>allDocs = documentService.findAll();
 			Document profilePic = new Document();
 			for(Document document : allDocs){
-				long idStudent = document.getStudent().getId();
-				if(idStudent==intId){
-					if(document.getName().equals("profile")){
-						profilePic.setPath(document.getPath());
+				if(document.getStudent()!=null){
+					long idStudent = document.getStudent().getId();
+					if(idStudent==intId){
+						if(document.getName().equals("profile")){
+							profilePic.setPath(document.getPath());
+						}
 					}
 				}
 			}
-			response.setContentType("image/jpg");	
-            try {
-    			if(profilePic.getPath() != null) {
-    				InputStream stream;
-    				stream = new BufferedInputStream(
-    						new FileInputStream(new File(profilePic.getPath())));
-    				ServletOutputStream out;
-    				out = response.getOutputStream();
-    				byte[] bbuf = new byte[100];
-    				int length = 0;
-    				while ((stream != null) && ((length = stream.read(bbuf)) != -1))
-    				   {
-    				       out.write(bbuf,0,length);
-    				   }
-    				out.flush();
-		            IOUtils.copy(stream, out);
-		            out.close();
-    			}
-    		} catch (Exception e1) {
-    			e1.printStackTrace();
-    		}
+			String src = profilePic.getPath();
+			String srcRealtive = src.replace(".\\src\\main\\resources\\public\\upload\\" , "./upload/");
+			Gson gson = new Gson();
+			String path = gson.toJson(srcRealtive);
+			return new ResponseEntity<String>(path, HttpStatus.OK);
 		}
 }

@@ -9,13 +9,18 @@ Upload preko angulara
 <form class="form-horizontal" ng-init= "initDocument()" required>
 
     <div class="form-group">
-        <label class="col-sm-2">Name</label>
+        <label class="col-sm-2">Type of document</label>
         <div class="col-sm-6">
-            <input  ng-model="document.name" class="form-control" />
+        	<select ng-model="document.name" >
+				<option value="">Select type:</option>
+				<option value="profile">Profile picture</option>
+				<option value="document">Document</option>
+				<option value="other">Other</option>
+			</select>
         </div>
     </div>
     
-    <div class="form-group">
+    <div class="form-group" hidden>
         <label class="col-sm-2">Path</label>
         <div class="col-sm-6">
             <input  ng-model="document.path" class="form-control"/>

@@ -49,6 +49,9 @@ angular.module('eObrazovanjeApp', [ 'angular-jwt' ,'ngRoute']).config(
 			}).when('/Students/profileOfStudent/:id', {
 				templateUrl : '/html/profileOfStudent.html',
 				controller : 'StudentController'
+			}).when('/professors/profileOfProfesors/:id', {
+				templateUrl : '/html/profileOfProfesors.html',
+				controller : 'ProfessorController'
 			}).when('/addOrUpdateDocument', {
 				templateUrl : '/html/addOrUpdateDocument.html',
 				controller : 'DocumentController'

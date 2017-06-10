@@ -1,63 +1,67 @@
 <div ng-controller="PictureController">
 	<img ng-src="{{availableImages[0].src}}" height="242" width="142"/>
 </div>
-<form class="form-horizontal" ng-init= "initStudent()" required>
+
+<form enctype="multipart/form-data">
+	<input type="file" name="file" file-input="files"/>
+	<button ng-click="upload()">Upload</button>
+</form>
+
+<form class="form-horizontal" ng-init= "initProfessor()" required>
 
     <div class="form-group">
         <label class="col-sm-2">Name</label>
         <div class="col-sm-6">
-            <label>{{student.name}}</label>
+            <label>{{professor.name}}</label>
         </div>
     </div>
     
     <div class="form-group">
         <label class="col-sm-2">Last name</label>
         <div class="col-sm-6">
-            <label>{{student.lastName}}</label>
+            <label>{{professor.lastName}}</label>
         </div>
     </div>
     
     <div class="form-group">
         <label class="col-sm-2">User name</label>
         <div class="col-sm-6">
-            <label>{{student.userName}}</label>
+            <label>{{professor.userName}}</label>
         </div>
     </div>
     
     <div class="form-group">
         <label class="col-sm-2">JMBG</label>
         <div class="col-sm-6">
-            <label>{{student.jmbg}}</label>
+            <label>{{professor.jmbg}}</label>
         </div>
     </div>
     
         <div class="form-group">
         <label class="col-sm-2">Date of birth</label>
         <div class="col-sm-6">
-            <label>{{student.dateOfBirth}}</label>
+            <label>{{professor.dateOfBirth}}</label>
         </div>
     </div>
     
     <div class="form-group">
         <label class="col-sm-2">Address</label>
         <div class="col-sm-6">
-            <label>{{student.address}}</label>
+            <label>{{professor.address}}</label>
         </div>
     </div>
     
     <div class="form-group">
         <label class="col-sm-2">Gender</label>
         <div class="col-sm-6">
-        <label>{{student.gender}}</label>
+        <label>{{professor.gender}}</label>
              
         </div>
     </div>
     
-
-
     <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
-      <a href="#/Students/edit/{{ student.id }}" class="btn btn-xs btn-primary">Edit</a>
+      <a href="#/professors/edit/{{ professor.id }}" class="btn btn-xs btn-primary">Edit</a>
     </div>
   </div>
 </form>

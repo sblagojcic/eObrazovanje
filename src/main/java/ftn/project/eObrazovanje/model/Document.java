@@ -20,7 +20,7 @@ public class Document {
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	@JsonBackReference
-	private Student student;
+	private User student;
 
 	public Document() {
 		super();
@@ -58,11 +58,11 @@ public class Document {
 		this.path = path;
 	}
 
-	public Student getStudent() {
+	public User getStudent() {
 		return student;
 	}
 
-	public void setStudent(Student student) {
+	public void setStudent(User student) {
 		this.student = student;
 	}
 }
