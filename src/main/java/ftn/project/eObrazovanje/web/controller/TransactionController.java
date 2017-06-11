@@ -72,7 +72,7 @@ public class TransactionController {
 		return new ResponseEntity<>(new TransactionDTO(transaction), HttpStatus.CREATED);
 	}
 
-	@PreAuthorize("hasRole('ROLE_STUDENT')")
+	@PreAuthorize("hasAnyRole('ROLE_STUDENT', 'ROLE_ADMIN')")
 	@RequestMapping(value = "/getFor/{id}", method = RequestMethod.GET)
 	public ResponseEntity<List<TransactionDTO>> getSubjectForUser(@PathVariable Long id) {
 		List<TransactionDTO> transactionsDTO = new ArrayList<TransactionDTO>();

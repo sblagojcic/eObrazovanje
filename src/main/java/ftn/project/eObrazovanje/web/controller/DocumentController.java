@@ -190,9 +190,8 @@ public class DocumentController {
     }
 	
 	@RequestMapping(value = "/download/{id}", method = RequestMethod.GET)
-	public void DownloadFiles(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) {
-			long intId = Long.parseLong(id);
-			Document document = documentService.findOne(intId);
+	public void DownloadFiles(@PathVariable Long id, HttpServletRequest request, HttpServletResponse response) {
+			Document document = documentService.findOne(id);
 			String filename = document.getPath();
             Gson gson = new Gson();
             String jsonTry = gson.toJson(document.getPath().toString());
@@ -218,15 +217,15 @@ public class DocumentController {
 		}
 	
 	@RequestMapping(value = "/downloadPicture/{id}", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<String> DownloadImages(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) throws IOException {
-			long intId = Long.parseLong(id);
-			User user = userService.findOne(intId);
+	public ResponseEntity<String> DownloadImages(@PathVariable Long id, HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+			User user = userService.findOne(id);
 			List<Document>allDocs = documentService.findAll();
 			Document profilePic = new Document();
 			for(Document document : allDocs){
 				if(document.getStudent()!=null){
 					long idStudent = document.getStudent().getId();
-					if(idStudent==intId){
+					if(idStudent==id){
 						if(document.getName().equals("profile")){
 							profilePic.setPath(document.getPath());
 						}

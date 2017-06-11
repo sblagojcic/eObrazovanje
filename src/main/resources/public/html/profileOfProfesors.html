@@ -1,71 +1,55 @@
-<div class="left">
-<div ng-controller="PictureController">
-	<img ng-src="{{availableImages[0].src}}" height="242" width="142"/>
-</div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+   
+   
+          <div class="panel panel-info" ng-init= "initProfessor()" required>
+            <div class="panel-heading">
+              <h3 class="panel-title">{{professor.name}} {{professor.lastName}}</h3>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div ng-controller="PictureController" class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" ng-src="{{availableImages[0].src}}" class="img-circle img-responsive"> </div>
 
-<form enctype="multipart/form-data">
+                <div class=" col-md-9 col-lg-9 "> 
+                  <table class="table table-user-information">
+                    <tbody>
+                      <tr>
+                        <td>User name:</td>
+                        <td>{{professor.userName}}</td>
+                      </tr>
+                      <tr>
+                        <td>JMBG:</td>
+                        <td>{{professor.jmbg}}</td>
+                      </tr>
+                      <tr>
+                        <td>Date of Birth</td>
+                        <td>{{professor.dateOfBirth| date:'dd-MM-yyyy'}}</td>
+                      </tr>
+                   
+                         <tr>
+                             <tr>
+                        <td>Gender</td>
+                        <td>{{professor.gender}}</td>
+                      </tr>
+                        <tr>
+                        <td>Address</td>
+                        <td>{{professor.address}}</td>
+                      </tr>
+
+                     
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+                 <div class="panel-footer">
+						<a data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning" href="#/professors/edit/{{ professor.id }}" class="btn btn-xs btn-primary">Edit</a><br>
+                    </div>
+            
+          </div>
+        </div>
+
+<!-- <form enctype="multipart/form-data">
 	<input type="file" name="file" file-input="files"/>
 	<button ng-click="upload()">Upload</button>
-</form></div>
-
-
-<div class="right">
-	<form class="form-horizontal" ng-init= "initProfessor()" required>
-
-    <div class="form-group">
-        <label class="col-sm-2">Name</label>
-        <div class="col-sm-6">
-            <label>{{professor.name}}</label>
-        </div>
-    </div>
-    
-    <div class="form-group">
-        <label class="col-sm-2">Last name</label>
-        <div class="col-sm-6">
-            <label>{{professor.lastName}}</label>
-        </div>
-    </div>
-    
-    <div class="form-group">
-        <label class="col-sm-2">User name</label>
-        <div class="col-sm-6">
-            <label>{{professor.userName}}</label>
-        </div>
-    </div>
-    
-    <div class="form-group">
-        <label class="col-sm-2">JMBG</label>
-        <div class="col-sm-6">
-            <label>{{professor.jmbg}}</label>
-        </div>
-    </div>
-    
-        <div class="form-group">
-        <label class="col-sm-2">Date of birth</label>
-        <div class="col-sm-6">
-            <label>{{professor.dateOfBirth}}</label>
-        </div>
-    </div>
-    
-    <div class="form-group">
-        <label class="col-sm-2">Address</label>
-        <div class="col-sm-6">
-            <label>{{professor.address}}</label>
-        </div>
-    </div>
-    
-    <div class="form-group">
-        <label class="col-sm-2">Gender</label>
-        <div class="col-sm-6">
-        <label>{{professor.gender}}</label>
-             
-        </div>
-    </div>
-    
-    <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <a href="#/professors/edit/{{ professor.id }}" class="btn btn-xs btn-primary">Edit</a>
-    </div>
-  </div>
-</form></div>
+</form> -->
 

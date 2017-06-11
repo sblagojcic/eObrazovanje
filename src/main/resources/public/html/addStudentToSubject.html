@@ -4,7 +4,7 @@
     <div class=" form-group">
         <label class="col-sm-2">Pick a student</label>
         <select style="width: 30%; height: 100%;" size=10 multiple ng-model="tempSubjectDTO.studentsDTO"
-				ng-options="student as student.name +' '+student.lastName for student in students track by student.Id"">
+				ng-options="student as student.name +' '+student.lastName for student in students">
 				<option value="">Select student:</option>
 		</select>
     </div>
