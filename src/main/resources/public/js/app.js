@@ -103,6 +103,9 @@ angular.module('eObrazovanjeApp', [ 'angular-jwt' ,'ngRoute']).config(
 			}).when('/subjects/:id/addStudents', {
 				templateUrl : '/html/addStudentToSubject.html',
 				controller : 'SubjectController'
+			}).when('/changePassword/:id', {
+				templateUrl : '/html/changePassword.html',
+				controller : 'ChangePasswordController'
 			}).otherwise({
 				redirectTo : '/'
 			});

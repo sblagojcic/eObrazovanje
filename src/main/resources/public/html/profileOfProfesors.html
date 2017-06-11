@@ -41,10 +41,12 @@
                 </div>
               </div>
             </div>
-                 <div class="panel-footer">
-						<a data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning" href="#/professors/edit/{{ professor.id }}" class="btn btn-xs btn-primary">Edit</a><br>
-                    </div>
-            
+         	 <div class="panel-footer">
+					<a data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning" href="#/professors/edit/{{ professor.id }}" class="btn btn-xs btn-primary">Edit</a><br>
+                </div>
+            	<div class="panel-footer" ng-show="isStudent()||isProfessor()">
+					<a  data-original-title="Change password" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning" href="#/changePassword/{{ professor.id }}" class="btn btn-xs btn-primary">Change password</a><br>
+                </div>
           </div>
         </div>
 

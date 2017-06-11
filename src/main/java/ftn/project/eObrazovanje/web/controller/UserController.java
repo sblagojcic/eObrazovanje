@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,9 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ftn.project.eObrazovanje.model.User;
 import ftn.project.eObrazovanje.service.UserService;
+import ftn.project.eObrazovanje.web.dto.ChangePasswordDTO;
 import ftn.project.eObrazovanje.web.dto.UserDTO;
-
-
+import ftn.project.eObrazovanje.web.exceptions.PasswordNotEqualsException;
 
 @RestController
 @RequestMapping(value = "api/users")
@@ -44,9 +45,9 @@ public class UserController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Page<User>> getUsersPage(Pageable page) {
 		Page<User> users = userService.findAll(page);
-
 		return new ResponseEntity<>(users, HttpStatus.OK);
 	}
+    
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
@@ -95,6 +96,7 @@ public class UserController {
         return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
 
     }
+    
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
@@ -106,6 +108,23 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
+    
+    @RequestMapping(value = "/changePassword/", method = RequestMethod.PUT)
+    public ResponseEntity<Void> changePassword(@RequestBody ChangePasswordDTO passwordDTO) throws Exception {
+        User user = userService.findOne(passwordDTO.getUserID());
+        if (user == null) {
+            throw new Exception(); 
+            } 
+        String newPass = passwordDTO.getNewPassword();
+        String repeatPass = passwordDTO.getReapeatPassword();
+        if(!newPass.equals(repeatPass)){
+        	System.out.println("JBG");
+        }
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String hashedPassword = passwordEncoder.encode(newPass);
+		user.setPassword(hashedPassword);
+		userService.save(user);
+		return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
 

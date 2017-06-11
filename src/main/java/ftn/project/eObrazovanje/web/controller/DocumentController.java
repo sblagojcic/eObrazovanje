@@ -180,10 +180,14 @@ public class DocumentController {
 	
 	@RequestMapping(value = "/download/{id}", method = RequestMethod.GET)
 	public void downloadFiles(@PathVariable Long id, HttpServletRequest request, HttpServletResponse response) {
-			Document document = documentService.findOne(id);
+			Document document = documentService.findOne(id);						
 			String filename = document.getPath();
-            Gson gson = new Gson();
-            String jsonTry = gson.toJson(document.getPath().toString());
+			if(filename.contains(".pdf")){
+				response.setContentType("application/pdf");
+			}
+			if(filename.contains(".jpg")|| filename.contains("jpeg")){
+				response.setContentType("image/jpeg");
+			}
             try {
     			if(filename != null) {
     				InputStream stream;
@@ -197,6 +201,7 @@ public class DocumentController {
     				   {
     				       out.write(bbuf,0,length);
     				   }
+    				stream.close();
     				out.flush();
     				out.close();
     			}

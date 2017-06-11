@@ -123,13 +123,10 @@ public class StudentController {
 
 		student.setAddress(student1.getAddress());
 		student.setDateOfBirth(student1.getDateOfBirth());
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		String hashedPassword = passwordEncoder.encode(student1.getPassword());
 		student.setGender(student1.getGender());
 		student.setJMBG(student1.getJMBG());
 		student.setLastName(student1.getLastName());
 		student.setName(student1.getName());
-		student.setPassword(hashedPassword);
 		student.setPicturePath(student1.getPicturePath());
 		student.setUserName(student1.getUserName());
 		student.setRole(student1.getRole());
