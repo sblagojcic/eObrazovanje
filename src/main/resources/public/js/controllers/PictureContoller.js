@@ -13,7 +13,6 @@ angular.module('eObrazovanjeApp').controller(
 				    	
 				    	$http.get("api/documents/downloadPicture/" + id)
 				        .then( function(response){
-				        	alert(response.data);
 				        	$scope.availableImages[0].src = response.data;
 				        	})
 				    

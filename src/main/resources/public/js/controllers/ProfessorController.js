@@ -75,7 +75,12 @@ angular.module('eObrazovanjeApp').controller(
 					// edit stranica
 					$http.put('api/professors/edit/' + $scope.professor.id,
 						$scope.professor).success(function() {
-							window.location ="#/professors";
+							if ($scope.isAdmin()) {
+								window.location ="#/professors";
+							} else if($scope.isProfessor()){
+								window.location ="#/subjects/getFor/"+$rootScope.userId;
+							}
+							
 					}).error(function() {
 						alert("neka greska edita");
 					});
@@ -83,7 +88,11 @@ angular.module('eObrazovanjeApp').controller(
 					// add stranica
 					$http.post('api/professors/add/', $scope.professor).success(
 						function() {
-							window.location ="#/professors";
+							if ($scope.isAdmin()) {
+								window.location ="#/professors";
+							} else if($scope.isProfessor()){
+								window.location ="#/subjects/getFor/"+$rootScope.userId;
+							}
 						}).error(function() {
 						alert('greska dodavanja!')
 					});

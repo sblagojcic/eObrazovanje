@@ -24,7 +24,15 @@
             <input  ng-model="professor.userName" class="form-control" />
         </div>
     </div>
-
+    
+    
+    <div class="form-group" ng-show="isAdmin()">
+        <label class="col-sm-2">Password</label>
+        <div class="col-sm-6">
+            <input type="password"  ng-model="professor.password" class="form-control" />
+        </div>
+    </div>
+    
     <div class="form-group">
         <label class="col-sm-2">JMBG</label>
         <div class="col-sm-6">

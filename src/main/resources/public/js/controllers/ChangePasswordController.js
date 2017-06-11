@@ -19,7 +19,7 @@ angular.module('eObrazovanjeApp').controller(
 						$scope.password.userID= $rootScope.userId;
 						$http.put('api/users/changePassword/', $scope.password).success(
 								function() {
-									window.location ="#/documents/getFor/"+$rootScope.userId;
+									window.location ="#/subjects/getFor/"+$rootScope.userId;
 								}).error(function() {
 							alert('greska dodavanja!')
 						});

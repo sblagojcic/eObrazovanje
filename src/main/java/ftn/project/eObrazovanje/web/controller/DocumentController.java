@@ -188,6 +188,9 @@ public class DocumentController {
 			if(filename.contains(".jpg")|| filename.contains("jpeg")){
 				response.setContentType("image/jpeg");
 			}
+			if(filename.contains(".png")){
+				response.setContentType("image/png");
+			}
             try {
     			if(filename != null) {
     				InputStream stream;

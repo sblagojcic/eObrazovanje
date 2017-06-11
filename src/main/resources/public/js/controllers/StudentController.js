@@ -90,7 +90,11 @@ angular.module('eObrazovanjeApp').controller(
 							// edit stranica
 							$http.put('api/students/edit/' + $scope.student.id,
 									$scope.student).success(function() {
-										window.location ="#/students";
+										if ($scope.isAdmin()) {
+											window.location ="#/students";
+										} else if($scope.isStudent()){
+											window.location ="#/subjects/getFor/"+$rootScope.userId;
+										}
 							}).error(function() {
 								alert("neka greska edita");
 							});
