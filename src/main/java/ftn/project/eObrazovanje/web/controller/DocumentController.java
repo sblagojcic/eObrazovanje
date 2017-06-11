@@ -78,6 +78,7 @@ public class DocumentController {
 
 		return new ResponseEntity<>(documents, HttpStatus.OK);
 	}
+	
 	@PreAuthorize("hasAnyRole('ROLE_STUDENT','ROLE_ADMIN')")
 	@RequestMapping(value="/add",method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<DocumentDTO> saveDocument(@RequestBody DocumentDTO documentDTO) {
@@ -89,6 +90,7 @@ public class DocumentController {
 		document = documentService.save(document);
 		return new ResponseEntity<>(new DocumentDTO(document), HttpStatus.OK);
 	}
+	
 	@PreAuthorize("hasAnyRole('ROLE_STUDENT','ROLE_ADMIN')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<DocumentDTO> getProfessorRole(@PathVariable Long id) {
@@ -98,6 +100,7 @@ public class DocumentController {
 		else
 			return new ResponseEntity<>(new DocumentDTO(document), HttpStatus.OK);
 	}
+	
 	@PreAuthorize("hasRole('ROLE_ADMIN','ROLE_STUDENT')")
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteResponsePayment(@PathVariable Long id) {
@@ -109,6 +112,7 @@ public class DocumentController {
             return new ResponseEntity<>(HttpStatus.OK);
         }
     }
+	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT, consumes = "application/json")
 	public ResponseEntity<DocumentDTO> updateProfessor(@RequestBody DocumentDTO documentDTO) {
@@ -122,6 +126,7 @@ public class DocumentController {
 		document = documentService.save(document);
 		return new ResponseEntity<>(new DocumentDTO(document), HttpStatus.OK);
 	}
+	
 	@PreAuthorize("hasAnyRole('ROLE_STUDENT','ROLE_ADMIN')")
 	@RequestMapping(value="/getFor/{id}", method = RequestMethod.GET)
 	public ResponseEntity<List<DocumentDTO>> getDocunemtForUser(@PathVariable Long id){
@@ -156,29 +161,13 @@ public class DocumentController {
     }
 	
 	@RequestMapping(value="/profilePic/{id}", method = RequestMethod.POST)
-    public ResponseEntity<String> profilePic(@RequestParam("file") MultipartFile file, @PathVariable String id) {
+    public ResponseEntity<String> uploadProfilePic(@RequestParam("file") MultipartFile file) {
         try {
         	if (file.isEmpty()) {
-            	
             	throw new IOException();
             }
             byte[] bytes = file.getBytes();
             Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
-            Document doc = new Document();
-            doc.setName("profile");
-            doc.setPath(path.toString());
-            User user = userService.findOne(Long.parseLong(id));
-            doc.setStudent(user);
-            documentService.save(doc);
-            
-            if(user instanceof Student){
-            	((Student) user).setPicturePath(path.toString());
-            	studentService.save((Student) user);
-            }else{
-            	((Professor) user).setPicturePath(path.toString());
-            	professorService.save((Professor) user);
-            }
-            
             Files.write(path, bytes);
             Gson gson = new Gson();
             String jsonTry = gson.toJson(path.toString());
@@ -190,7 +179,7 @@ public class DocumentController {
     }
 	
 	@RequestMapping(value = "/download/{id}", method = RequestMethod.GET)
-	public void DownloadFiles(@PathVariable Long id, HttpServletRequest request, HttpServletResponse response) {
+	public void downloadFiles(@PathVariable Long id, HttpServletRequest request, HttpServletResponse response) {
 			Document document = documentService.findOne(id);
 			String filename = document.getPath();
             Gson gson = new Gson();
@@ -215,27 +204,20 @@ public class DocumentController {
     			e1.printStackTrace();
     		}
 		}
+
 	
 	@RequestMapping(value = "/downloadPicture/{id}", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<String> DownloadImages(@PathVariable Long id, HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-			User user = userService.findOne(id);
-			List<Document>allDocs = documentService.findAll();
-			Document profilePic = new Document();
-			for(Document document : allDocs){
-				if(document.getStudent()!=null){
-					long idStudent = document.getStudent().getId();
-					if(idStudent==id){
-						if(document.getName().equals("profile")){
-							profilePic.setPath(document.getPath());
-						}
-					}
-				}
-			}
-			String src = profilePic.getPath();
-			String srcRealtive = src.replace(".\\src\\main\\resources\\public\\upload\\" , "./upload/");
-			Gson gson = new Gson();
-			String path = gson.toJson(srcRealtive);
-			return new ResponseEntity<String>(path, HttpStatus.OK);
+	public ResponseEntity<String> DownloadImagesProfesor(@PathVariable Long id, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		User user = userService.findOne(id);
+		String src = "";
+		if(user instanceof Student){
+			src =((Student)user).getPicturePath();
+		}else{
+			src =((Professor)user).getPicturePath(); 
 		}
+		String srcRealtive = src.replace(".\\src\\main\\resources\\public\\upload\\" , "./upload/");
+		Gson gson = new Gson();
+		String path = gson.toJson(srcRealtive);
+		return new ResponseEntity<String>(path, HttpStatus.OK);
+	}
 }

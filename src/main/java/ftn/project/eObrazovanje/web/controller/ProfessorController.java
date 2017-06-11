@@ -35,6 +35,7 @@ public class ProfessorController {
 
 	@Autowired
 	ProfessorRoleService professorRoleService;
+	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public ResponseEntity<List<ProfessorDTO>> getProfessors() {
@@ -45,6 +46,7 @@ public class ProfessorController {
 		}
 		return new ResponseEntity<>(professorsDTO, HttpStatus.OK);
 	}
+	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Page<Professor>> getProfessorsPage(
@@ -62,6 +64,7 @@ public class ProfessorController {
 
 		return new ResponseEntity<>(professors, HttpStatus.OK);
 	}
+	
 	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR','ROLE_ADMIN','ROLE_STUDENT')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<ProfessorDTO> getProfessor(@PathVariable Long id) {
@@ -71,6 +74,7 @@ public class ProfessorController {
 		else
 			return new ResponseEntity<>(new ProfessorDTO(professor), HttpStatus.OK);
 	}
+	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<ProfessorDTO> saveProfessor(@RequestBody ProfessorDTO professorDTO) {
@@ -87,10 +91,11 @@ public class ProfessorController {
 		professor.setDateOfBirth(professorDTO.getDateOfBirth());
 		professor.setJMBG(professorDTO.getJMBG());
 		professor.setTitle(professorDTO.getTitle());
-
+		professor.setPicturePath(professorDTO.getPicturePath());
 		professor = professorService.save(professor);
 		return new ResponseEntity<>(new ProfessorDTO(professor), HttpStatus.OK);
 	}
+	
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_PROFESSOR')")
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT, consumes = "application/json")
 	public ResponseEntity<ProfessorDTO> updateProfessor(@RequestBody ProfessorDTO professorDTO) {
@@ -112,6 +117,7 @@ public class ProfessorController {
 		professor = professorService.save(professor);
 		return new ResponseEntity<>(new ProfessorDTO(professor), HttpStatus.OK);
 	}
+	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteProfessor(@PathVariable Long id) {
@@ -127,6 +133,7 @@ public class ProfessorController {
 
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	
 	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR','ROLE_ADMIN')")
 	@RequestMapping(value = "/{id}/roles", method = RequestMethod.GET)
 	public ResponseEntity<List<ProfessorRoleDTO>> getRoles(@PathVariable Long id) {

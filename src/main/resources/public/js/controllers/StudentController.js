@@ -172,21 +172,21 @@ angular.module('eObrazovanjeApp').controller(
 				            });
 				    };
 				    
-				    $scope.profilePicture = function() {
-				    	$http.post('api/documents/downloadPicture/' + $routeParams.id).success(
-								function(data, status) {
-									return "https://www.google.co.in/images/srpr/logo11w.png"
-
-								}).error(function() {
-							$scope.redAlert = true;
-
+				    $scope.upload = function(){
+						var id = $routeParams.id;
+						var fd= new FormData();
+						angular.forEach($scope.files,function(file){
+							fd.append('file', file)
 						});
-		    			
-					}
-				    
-				    $scope.availableImages = [
-				    	{
-				    	  src: "http://upload.wikimedia.org/wikipedia/commons/thumb/8/80/US_1.svg/50px-US_1.svg.png"
-				    	}
-				    	];
-				} ]);
+						$http.post('api/documents/profilePic/'+id, fd,{
+							transformRequest:angular.identity,	
+							headers:{'Content-Type': undefined}
+						})
+						.success(function(data){
+							$scope.student.picturePath = data;
+						});
+						
+					};
+				}
+
+ ]);

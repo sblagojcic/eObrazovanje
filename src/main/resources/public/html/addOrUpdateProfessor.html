@@ -1,3 +1,7 @@
+<form enctype="multipart/form-data">
+	<input type="file" name="file" file-input="files"/>
+	<button ng-click="upload()">Upload</button>
+</form> 
 <form class="form-horizontal" ng-init= "initProfessor()" required>
 
     <div class="form-group">
@@ -65,6 +69,13 @@
         <label class="col-sm-2">Title</label>
         <div class="col-sm-6">
             <input ng-model="professor.title" class="form-control" />
+        </div>
+    </div>
+    
+    <div class="form-group" hidden>
+        <label class="col-sm-2">Path to profile</label>
+        <div class="col-sm-6">
+            <input ng-model="professor.picturePath" class="form-control" />
         </div>
     </div>
 

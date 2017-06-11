@@ -40,6 +40,7 @@ public class StudentController {
 		}
 		return new ResponseEntity<>(studentsDTO, HttpStatus.OK);
 	}
+	
 	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	@RequestMapping(value = "/inSubject/{id}", method = RequestMethod.GET)
 	public ResponseEntity<List<StudentDTO>> getStudentsInSubject(@PathVariable Long id) {
@@ -61,6 +62,7 @@ public class StudentController {
 		}
 		return new ResponseEntity<>(studentsDTO, HttpStatus.OK);
 	}
+	
 	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR','ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Page<Student>> getStudentsPage(
@@ -78,6 +80,7 @@ public class StudentController {
 
 		return new ResponseEntity<>(students, HttpStatus.OK);
 	}
+	
 	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR','ROLE_ADMIN','ROLE_STUDENT')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<StudentDTO> getStudent(@PathVariable Long id) {
@@ -88,6 +91,7 @@ public class StudentController {
 
 		return new ResponseEntity<>(new StudentDTO(student), HttpStatus.OK);
 	}
+	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<StudentDTO> savestudent(@RequestBody StudentDTO student1) {
@@ -101,10 +105,13 @@ public class StudentController {
 		student.setRole("STUDENT");
 		student.setLastName(student1.getLastName());
 		student.setPassword(hashedPassword);
+		student.setPicturePath(student1.getPicturePath());
 		student = studentService.save(student);
 
 		return new ResponseEntity<>(new StudentDTO(student), HttpStatus.CREATED);
 	}
+
+	
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STUDENT')")
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT, consumes = "application/json")
 	public ResponseEntity<StudentDTO> updatestudent(@RequestBody StudentDTO student1) {
@@ -130,6 +137,7 @@ public class StudentController {
 
 		return new ResponseEntity<>(new StudentDTO(student), HttpStatus.OK);
 	}
+	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {

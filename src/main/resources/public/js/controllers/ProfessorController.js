@@ -37,8 +37,6 @@ angular.module('eObrazovanjeApp').controller(
 
 			};
 
-
-
 			$scope.deleteProfessor = function(id) {
 				$http.delete('api/professors/delete/' + id).success(
 					function(data, status) {
@@ -159,6 +157,7 @@ angular.module('eObrazovanjeApp').controller(
 					});
 
 			};
+			
 			$scope.upload = function(){
 				var id = $routeParams.id;
 				var fd= new FormData();
@@ -170,7 +169,7 @@ angular.module('eObrazovanjeApp').controller(
 					headers:{'Content-Type': undefined}
 				})
 				.success(function(data){
-					$scope.document.path = data;
+					$scope.professor.picturePath = data;
 				});
 				
 			};
