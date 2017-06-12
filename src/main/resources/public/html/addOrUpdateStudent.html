@@ -1,6 +1,6 @@
 <form enctype="multipart/form-data">
 	<input type="file" name="file" file-input="files"/>
-	<button ng-click="upload()">Upload</button>
+	<button ng-click="upload()" >Upload</button>
 </form> 
 <form class="form-horizontal" ng-init= "initStudent()" required>
 
@@ -25,7 +25,7 @@
         </div>
     </div>
     
-    <div class="form-group">
+    <div class="form-group" ng-show="isAdmin()">
         <label class="col-sm-2">Password</label>
         <div class="col-sm-6">
             <input type="password"  ng-model="student.password" class="form-control" />
