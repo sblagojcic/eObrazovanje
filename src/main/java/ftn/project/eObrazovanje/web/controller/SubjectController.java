@@ -42,7 +42,7 @@ public class SubjectController {
 	StudentService studentService;
 	@Autowired
 	ProfessorService professorService;
-	
+
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public ResponseEntity<List<SubjectDTO>> getSubjects() {
@@ -53,6 +53,7 @@ public class SubjectController {
 		}
 		return new ResponseEntity<>(subjectsDTO, HttpStatus.OK);
 	}
+
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Page<Subject>> getSubjectsPage(
@@ -62,7 +63,7 @@ public class SubjectController {
 		}
 		PageRequest page = null;
 		try {
-			page = new PageRequest(pageNumber,20);
+			page = new PageRequest(pageNumber, 20);
 		} catch (Exception e) {
 			page = (PageRequest) pageable;
 		}
@@ -70,6 +71,7 @@ public class SubjectController {
 
 		return new ResponseEntity<>(subjects, HttpStatus.OK);
 	}
+
 	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR','ROLE_ADMIN','ROLE_STUDENT')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<SubjectDTO> getSubject(@PathVariable Long id) {
@@ -79,6 +81,7 @@ public class SubjectController {
 		else
 			return new ResponseEntity<>(new SubjectDTO(subject), HttpStatus.OK);
 	}
+
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<SubjectDTO> saveSubject(@RequestBody SubjectDTO subjectDTO) {
@@ -89,6 +92,7 @@ public class SubjectController {
 		subject = subjectService.save(subject);
 		return new ResponseEntity<>(new SubjectDTO(subject), HttpStatus.OK);
 	}
+
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT, consumes = "application/json")
 	public ResponseEntity<SubjectDTO> updateSubject(@RequestBody SubjectDTO subjectDTO) {
@@ -101,6 +105,7 @@ public class SubjectController {
 		subject = subjectService.save(subject);
 		return new ResponseEntity<>(new SubjectDTO(subject), HttpStatus.OK);
 	}
+
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteSubject(@PathVariable Long id) {
@@ -112,69 +117,79 @@ public class SubjectController {
 
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+
 	@PreAuthorize("hasAnyRole('ROLE_STUDENT','ROLE_PROFESSOR')")
-	@RequestMapping(value="/getFor/{id}", method = RequestMethod.GET)
-	public ResponseEntity<List<SubjectDTO>> getSubjectForUser(@PathVariable Long id){
+	@RequestMapping(value = "/getFor/{id}", method = RequestMethod.GET)
+	public ResponseEntity<List<SubjectDTO>> getSubjectForUser(@PathVariable Long id) {
 		List<SubjectDTO> subjectsDTO = new ArrayList<SubjectDTO>();
-		User user=userService.findOne(id);
+		User user = userService.findOne(id);
 		if (user.getRole().equals("STUDENT")) {
-			Student student=studentService.findOne(id);
-			for(Subject subject : student.getSubjects()){
+			Student student = studentService.findOne(id);
+			for (Subject subject : student.getSubjects()) {
 				subjectsDTO.add(new SubjectDTO(subject));
 			}
-		}else{
-			Professor professor= professorService.findOne(id);
-			for(ProfessorRole role : professor.getRoles()){
+		} else {
+			Professor professor = professorService.findOne(id);
+			for (ProfessorRole role : professor.getRoles()) {
 				subjectsDTO.add(new SubjectDTO(role.getSubject()));
 			}
 		}
 		return new ResponseEntity<>(subjectsDTO, HttpStatus.OK);
 	}
-	
+
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-	@RequestMapping(value="/getNotInSubject/{id}", method = RequestMethod.GET)
-	public ResponseEntity<List<StudentDTO>> getStudentsNotInSubject(@PathVariable Long id){
+	@RequestMapping(value = "/getNotInSubject/{id}", method = RequestMethod.GET)
+	public ResponseEntity<List<StudentDTO>> getStudentsNotInSubject(@PathVariable Long id) {
 		List<StudentDTO> studentsDTO = new ArrayList<StudentDTO>();
 		List<Student> students = studentService.findAll();
-        
+
 		for (Student student : students) {
-			int i =1;
-			if (student.getSubjects().size()==0) {
+			int i = 1;
+			if (student.getSubjects().size() == 0) {
 				studentsDTO.add(new StudentDTO(student));
-			}
-			else{
-				for(Subject subject : student.getSubjects()){
-				if (subject.getId()==id) {
-					i=0;
+			} else {
+				for (Subject subject : student.getSubjects()) {
+					if (subject.getId() == id) {
+						i = 0;
+					} else {
+						i = i * 1;
+					}
+
 				}
-				else{
-					i=i*1;
-				}
-				if (i==1) {
+				if (i == 1) {
 					studentsDTO.add(new StudentDTO(student));
 				}
-			}}
+			}
 		}
 		return new ResponseEntity<>(studentsDTO, HttpStatus.OK);
 	}
-	
+
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/addStudentToSubject/{id}", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<SubjectDTO> saveSubject(@RequestBody TempSubjectDTO tempSubjectDTO, @PathVariable Long id) {
 		Subject subject = subjectService.findOne(id);
-		
-		for (StudentDTO studentDTO : tempSubjectDTO.getStudentsDTO()) {
-			Student student=studentService.findOne(studentDTO.getId());
-			student.getSubjects().add(subject);
-			studentService.save(student);
-			subject.getStudents().add(student);
-			
+		if (tempSubjectDTO.getStudentsDTO()==null) {
+			for (Student student : subject.getStudents()) {
+				student.getSubjects().remove(subject);
+				studentService.save(student);
+			}
+			subject.getStudents().clear();
+			subjectService.save(subject);
 		}
-		
-		subjectService.save(subject);
-		
+		else{
+			for (StudentDTO studentDTO : tempSubjectDTO.getStudentsDTO()) {
+				Student student = studentService.findOne(studentDTO.getId());
+				student.getSubjects().add(subject);
+				studentService.save(student);
+				subject.getStudents().add(student);
+
+			}
+
+			subjectService.save(subject);
+
+		}
+
 		return new ResponseEntity<>(new SubjectDTO(subject), HttpStatus.OK);
 	}
-	
-	
+
 }
