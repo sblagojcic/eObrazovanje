@@ -22,6 +22,7 @@ import ftn.project.eObrazovanje.model.Exam;
 import ftn.project.eObrazovanje.model.Student;
 import ftn.project.eObrazovanje.model.Subject;
 import ftn.project.eObrazovanje.service.StudentService;
+import ftn.project.eObrazovanje.service.SubjectService;
 import ftn.project.eObrazovanje.web.dto.StudentDTO;
 
 @RestController
@@ -29,6 +30,8 @@ import ftn.project.eObrazovanje.web.dto.StudentDTO;
 public class StudentController {
 	@Autowired
 	private StudentService studentService;
+	@Autowired
+	private SubjectService subjectService;
 	
 	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR','ROLE_ADMIN')")
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
@@ -41,7 +44,7 @@ public class StudentController {
 		return new ResponseEntity<>(studentsDTO, HttpStatus.OK);
 	}
 	
-	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
+	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR','ROLE_ADMIN')")
 	@RequestMapping(value = "/inSubject/{id}", method = RequestMethod.GET)
 	public ResponseEntity<List<StudentDTO>> getStudentsInSubject(@PathVariable Long id) {
 		List<Student> students = studentService.findAll();
@@ -66,7 +69,7 @@ public class StudentController {
 	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR','ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Page<Student>> getStudentsPage(
-			@RequestParam(value = "pageNumber", required = false) int pageNumber, Pageable pageable) {
+			@RequestParam(value = "pageNumber", required = false) int pageNumber,@RequestParam(value = "text", required = false) String text, Pageable pageable) {
 		if (pageNumber < 0) {
 			pageNumber = 0;
 		}
@@ -76,7 +79,12 @@ public class StudentController {
 		} catch (Exception e) {
 			page = (PageRequest) pageable;
 		}
-		Page<Student> students = studentService.findAll(page);
+		Page<Student> students=null;
+		if (text!=null) {
+			students = studentService.findFilteredStudent(text, text, text, page);
+		}else{
+			students = studentService.findAll(page);			 
+		}
 
 		return new ResponseEntity<>(students, HttpStatus.OK);
 	}
@@ -145,5 +153,26 @@ public class StudentController {
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+	}
+	
+	
+	
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(value = "/getStudentsInSubject/{id}", method = RequestMethod.GET)
+	public ResponseEntity<List<StudentDTO>> getStudentsNotInSubject(@PathVariable Long id) {
+		List<StudentDTO> studentsDTO = new ArrayList<StudentDTO>();
+		List<Student> students = studentService.findAll();
+		//Subject subject = subjectService.findOne(id);
+		for (Student student : students) {	
+				for (Subject subject : student.getSubjects()) {
+					if (subject.getId() == id) {
+						studentsDTO.add(new StudentDTO(student));
+					} 
+				}
+		}
+ 
+		return new ResponseEntity<>(studentsDTO, HttpStatus.OK);
+
 	}
 }

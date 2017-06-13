@@ -1,10 +1,7 @@
 'use stirict';
 angular.module('eObrazovanjeApp', [ 'angular-jwt' ,'ngRoute']).config(
 		[ '$routeProvider', function($routeProvider) {
-			$routeProvider.when('/', {
-		        templateUrl: '/html/login.html',
-		        controller: 'LoginController',
-		    }).when('/login', {
+			$routeProvider.when('/login', {
 				templateUrl : '/html/login.html',
 				controller : 'LoginController'
 			}).when('/professors', {
@@ -25,6 +22,9 @@ angular.module('eObrazovanjeApp', [ 'angular-jwt' ,'ngRoute']).config(
 			}).when('/professorRoles/edit/:id', {
 				templateUrl : '/html/addOrUpdateProfessorRole.html',
 				controller : 'ProfessorRoleController'
+			}).when('/students/getStudentsInSubject/:id', {
+				templateUrl : '/html/studentsInSubject.html',
+				controller : 'SubjectController'
 			}).when('/students', {
 				templateUrl : '/html/Students.html',
 				controller : 'StudentController'
@@ -107,7 +107,7 @@ angular.module('eObrazovanjeApp', [ 'angular-jwt' ,'ngRoute']).config(
 				templateUrl : '/html/changePassword.html',
 				controller : 'ChangePasswordController'
 			}).otherwise({
-				redirectTo : '/'
+				redirectTo : '/login'
 			});
 		} ]);
 

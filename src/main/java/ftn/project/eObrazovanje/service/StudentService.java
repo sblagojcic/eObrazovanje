@@ -35,4 +35,9 @@ public class StudentService {
 	public void remove(Long id) {
 		studentRepository.delete(id);
 	}
+
+
+	public Page<Student> findFilteredStudent(String name, String username, String lastname,  Pageable page) {
+		return studentRepository.findAllByNameLikeOrUserNameLikeOrLastNameLike('%'+name+'%', '%'+username+'%', '%'+lastname+'%', page);
+	}
 }

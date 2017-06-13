@@ -25,6 +25,7 @@ angular.module('eObrazovanjeApp').controller(
 					$scope.getAllStudents = function() {
 						$http.get('api/students', {
 			                params: {
+			                	"text": $scope.text,
 			                    "pageNumber":$scope.pageNumber
 			                    
 			                }

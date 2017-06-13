@@ -46,11 +46,10 @@ public class ProfessorController {
 		}
 		return new ResponseEntity<>(professorsDTO, HttpStatus.OK);
 	}
-	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Page<Professor>> getProfessorsPage(
-			@RequestParam(value = "pageNumber", required = false) int pageNumber, Pageable pageable) {
+			@RequestParam(value = "pageNumber", required = false) int pageNumber,@RequestParam(value = "text", required = false) String text, Pageable pageable) {
 		if (pageNumber < 0) {
 			pageNumber = 0;
 		}
@@ -60,10 +59,19 @@ public class ProfessorController {
 		} catch (Exception e) {
 			page = (PageRequest) pageable;
 		}
-		Page<Professor> professors = professorService.findAll(page);
+		Page<Professor> professors=null;
+		
+		if (text!=null) {
+			professors = professorService.findFilteredProfessor(text, text, text, page);
+		}else{
+			professors = professorService.findAll(page);			 
+		}
+		
 
 		return new ResponseEntity<>(professors, HttpStatus.OK);
 	}
+	
+	
 	
 	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR','ROLE_ADMIN','ROLE_STUDENT')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)

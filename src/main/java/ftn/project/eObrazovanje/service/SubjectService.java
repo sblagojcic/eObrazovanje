@@ -36,5 +36,10 @@ public class SubjectService {
 		subjectRepository.delete(id);
 	}
 
+	public Page<Subject> findAllByNameLike(String filter1, Pageable page) {
+		
+		return subjectRepository.findAllByNameLike('%'+filter1+'%',page);
+	}
+
 }
 

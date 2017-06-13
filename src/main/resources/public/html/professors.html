@@ -1,3 +1,7 @@
+Filter by name username or last name:
+<input type="text" ng-model="text">	
+<button  ng-click=getAllProfessors()  class="btn btn-xs btn-info">Search</button>
+<button  ng-click="text=null;getAllProfessors()" class="btn btn-xs btn-primary">Reset</button>
 <table ng-init= "getAllProfessors()" class="table table-bordered" >
 	<thead class="thead-inverse">
 		<tr>

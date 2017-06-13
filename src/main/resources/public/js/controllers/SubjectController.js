@@ -25,6 +25,7 @@ angular.module('eObrazovanjeApp').controller(
 						$http.get('api/subjects/getNotInSubject/' + $routeParams.id).success
 						(function(data, status) {
 							$scope.students = data;
+							$scope.tempSubjectDTO.studentsDTO=[];
 						}).error(function() {
 						alert('Oops, something went wrong!');
 					});
@@ -32,6 +33,19 @@ angular.module('eObrazovanjeApp').controller(
 					$scope.takeSubjectId = function(subjectId){
 						$rootScope.subjectId=subjectId;
 					};
+					
+					
+					$scope.getStudentsInSubject = function() {
+						$http.get('api/students/getStudentsInSubject/' + $routeParams.id).success
+						(function(data, status) {
+							$scope.students = data;
+						}).error(function() {
+						alert('Oops, something went wrong!');
+					});
+				};
+					
+					
+					
 					$scope.getSubject = function(id) {
 						$http.get('api/subjects/' + id).success(
 								function(data, status) {
@@ -47,6 +61,7 @@ angular.module('eObrazovanjeApp').controller(
 					$scope.getAllSubjects = function() {
 						$http.get('api/subjects', {
 							params: {
+								"text": $scope.text,
 								"pageNumber": $scope.pageNumber
 
 							}
@@ -122,7 +137,7 @@ angular.module('eObrazovanjeApp').controller(
 					};
 					
 					
-					$scope.addStudentToSubject = function() {
+					$scope.addStudentsToSubject = function() {
 							$http.post('api/subjects/addStudentToSubject/'+ $routeParams.id, $scope.tempSubjectDTO).success(
 									function() {
 										window.location ="#/subjects";
@@ -131,6 +146,11 @@ angular.module('eObrazovanjeApp').controller(
 							});
 						
 					};
+					$scope.addStudentToSubject = function(student) {
+						$scope.tempSubjectDTO.studentsDTO.push(student);
+						var index = $scope.students.indexOf(student);
+						$scope.students.splice(index,1);
+				};
 
 					// paginacija
 					$scope.previousPage = function () {

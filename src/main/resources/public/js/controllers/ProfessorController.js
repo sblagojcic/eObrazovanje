@@ -23,6 +23,7 @@ angular.module('eObrazovanjeApp').controller(
 			$scope.getAllProfessors = function() {
 				$http.get('api/professors', {
 						params: {
+							"text": $scope.text,
 							"pageNumber": $scope.pageNumber
 
 						}
@@ -34,7 +35,9 @@ angular.module('eObrazovanjeApp').controller(
 					}).error(function() {
 						alert('Oops, something went wrong!');
 					});
+				$scope.resetFilter = function() {
 
+				}
 			};
 
 			$scope.deleteProfessor = function(id) {

@@ -1,3 +1,7 @@
+Filter by name:
+<input type="text" ng-model="text">	
+<button  ng-click=getAllSubjects()  class="btn btn-xs btn-info">Search</button>
+<button  ng-click="text=null;getAllSubjects()" class="btn btn-xs btn-primary">Reset</button>
  <table ng-init= "getAllSubjects()" class=" row table table-bordered" >
 	<thead class="thead-inverse">
 		<tr>
@@ -7,6 +11,8 @@
 			<th></th>
 			<th></th>
 			<th></th>
+			<th></th>
+			
 			
 		</tr>
 	</thead>
@@ -23,6 +29,9 @@
 			</td>
 			<td>
 				<a href="#/subjects/edit/{{ subject.id }}" class="btn btn-xs btn-primary">Edit</a>
+			</td>
+			<td>
+				<a href="#/students/getStudentsInSubject/{{ subject.id }}" class="btn btn-xs btn-success">Students</a>
 			</td>
 		</tr>
 		

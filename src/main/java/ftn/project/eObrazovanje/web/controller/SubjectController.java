@@ -57,7 +57,7 @@ public class SubjectController {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Page<Subject>> getSubjectsPage(
-			@RequestParam(value = "pageNumber", required = false) int pageNumber, Pageable pageable) {
+			@RequestParam(value = "pageNumber", required = false) int pageNumber,@RequestParam(value = "text", required = false) String filter1, Pageable pageable) {
 		if (pageNumber < 0) {
 			pageNumber = 0;
 		}
@@ -67,7 +67,13 @@ public class SubjectController {
 		} catch (Exception e) {
 			page = (PageRequest) pageable;
 		}
-		Page<Subject> subjects = subjectService.findAll(page);
+		Page<Subject> subjects=null;
+		if (filter1!=null) {
+			subjects = subjectService.findAllByNameLike(filter1,page);
+		} else {
+			subjects = subjectService.findAll(page);
+		}
+		
 
 		return new ResponseEntity<>(subjects, HttpStatus.OK);
 	}

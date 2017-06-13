@@ -1,17 +1,15 @@
-<table ng-init= "getStudentsNotInSubject();" class="table table-bordered" >
+<table ng-init= "getStudentsInSubject()" class="table table-bordered" >
 	<thead class="thead-inverse">
 		<tr>
 			<th>ID</th>
 			<th>Last name</th>
 			<th>Name</th>
-			<th>Username</th>
+			<th>username</th>
 			<th>JMBG</th>
 			<th>Address</th>
 			<th>Date of birth</th>
 			<th>Gender</th>
-			<th>Profile</th>
-			<th>Add to subject</th>
-
+			<th></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -24,20 +22,10 @@
 			<td>{{ student.address }}</td>
 			<td>{{ student.dateOfBirth| date:'dd-MM-yyyy'}}</td>
 			<td>{{ student.gender }}</td>
+
 			<td>
 				<a href="#/Students/profileOfStudent/{{ student.id }}" class="btn btn-xs btn-warning">See profile</a>
 			</td>
-			<td>
-				<button ng-model="button" ng-click="addStudentToSubject(student)" class="btn btn-xs btn-danger">Add</button>
-			</td>
-
 		</tr>
 	</tbody>
 </table>
-    
-    <div class=" form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <button  ng-click="addStudentsToSubject()" type="submit" class="btn btn-success" >Add</button>
-    </div>
-  </div>
-</form>

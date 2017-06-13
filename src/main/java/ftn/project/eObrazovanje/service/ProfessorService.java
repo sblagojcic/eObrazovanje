@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import ftn.project.eObrazovanje.model.Professor;
 import ftn.project.eObrazovanje.repository.ProfessorRepository;
 
+
 @Service
 public class ProfessorService {
 
@@ -34,6 +35,12 @@ public class ProfessorService {
 
 	public void remove(Long id) {
 		professorRepository.delete(id);
+	}
+
+
+	
+	public Page<Professor> findFilteredProfessor(String name, String username, String lastname,  Pageable page) {
+		return professorRepository.findAllByNameLikeOrUserNameLikeOrLastNameLike('%'+name+'%', '%'+username+'%', '%'+lastname+'%', page);
 	}
 
 }
