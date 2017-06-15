@@ -100,7 +100,7 @@ angular.module('eObrazovanjeApp').controller(
 						$scope.blueAlert = false;
 						$scope.orangeAlert = false;
 					};
-
+					
 					$scope.initSubject = function() {
 						$scope.subject = {};
 
@@ -140,6 +140,11 @@ angular.module('eObrazovanjeApp').controller(
 					$scope.addStudentsToSubject = function() {
 							$http.post('api/subjects/addStudentToSubject/'+ $routeParams.id, $scope.tempSubjectDTO).success(
 									function() {
+										var poruka ="uspesno ste dodali : "
+										for ( var i in $scope.tempSubjectDTO.studentsDTO) {
+											poruka+=$scope.tempSubjectDTO.studentsDTO[i].name+ ' '+$scope.tempSubjectDTO.studentsDTO[i].lastName+',  '
+										}
+										alert(poruka);
 										window.location ="#/subjects";
 									}).error(function() {
 								alert('Error while adding!')

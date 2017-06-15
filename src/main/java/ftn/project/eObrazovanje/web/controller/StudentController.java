@@ -22,7 +22,6 @@ import ftn.project.eObrazovanje.model.Exam;
 import ftn.project.eObrazovanje.model.Student;
 import ftn.project.eObrazovanje.model.Subject;
 import ftn.project.eObrazovanje.service.StudentService;
-import ftn.project.eObrazovanje.service.SubjectService;
 import ftn.project.eObrazovanje.web.dto.StudentDTO;
 
 @RestController
@@ -30,8 +29,7 @@ import ftn.project.eObrazovanje.web.dto.StudentDTO;
 public class StudentController {
 	@Autowired
 	private StudentService studentService;
-	@Autowired
-	private SubjectService subjectService;
+
 	
 	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR','ROLE_ADMIN')")
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
@@ -158,7 +156,7 @@ public class StudentController {
 	
 	
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR','ROLE_ADMIN')")
 	@RequestMapping(value = "/getStudentsInSubject/{id}", method = RequestMethod.GET)
 	public ResponseEntity<List<StudentDTO>> getStudentsNotInSubject(@PathVariable Long id) {
 		List<StudentDTO> studentsDTO = new ArrayList<StudentDTO>();
