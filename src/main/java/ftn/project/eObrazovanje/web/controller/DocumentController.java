@@ -72,7 +72,7 @@ public class DocumentController {
 		return new ResponseEntity<>(documentsDTO, HttpStatus.OK);
 	}
 	
-	@RequestMapping(method = RequestMethod.GET)
+	@PreAuthorize("hasAnyRole('ROLE_STUDENT','ROLE_ADMIN')")	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Page<Document>> getDocumentssPage(Pageable page) {
 		Page<Document> documents = documentService.findAll(page);
 
@@ -139,7 +139,7 @@ public class DocumentController {
 		}
 		return new ResponseEntity<>(documentsDTO, HttpStatus.OK);
 	}
-
+	@PreAuthorize("hasAnyRole('ROLE_STUDENT','ROLE_ADMIN')")
 	@RequestMapping(value="/uploadAngular", method = RequestMethod.POST)
     public ResponseEntity<String> singleFileUploadAngular(@RequestParam("file") MultipartFile file) {
         try {
@@ -159,7 +159,7 @@ public class DocumentController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-	
+	@PreAuthorize("hasAnyRole('ROLE_STUDENT','ROLE_ADMIN','ROLE_PROFESSOR')")
 	@RequestMapping(value="/profilePic/{id}", method = RequestMethod.POST)
     public ResponseEntity<String> uploadProfilePic(@RequestParam("file") MultipartFile file) {
         try {
@@ -177,7 +177,7 @@ public class DocumentController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-	
+	@PreAuthorize("hasAnyRole('ROLE_STUDENT','ROLE_ADMIN')")
 	@RequestMapping(value = "/download/{id}", method = RequestMethod.GET)
 	public void downloadFiles(@PathVariable Long id, HttpServletRequest request, HttpServletResponse response) {
 			Document document = documentService.findOne(id);						
@@ -213,7 +213,7 @@ public class DocumentController {
     		}
 		}
 
-	
+	@PreAuthorize("hasAnyRole('ROLE_STUDENT','ROLE_ADMIN','ROLE_PROFESSOR')")
 	@RequestMapping(value = "/downloadPicture/{id}", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<String> DownloadImagesProfesor(@PathVariable Long id, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		User user = userService.findOne(id);

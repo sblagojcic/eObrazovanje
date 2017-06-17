@@ -157,6 +157,12 @@ angular.module('eObrazovanjeApp').controller(
 						$scope.students.splice(index,1);
 				};
 
+				$scope.removeFromList = function(student) {
+					var index = $scope.tempSubjectDTO.studentsDTO.indexOf(student);
+					$scope.tempSubjectDTO.studentsDTO.splice(index, 1);
+
+
+				};
 					// paginacija
 					$scope.previousPage = function () {
 						if ($scope.pageNumber != 0) {

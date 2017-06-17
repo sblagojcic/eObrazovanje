@@ -13,6 +13,14 @@
                   <table class="table table-user-information">
                     <tbody>
                       <tr>
+                        <td>Name:</td>
+                        <td>{{student.name}}</td>
+                      </tr>
+						<tr>
+                        <td>Last name:</td>
+                        <td>{{student.lastName}}</td>
+                      </tr>
+                      <tr>
                         <td>User name:</td>
                         <td>{{student.userName}}</td>
                       </tr>
@@ -38,15 +46,15 @@
                      
                     </tbody>
                   </table>
-                  <a  href="#/documents/getFor/{{ student.id }}" class="btn btn-primary">Student documents</a> 
-                  <a  href="#/transactions/getFor/{{ student.id }}" class="btn btn-primary">Student transactions</a>
+                  <a ng-hide="isProfessor()"  href="#/documents/getFor/{{ student.id }}" class="btn btn-primary">Student documents</a> 
+                  <a ng-hide="isProfessor()"  href="#/transactions/getFor/{{ student.id }}" class="btn btn-primary">Student transactions</a>
                 </div>
               </div>
             </div>
                  <div class="panel-footer">
-						<a data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning" href="#/Students/edit/{{ student.id }}" class="btn btn-xs btn-primary">Edit</a><br>
+						<a ng-hide="isProfessor()" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning" href="#/Students/edit/{{ student.id }}" class="btn btn-xs btn-primary">Edit</a><br>
                     </div>
-            		<div class="panel-footer" ng-show="isStudent()||isProfessor()">
+            		<div class="panel-footer" ng-show="isStudent()">
 						<a  data-original-title="Change password" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning" href="#/changePassword/{{ student.id }}" class="btn btn-xs btn-primary">Change password</a><br>
                     </div>
           </div>

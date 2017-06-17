@@ -6,7 +6,8 @@
       <p class="card-text">Semester: {{ subject.semester }}</p>
       <p class="card-text"><small class="text-muted">ID: {{ subject.id }}</small></p>
        	<a ng-show="isProfessor()" ng-click="takeSubjectId(subject.id)" ng-model="button" href="#/addOrUpdateExam" class="btn btn-xs btn-primary">grades</a>
+		<a ng-show="isProfessor()" ng-model="button" href="#/students/getStudentsInSubject/{{ subject.id }}" class="btn btn-xs btn-success">Students</a>
 		<a ng-show="isStudent()" ng-model="button" href="#/addOrUpdateTransaction" class="btn btn-xs btn-primary">apply for exam</a>	    </div>
-  		<a ng-show="isProfessor()" ng-model="button" href="#/students/getStudentsInSubject/{{ subject.id }}" class="btn btn-xs btn-success">Students</a>
+  		
   </div>
 </div>
