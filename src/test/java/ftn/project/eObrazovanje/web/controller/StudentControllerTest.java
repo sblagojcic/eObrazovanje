@@ -18,7 +18,7 @@ public class StudentControllerTest extends EObrazovanjeApplicationTests {
 	@Autowired
 	private StudentService studentService;
 
-	private StudentController studentController;
+	//private StudentController studentController;
 	
 	@Before
 	public void setUp()
@@ -37,6 +37,45 @@ public class StudentControllerTest extends EObrazovanjeApplicationTests {
 	{
 		List<Student> students = studentService.findAll();
 		Assert.assertNotNull("JUnit Test neuspesan! Lista studenata prazna", students);
-		//Assert.assertEquals("JUnit Test neuspesan! Ocekivana dva clana liste", 2, students.size());
+		Assert.assertEquals("JUnit Test neuspesan! Ocekivana dva clana liste", 2, students.size());
+	}
+	
+	@Test
+	public void testFindMaxStudent()
+	{
+		Long id = Long.MAX_VALUE;
+		Student student = studentService.findOne(id);
+		
+		Assert.assertNull("JUnit Test neuspesan! Lista je popunjena", student);
+	}
+	
+	@Test
+	public void testCreate()
+	{
+		Student student = new Student();
+		student.setName("Informatika");
+		
+		Student createdStudent = studentService.save(student);
+		
+		Assert.assertNotNull("JUnit Test neuspesan! Predmet nije kreiran", createdStudent);
+		Assert.assertNotNull("JUnit Test neuspesan! Predmet nije kreiran", createdStudent.getId());
+		Assert.assertEquals("JUnit Test neuspesan! Predmet nije kreiran", "Informatika", createdStudent.getName());
+		
+	}
+	
+	@Test
+	public void testDelete()
+	{
+		Long testId = new Long(1);
+		
+		Student student = studentService.findOne(testId);
+		
+		Assert.assertNotNull("JUnit test neuspesan! Ocekivano !null svojstvo u testDelete metodi", student);
+		
+		studentService.remove(testId);
+		
+		Student deletedStudent = studentService.findOne(testId);
+		
+		Assert.assertNull("JUnit test neuspesan! Ocekivani Student entitet nije obrisan", deletedStudent);
 	}
 }
