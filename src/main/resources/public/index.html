@@ -63,6 +63,7 @@
 					<li><a class="navbar-brand"  ng-show="isAdmin()" href="#/documents">All Documents</a></li>
             	    <li><a class="navbar-brand"  ng-show="isStudent()" href="#/documents/getFor/{{ userId }}">Documents</a></li>
             	    <li><a class="navbar-brand"  ng-show="isStudent()" href="#/exams/getFor/{{ userId }}">Exams</a></li>
+            	   	<li><a class="navbar-brand"  ng-show="isAdmin()" href="#/exams">Exams</a></li>
 					<li><a class="navbar-brand"  ng-show="isStudent()" href="#/Students/profileOfStudent/{{ userId }}">Profile</a></li>
 					<li><a class="navbar-brand"  ng-show="isProfessor()" href="#/professors/profileOfProfesors/{{ userId }}">Profile</a></li>
     </ul>
